@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <noWarn>1591</noWarn>
+        <IsPackable>False</IsPackable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <NoWarn>1701;1702;1705</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="dist\**" />
+      <Compile Remove="node_modules\**" />
+      <EmbeddedResource Remove="dist\**" />
+      <EmbeddedResource Remove="node_modules\**" />
+      <None Remove="dist\**" />
+      <None Remove="node_modules\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\VirtoCommerce.ShippingModule.Core\VirtoCommerce.ShippingModule.Core.csproj" />
+        <ProjectReference Include="..\VirtoCommerce.ShippingModule.Data\VirtoCommerce.ShippingModule.Data.csproj" />
+    </ItemGroup>
+
+</Project>
