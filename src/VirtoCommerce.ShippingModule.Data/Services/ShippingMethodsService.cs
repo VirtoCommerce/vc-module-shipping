@@ -45,6 +45,7 @@ namespace VirtoCommerce.ShippingModule.Data.Services
                 }
             }
         }
+
         #endregion
 
         public async Task<ShippingMethod[]> GetByIdsAsync(string[] ids, string responseGroup)
