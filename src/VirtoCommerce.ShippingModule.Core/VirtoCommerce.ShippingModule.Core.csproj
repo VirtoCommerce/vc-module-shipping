@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <noWarn>1591</noWarn>
-		<IsPackable>True</IsPackable>
+        <IsPackable>True</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +13,6 @@
       </PackageReference>
       <PackageReference Include="VirtoCommerce.CoreModule.Core" Version="2.25.26-3-0-0-core3-0001" />
       <PackageReference Include="VirtoCommerce.Platform.Core" Version="3.0.0-v3-feature-vp-7-0001" />
-	</ItemGroup>
+    </ItemGroup>
 
 </Project>
