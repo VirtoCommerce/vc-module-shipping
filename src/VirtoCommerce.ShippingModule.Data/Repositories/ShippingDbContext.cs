@@ -18,7 +18,7 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StoreShippingMethodEntity>().ToTable("StoreShippingMethod").HasKey(x => x.Id);
-            modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.Id).HasMaxLength(128);
+            modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
             modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.StoreId).HasMaxLength(128);
             modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.TypeName).HasMaxLength(128);
             modelBuilder.Entity<StoreShippingMethodEntity>().HasIndex(x => new { x.TypeName, x.StoreId })

@@ -53,7 +53,7 @@ namespace VirtoCommerce.ShippingModule.Web
             var shippingMethodsRegistrar = applicationBuilder.ApplicationServices.GetRequiredService<IShippingMethodsRegistrar>();
             shippingMethodsRegistrar.RegisterShippingMethod<FixedRateShippingMethod>();
 
-            var mvcJsonOptions = applicationBuilder.ApplicationServices.GetService<IOptions<MvcJsonOptions>>();
+            var mvcJsonOptions = applicationBuilder.ApplicationServices.GetService<IOptions<MvcNewtonsoftJsonOptions>>();
             mvcJsonOptions.Value.SerializerSettings.Converters.Add(new PolymorphicJsonConverter());
 
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
