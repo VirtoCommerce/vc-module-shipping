@@ -8,6 +8,7 @@ namespace VirtoCommerce.ShippingModule.Core.Model
         /// Shipping option name or identifier
         /// </summary>
         public string OptionName { get; set; }
+        public string OptionDescription { get; set; }
 
         public decimal Rate { get; set; }
         public decimal RateWithTax { get; set; }
