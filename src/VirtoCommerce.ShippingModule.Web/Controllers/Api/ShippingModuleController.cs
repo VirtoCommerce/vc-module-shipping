@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
@@ -7,6 +8,7 @@ using VirtoCommerce.ShippingModule.Core.Services;
 namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
 {
     [Route("api/shipping")]
+    [Authorize]
     public class ShippingModuleController : Controller
     {
         private readonly IShippingMethodsSearchService _shippingMethodsSearchService;
