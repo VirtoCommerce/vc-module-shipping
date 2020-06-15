@@ -7,7 +7,8 @@ The Shipping module allows the following:
 1. Register shipping methods using the code;
 1. Receive the list of Shipping methods on UI on admin side;
 1. Edit shipping method settings;
-1. Connect the shipping methods to a Store.
+1. Connect the shipping methods to a Store;
+1. API to work with shipping method list.
 
 The selected Shipping methods will be available for selection on the Storefront.
 
