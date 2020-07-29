@@ -1,6 +1,8 @@
 # Overview
 
-The Shipping module allows the following:
+The Shipping Module provides the ability to add as many shipping providers as needed to Virtocommerce and also provides an interface to manage the shipping providers.
+
+## Key Features
 
 1. Register shipping methods using the code;
 1. Receive the list of Shipping methods on UI on admin side;

@@ -13,9 +13,11 @@ The Shipping Module provides the ability to add as many shipping providers as ne
 
 Documentation
 
-[Shipping Module Document](/docs/index.md)
+1. [Shipping Module Document](/docs/index.md)
 
-[View on Github](https://github.com/VirtoCommerce/vc-module-shipping)
+1. [View on Github](https://github.com/VirtoCommerce/vc-module-shipping)
+
+## References
 
 1. Deploy: https://virtocommerce.com/docs/latest/developer-guide/deploy-module-from-source-code/
 1. Installation: https://www.virtocommerce.com/docs/latest/user-guide/modules/
