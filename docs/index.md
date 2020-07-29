@@ -1,6 +1,6 @@
 # Overview
 
-The Shipping Module provides the ability to add as many shipping providers as needed to Virtocommerce and also provides an interface to manage the shipping providers.
+The Shipping Module provides the ability to extend shipping provider list with custom providers and also provides an interface and API for managing these shipping providers.
 
 ## Key Features
 
