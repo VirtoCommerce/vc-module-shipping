@@ -1,4 +1,3 @@
-
 # Overview
 
 The Shipping Module provides the ability to extend shipping provider list with custom providers and also provides an interface and API for managing these shipping providers.
