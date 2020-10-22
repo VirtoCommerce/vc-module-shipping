@@ -13,18 +13,29 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
     {
         private readonly IShippingMethodsSearchService _shippingMethodsSearchService;
         private readonly IShippingMethodsService _shippingMethodsService;
+        private readonly IShippingMethodsRegistrar _shippingMethodsRegistrar;
 
         public ShippingModuleController(
             IShippingMethodsSearchService shippingMethodsSearchService,
-            IShippingMethodsService shippingMethodsService
+            IShippingMethodsService shippingMethodsService,
+            IShippingMethodsRegistrar shippingMethodsRegistrar
             )
         {
             _shippingMethodsSearchService = shippingMethodsSearchService;
             _shippingMethodsService = shippingMethodsService;
+            _shippingMethodsRegistrar = shippingMethodsRegistrar;
+        }
+
+        [HttpGet]
+        [Route("")]
+        public async Task<ActionResult<ShippingMethod>> GetRegisteredShippingMethods()
+        {
+            var result = await _shippingMethodsRegistrar.GetRegisteredMethods();
+            return Ok(result);
         }
 
         [HttpPost("search")]
-        public async Task<ActionResult<ShippingMethodsSearchResult>> SearchShippingMethods([FromBody]ShippingMethodsSearchCriteria criteria)
+        public async Task<ActionResult<ShippingMethodsSearchResult>> SearchShippingMethods([FromBody] ShippingMethodsSearchCriteria criteria)
         {
             var result = await _shippingMethodsSearchService.SearchShippingMethodsAsync(criteria);
             return Ok(result);
@@ -38,7 +49,7 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
         }
 
         [HttpPut("")]
-        public async Task<ActionResult<ShippingMethod>> UpdateShippingMethod([FromBody]ShippingMethod shippingMethod)
+        public async Task<ActionResult<ShippingMethod>> UpdateShippingMethod([FromBody] ShippingMethod shippingMethod)
         {
             await _shippingMethodsService.SaveChangesAsync(new[] { shippingMethod });
             return Ok(shippingMethod);
