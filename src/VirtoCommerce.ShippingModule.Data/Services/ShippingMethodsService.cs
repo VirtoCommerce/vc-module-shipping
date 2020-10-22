@@ -46,7 +46,13 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             }
         }
 
-        #endregion
+        public Task<ShippingMethod[]> GetRegisteredMethods() =>
+            Task.FromResult(
+                AbstractTypeFactory<ShippingMethod>.AllTypeInfos
+                .Select(x => AbstractTypeFactory<ShippingMethod>.TryCreateInstance(x.Type.Name))
+                .ToArray());
+
+        #endregion IShippingMethodsRegistrar members
 
         public async Task<ShippingMethod[]> GetByIdsAsync(string[] ids, string responseGroup)
         {
