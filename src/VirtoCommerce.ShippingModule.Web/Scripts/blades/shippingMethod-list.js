@@ -3,7 +3,7 @@ angular.module('virtoCommerce.shippingModule').controller('virtoCommerce.shippin
 
     function initializeBlade() {
         blade.isLoading = false;
-        blade.headIcon = 'fa-archive';
+        blade.headIcon = 'fa fa-archive';
 
         $scope.sortableOptions = {
             stop: function (e, ui) {
