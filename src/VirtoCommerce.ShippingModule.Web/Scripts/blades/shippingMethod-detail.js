@@ -78,7 +78,7 @@ angular.module('virtoCommerce.shippingModule')
                 bladeNavigationService.showBlade(newBlade, blade);
             };
 
-            blade.headIcon = 'fa-archive';
+            blade.headIcon = 'fa fa-archive';
 
             blade.toolbarCommands = [             
                 {
