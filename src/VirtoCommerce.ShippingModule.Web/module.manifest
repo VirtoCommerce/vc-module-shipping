@@ -3,7 +3,7 @@
   <id>VirtoCommerce.Shipping</id>
   <version>3.7.0</version>
   <version-tag />
-  <platformVersion>3.0.0</platformVersion>
+  <platformVersion>3.51.0</platformVersion>
   <title>Shipping module</title>
   <description>Add shipping methods management</description>
   <authors>
