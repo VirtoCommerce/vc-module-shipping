@@ -5,6 +5,5 @@ namespace VirtoCommerce.ShippingModule.Core.Services
 {
     public interface IShippingMethodsSearchService
     {
-        Task<ShippingMethodsSearchResult> SearchShippingMethodsAsync(ShippingMethodsSearchCriteria criteria);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VirtoCommerce.Platform.Core.Common;
@@ -7,7 +8,8 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
 {
     public interface IShippingRepository : IRepository
     {
-        IQueryable<StoreShippingMethodEntity> StoreShippingMethods { get; }
-        Task<StoreShippingMethodEntity[]> GetStoreShippingMethodsByIdsAsync(string[] ids, string responseGroup = null);
+        IQueryable<StoreShippingMethodEntity> ShippingMethods { get; }
+
+        Task<IEnumerable<StoreShippingMethodEntity>> GetByIdsAsync(IEnumerable<string> ids);
     }
 }

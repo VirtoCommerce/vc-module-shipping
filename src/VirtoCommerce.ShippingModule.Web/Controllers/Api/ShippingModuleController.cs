@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Services;
+using VirtoCommerce.Platform.Core.GenericCrud;
 
 namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
 {
@@ -11,8 +12,8 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
     [Authorize]
     public class ShippingModuleController : Controller
     {
-        private readonly IShippingMethodsSearchService _shippingMethodsSearchService;
-        private readonly IShippingMethodsService _shippingMethodsService;
+        private readonly ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod> _shippingMethodsSearchService;
+        private readonly ICrudService<ShippingMethod> _shippingMethodsService;
         private readonly IShippingMethodsRegistrar _shippingMethodsRegistrar;
 
         public ShippingModuleController(
@@ -21,8 +22,8 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
             IShippingMethodsRegistrar shippingMethodsRegistrar
             )
         {
-            _shippingMethodsSearchService = shippingMethodsSearchService;
-            _shippingMethodsService = shippingMethodsService;
+            _shippingMethodsSearchService = (ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod>)shippingMethodsSearchService;
+            _shippingMethodsService = (ICrudService<ShippingMethod>) shippingMethodsService;
             _shippingMethodsRegistrar = shippingMethodsRegistrar;
         }
 
@@ -37,7 +38,7 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
         [HttpPost("search")]
         public async Task<ActionResult<ShippingMethodsSearchResult>> SearchShippingMethods([FromBody] ShippingMethodsSearchCriteria criteria)
         {
-            var result = await _shippingMethodsSearchService.SearchShippingMethodsAsync(criteria);
+            var result = await _shippingMethodsSearchService.SearchAsync(criteria);
             return Ok(result);
         }
 

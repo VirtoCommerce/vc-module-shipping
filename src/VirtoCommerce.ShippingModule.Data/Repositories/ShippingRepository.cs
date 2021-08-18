@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -12,12 +13,11 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
         {
         }
 
-        public IQueryable<StoreShippingMethodEntity> StoreShippingMethods => DbContext.Set<StoreShippingMethodEntity>();
+        public IQueryable<StoreShippingMethodEntity> ShippingMethods => DbContext.Set<StoreShippingMethodEntity>();
 
-        public async Task<StoreShippingMethodEntity[]> GetStoreShippingMethodsByIdsAsync(string[] ids, string responseGroup = null)
+        public Task<IEnumerable<StoreShippingMethodEntity>> GetByIdsAsync(IEnumerable<string> ids)
         {
-            return await StoreShippingMethods.Where(x => ids.Contains(x.Id))
-                .ToArrayAsync();
+            return Task.FromResult<IEnumerable<StoreShippingMethodEntity>>(ShippingMethods.Where(x => ids.Contains(x.Id)).ToList());
         }
     }
 }
