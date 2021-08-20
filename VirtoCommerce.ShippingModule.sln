@@ -13,16 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtoCommerce.ShippingModul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtoCommerce.ShippingModule.Web", "src\VirtoCommerce.ShippingModule.Web\VirtoCommerce.ShippingModule.Web.csproj", "{A4E89076-ACF3-41CF-8BDB-107ADBEECA2E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtoCommerce.ShippingModule.Tests", "tests\VirtoCommerce.ShippingModule.Data.Tests\VirtoCommerce.ShippingModule.Tests.csproj", "{E4045B06-451B-493D-A058-FC8CD14F0E10}"
-	ProjectSection(ProjectDependencies) = postProject
-		{ED6D4B40-054B-4CE6-B210-7EAD214A387B} = {ED6D4B40-054B-4CE6-B210-7EAD214A387B}
-		{57D5C7C8-5F79-4183-A572-694AC13F951A} = {57D5C7C8-5F79-4183-A572-694AC13F951A}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5E08CDBB-4D53-4535-921E-59DE9B142CF0}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.ShippingModule.Data.Tests", "tests\VirtoCommerce.ShippingModule.Data.Tests\VirtoCommerce.ShippingModule.Data.Tests.csproj", "{E4045B06-451B-493D-A058-FC8CD14F0E10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
