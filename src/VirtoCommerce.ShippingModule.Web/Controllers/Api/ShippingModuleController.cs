@@ -12,7 +12,7 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
     [Authorize]
     public class ShippingModuleController : Controller
     {
-        private readonly IShippingMethodsSearchService _shippingMethodsSearchService;
+        private readonly ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod> _shippingMethodsSearchService;
         private readonly ICrudService<ShippingMethod> _shippingMethodsService;
         private readonly IShippingMethodsRegistrar _shippingMethodsRegistrar;
 
@@ -22,7 +22,7 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
             IShippingMethodsRegistrar shippingMethodsRegistrar
             )
         {
-            _shippingMethodsSearchService = shippingMethodsSearchService;
+            _shippingMethodsSearchService = (ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod>)shippingMethodsSearchService;
             _shippingMethodsService = (ICrudService<ShippingMethod>)shippingMethodsService;
             _shippingMethodsRegistrar = shippingMethodsRegistrar;
         }
@@ -38,7 +38,7 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
         [HttpPost("search")]
         public async Task<ActionResult<ShippingMethodsSearchResult>> SearchShippingMethods([FromBody] ShippingMethodsSearchCriteria criteria)
         {
-            var result = await _shippingMethodsSearchService.SearchShippingMethodsAsync(criteria);
+            var result = await _shippingMethodsSearchService.SearchAsync(criteria);
             return Ok(result);
         }
 

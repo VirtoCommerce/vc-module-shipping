@@ -25,9 +25,8 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             _settingsManager = settingsManager;
         }
 
-        public async Task<ShippingMethodsSearchResult> SearchShippingMethodsAsync(ShippingMethodsSearchCriteria criteria)
+        protected override async Task<ShippingMethodsSearchResult> ProcessSearchResultAsync(ShippingMethodsSearchResult result, ShippingMethodsSearchCriteria criteria)
         {
-            var result = await SearchAsync(criteria);
             var sortInfos = BuildSortExpression(criteria);
 
             if (criteria.Take > 0 && !criteria.WithoutTransient)
