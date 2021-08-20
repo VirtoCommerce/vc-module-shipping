@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\VirtoCommerce.ShippingModule.Core\VirtoCommerce.ShippingModule.Core.csproj" />
+        <ProjectReference Include="..\..\src\VirtoCommerce.ShippingModule.Data\VirtoCommerce.ShippingModule.Data.csproj" />
+    </ItemGroup>
 </Project>

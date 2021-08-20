@@ -10,15 +10,19 @@ using VirtoCommerce.ShippingModule.Data.Model;
 using VirtoCommerce.ShippingModule.Data.Repositories;
 using VirtoCommerce.Platform.Core.Events;
 using VirtoCommerce.Platform.Data.GenericCrud;
+using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.ShippingModule.Core.Events;
 
 namespace VirtoCommerce.ShippingModule.Data.Services
 {
     public class ShippingMethodsService : CrudService<ShippingMethod, StoreShippingMethodEntity, ShippingChangeEvent, ShippingChangedEvent>, IShippingMethodsRegistrar, IShippingMethodsService
     {
-        public ShippingMethodsService(Func<IShippingRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IEventPublisher eventPublisher)
+        private readonly ISettingsManager _settingManager;
+
+        public ShippingMethodsService(Func<IShippingRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IEventPublisher eventPublisher, ISettingsManager settingManager)
             : base(repositoryFactory, platformMemoryCache, eventPublisher)
         {
+            _settingManager = settingManager;
         }
 
         public void RegisterShippingMethod<T>(Func<T> factory = null) where T : ShippingMethod
@@ -39,10 +43,27 @@ namespace VirtoCommerce.ShippingModule.Data.Services
                 .Select(x => AbstractTypeFactory<ShippingMethod>.TryCreateInstance(x.Type.Name))
                 .ToArray());
 
+        protected override ShippingMethod ProcessModel(string responseGroup, StoreShippingMethodEntity entity, ShippingMethod model)
+        {
+            var shippingMethod = AbstractTypeFactory<ShippingMethod>.TryCreateInstance(string.IsNullOrEmpty(entity.TypeName) ? entity.Code : entity.TypeName);
+            if (shippingMethod != null)
+            {
+                entity.ToModel(shippingMethod);
+                _settingManager.DeepLoadSettingsAsync(shippingMethod).GetAwaiter().GetResult();
+                return shippingMethod;
+            }
+            return null;
+        }
+
+        protected override async Task AfterSaveChangesAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        {
+            await _settingManager.DeepSaveSettingsAsync(models);
+        }
+
+
         protected override Task<IEnumerable<StoreShippingMethodEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
         {
             return ((IShippingRepository)repository).GetByIdsAsync(ids);
         }
-
     }
 }
