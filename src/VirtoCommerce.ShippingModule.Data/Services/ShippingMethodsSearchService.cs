@@ -19,8 +19,8 @@ namespace VirtoCommerce.ShippingModule.Data.Services
     {
         private readonly ISettingsManager _settingsManager;
 
-        public ShippingMethodsSearchService(Func<IShippingRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IShippingMethodsService customerReviewService, ISettingsManager settingsManager)
-            : base(repositoryFactory, platformMemoryCache, (ICrudService<ShippingMethod>)customerReviewService)
+        public ShippingMethodsSearchService(Func<IShippingRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IShippingMethodsService shippingMethodsService, ISettingsManager settingsManager)
+            : base(repositoryFactory, platformMemoryCache, (ICrudService<ShippingMethod>)shippingMethodsService)
         {
             _settingsManager = settingsManager;
         }
