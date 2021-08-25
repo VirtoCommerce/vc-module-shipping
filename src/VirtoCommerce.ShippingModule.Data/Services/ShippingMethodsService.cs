@@ -55,15 +55,36 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             return null;
         }
 
-        protected override async Task AfterSaveChangesAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        protected async override Task AfterSaveChangesAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
         {
             await _settingManager.DeepSaveSettingsAsync(models);
         }
 
 
-        protected override Task<IEnumerable<StoreShippingMethodEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
+        protected async override Task<IEnumerable<StoreShippingMethodEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
         {
-            return ((IShippingRepository)repository).GetByIdsAsync(ids);
+            return await ((IShippingRepository)repository).GetByIdsAsync(ids);
+        }
+
+        protected override async Task AfterDeleteAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        {
+            await _settingManager.DeepRemoveSettingsAsync(models);
+        }
+
+        public async Task<ShippingMethod[]> GetByIdsAsync(string[] ids, string responseGroup)
+        {
+            var result = await base.GetByIdsAsync(ids);
+            return result.ToArray();
+        }
+
+        public async Task SaveChangesAsync(ShippingMethod[] shippingMethods)
+        {
+            await base.SaveChangesAsync(shippingMethods);
+        }
+
+        public async Task DeleteAsync(string[] ids)
+        {
+            await base.DeleteAsync(ids);
         }
     }
 }

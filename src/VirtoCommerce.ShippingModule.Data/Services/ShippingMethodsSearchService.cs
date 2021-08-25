@@ -96,5 +96,10 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             }
             return sortInfos;
         }
+
+        public async Task<ShippingMethodsSearchResult> SearchShippingMethodsAsync(ShippingMethodsSearchCriteria criteria)
+        {
+            return await SearchAsync(criteria);
+        }
     }
 }
