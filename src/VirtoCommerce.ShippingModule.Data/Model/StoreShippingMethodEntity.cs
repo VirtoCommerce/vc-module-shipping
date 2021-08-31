@@ -1,11 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Domain;
 using VirtoCommerce.ShippingModule.Core.Model;
 
 namespace VirtoCommerce.ShippingModule.Data.Model
 {
-    public class StoreShippingMethodEntity : Entity
+    public class StoreShippingMethodEntity : Entity, IDataEntity<StoreShippingMethodEntity, ShippingMethod>
     {
         [Required]
         [StringLength(128)]
@@ -25,37 +26,37 @@ namespace VirtoCommerce.ShippingModule.Data.Model
 
         public string StoreId { get; set; }
 
-        public virtual ShippingMethod ToModel(ShippingMethod shippingMethod)
+        public virtual ShippingMethod ToModel(ShippingMethod model)
         {
-            if (shippingMethod == null)
-                throw new ArgumentNullException(nameof(shippingMethod));
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
 
-            shippingMethod.Id = Id;
-            shippingMethod.IsActive = IsActive;
-            shippingMethod.Code = Code;
-            shippingMethod.TaxType = TaxType;
-            shippingMethod.LogoUrl = LogoUrl;
-            shippingMethod.Priority = Priority;
-            shippingMethod.StoreId = StoreId;
+            model.Id = Id;
+            model.IsActive = IsActive;
+            model.Code = Code;
+            model.TaxType = TaxType;
+            model.LogoUrl = LogoUrl;
+            model.Priority = Priority;
+            model.StoreId = StoreId;
 
-            return shippingMethod;
+            return model;
         }
 
-        public virtual StoreShippingMethodEntity FromModel(ShippingMethod shippingMethod, PrimaryKeyResolvingMap pkMap)
+        public virtual StoreShippingMethodEntity FromModel(ShippingMethod model, PrimaryKeyResolvingMap pkMap)
         {
-            if (shippingMethod == null)
-                throw new ArgumentNullException(nameof(shippingMethod));
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
 
-            pkMap.AddPair(shippingMethod, this);
+            pkMap.AddPair(model, this);
 
-            Id = shippingMethod.Id;
-            IsActive = shippingMethod.IsActive;
-            Code = shippingMethod.Code;
-            TaxType = shippingMethod.TaxType;
-            LogoUrl = shippingMethod.LogoUrl;
-            Priority = shippingMethod.Priority;
-            StoreId = shippingMethod.StoreId;
-            TypeName = shippingMethod.TypeName;
+            Id = model.Id;
+            IsActive = model.IsActive;
+            Code = model.Code;
+            TaxType = model.TaxType;
+            LogoUrl = model.LogoUrl;
+            Priority = model.Priority;
+            StoreId = model.StoreId;
+            TypeName = model.TypeName;
 
             return this;
         }

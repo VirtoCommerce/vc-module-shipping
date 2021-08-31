@@ -2,37 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
-using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.Platform.Core.Common;
-using VirtoCommerce.Platform.Core.Settings;
-using VirtoCommerce.Platform.Data.Infrastructure;
+using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Services;
-using VirtoCommerce.ShippingModule.Data.Caching;
 using VirtoCommerce.ShippingModule.Data.Model;
 using VirtoCommerce.ShippingModule.Data.Repositories;
+using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Platform.Data.GenericCrud;
+using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.ShippingModule.Core.Events;
 
 namespace VirtoCommerce.ShippingModule.Data.Services
 {
-    public class ShippingMethodsService : IShippingMethodsRegistrar, IShippingMethodsService
+    public class ShippingMethodsService : CrudService<ShippingMethod, StoreShippingMethodEntity, ShippingChangeEvent, ShippingChangedEvent>, IShippingMethodsRegistrar, IShippingMethodsService
     {
-        private readonly Func<IShippingRepository> _repositoryFactory;
         private readonly ISettingsManager _settingManager;
-        private readonly IPlatformMemoryCache _memCache;
 
-        public ShippingMethodsService(
-            Func<IShippingRepository> repositoryFactory,
-            ISettingsManager settingManager,
-            IPlatformMemoryCache memCache
-            )
+        public ShippingMethodsService(Func<IShippingRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IEventPublisher eventPublisher, ISettingsManager settingManager)
+            : base(repositoryFactory, platformMemoryCache, eventPublisher)
         {
-            _repositoryFactory = repositoryFactory;
             _settingManager = settingManager;
-            _memCache = memCache;
         }
-
-        #region IShippingMethodsRegistrar members
 
         public void RegisterShippingMethod<T>(Func<T> factory = null) where T : ShippingMethod
         {
@@ -52,89 +43,48 @@ namespace VirtoCommerce.ShippingModule.Data.Services
                 .Select(x => AbstractTypeFactory<ShippingMethod>.TryCreateInstance(x.Type.Name))
                 .ToArray());
 
-        #endregion IShippingMethodsRegistrar members
+        protected override ShippingMethod ProcessModel(string responseGroup, StoreShippingMethodEntity entity, ShippingMethod model)
+        {
+            var shippingMethod = AbstractTypeFactory<ShippingMethod>.TryCreateInstance(string.IsNullOrEmpty(entity.TypeName) ? entity.Code : entity.TypeName);
+            if (shippingMethod != null)
+            {
+                entity.ToModel(shippingMethod);
+                _settingManager.DeepLoadSettingsAsync(shippingMethod).GetAwaiter().GetResult();
+                return shippingMethod;
+            }
+            return null;
+        }
+
+        protected async override Task AfterSaveChangesAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        {
+            await _settingManager.DeepSaveSettingsAsync(models);
+        }
+
+
+        protected async override Task<IEnumerable<StoreShippingMethodEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
+        {
+            return await ((IShippingRepository)repository).GetByIdsAsync(ids);
+        }
+
+        protected override async Task AfterDeleteAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        {
+            await _settingManager.DeepRemoveSettingsAsync(models);
+        }
 
         public async Task<ShippingMethod[]> GetByIdsAsync(string[] ids, string responseGroup)
         {
-            var cacheKey = CacheKey.With(GetType(), "GetByIdsAsync", string.Join("-", ids));
-            return await _memCache.GetOrCreateExclusiveAsync(cacheKey, async (cacheEntry) =>
-            {
-                var result = new List<ShippingMethod>();
-
-                using (var repository = _repositoryFactory())
-                {
-                    repository.DisableChangesTracking();
-                    var existEntities = await repository.GetStoreShippingMethodsByIdsAsync(ids, responseGroup);
-                    foreach (var existEntity in existEntities)
-                    {
-                        var shippingMethod = AbstractTypeFactory<ShippingMethod>.TryCreateInstance(string.IsNullOrEmpty(existEntity.TypeName) ? $"{existEntity.Code}ShippingMethod" : existEntity.TypeName);
-                        if (shippingMethod != null)
-                        {
-                            existEntity.ToModel(shippingMethod);
-
-                            await _settingManager.DeepLoadSettingsAsync(shippingMethod);
-                            result.Add(shippingMethod);
-                        }
-                    }
-                    cacheEntry.AddExpirationToken(ShippingCacheRegion.CreateChangeToken());
-                    return result.ToArray();
-                }
-            });
-        }
-
-        public async Task<ShippingMethod> GetByIdAsync(string id, string responseGroup)
-        {
-            return (await GetByIdsAsync(new[] { id }, responseGroup)).FirstOrDefault();
+            var result = await base.GetByIdsAsync(ids);
+            return result.ToArray();
         }
 
         public async Task SaveChangesAsync(ShippingMethod[] shippingMethods)
         {
-            var pkMap = new PrimaryKeyResolvingMap();
-
-            using (var repository = _repositoryFactory())
-            {
-                var dataExistEntities = await repository.GetStoreShippingMethodsByIdsAsync(shippingMethods.Where(x => !x.IsTransient())
-                    .Select(x => x.Id)
-                    .ToArray());
-
-                foreach (var shippingMethod in shippingMethods)
-                {
-                    var originalEntity = dataExistEntities.FirstOrDefault(x => x.Id == shippingMethod.Id);
-                    var modifiedEntity = AbstractTypeFactory<StoreShippingMethodEntity>.TryCreateInstance().FromModel(shippingMethod, pkMap);
-                    if (originalEntity != null)
-                    {
-                        modifiedEntity.Patch(originalEntity);
-                    }
-                    else
-                    {
-                        repository.Add(modifiedEntity);
-                    }
-                }
-
-                //Raise domain events
-                await repository.UnitOfWork.CommitAsync();
-                pkMap.ResolvePrimaryKeys();
-                //Save settings
-                await _settingManager.DeepSaveSettingsAsync(shippingMethods);
-            }
-
-            ShippingCacheRegion.ExpireRegion();
+            await base.SaveChangesAsync(shippingMethods);
         }
 
         public async Task DeleteAsync(string[] ids)
         {
-            var shippingMethods = await GetByIdsAsync(ids, null);
-            using (var repository = _repositoryFactory())
-            {
-                var shippingMethodEntities = await repository.GetStoreShippingMethodsByIdsAsync(ids);
-                foreach (var shippingMethodEntity in shippingMethodEntities)
-                {
-                    repository.Remove(shippingMethodEntity);
-                }
-                await repository.UnitOfWork.CommitAsync();
-            }
-
-            await _settingManager.DeepRemoveSettingsAsync(shippingMethods);
+            await base.DeleteAsync(ids);
         }
     }
 }
