@@ -55,20 +55,20 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             return null;
         }
 
-        protected async override Task AfterSaveChangesAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        protected override Task AfterSaveChangesAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
         {
-            await _settingManager.DeepSaveSettingsAsync(models);
+            return _settingManager.DeepSaveSettingsAsync(models);
         }
 
 
-        protected async override Task<IEnumerable<StoreShippingMethodEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
+        protected override Task<IEnumerable<StoreShippingMethodEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
         {
-            return await ((IShippingRepository)repository).GetByIdsAsync(ids);
+            return ((IShippingRepository)repository).GetByIdsAsync(ids);
         }
 
-        protected override async Task AfterDeleteAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        protected override Task AfterDeleteAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
         {
-            await _settingManager.DeepRemoveSettingsAsync(models);
+            return _settingManager.DeepRemoveSettingsAsync(models);
         }
 
         public async Task<ShippingMethod[]> GetByIdsAsync(string[] ids, string responseGroup)
@@ -77,14 +77,14 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             return result.ToArray();
         }
 
-        public async Task SaveChangesAsync(ShippingMethod[] shippingMethods)
+        public Task SaveChangesAsync(ShippingMethod[] shippingMethods)
         {
-            await base.SaveChangesAsync(shippingMethods);
+            return base.SaveChangesAsync(shippingMethods);
         }
 
-        public async Task DeleteAsync(string[] ids)
+        public Task DeleteAsync(string[] ids)
         {
-            await base.DeleteAsync(ids);
+            return base.DeleteAsync(ids);
         }
     }
 }
