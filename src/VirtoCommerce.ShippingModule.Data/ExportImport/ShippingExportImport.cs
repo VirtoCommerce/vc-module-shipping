@@ -9,21 +9,22 @@ using VirtoCommerce.Platform.Data.ExportImport;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Services;
+using VirtoCommerce.Platform.Core.GenericCrud;
 
 namespace VirtoCommerce.ShippingModule.Data.ExportImport
 {
     public class ShippingExportImport
     {
-        private readonly IShippingMethodsService _shippingMethodsService;
-        private readonly IShippingMethodsSearchService _shippingMethodsSearchService;
+        private readonly ICrudService<ShippingMethod> _shippingMethodsService;
+        private readonly ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod> _shippingMethodsSearchService;
         private readonly JsonSerializer _jsonSerializer;
         private readonly int _batchSize = 50;
 
         public ShippingExportImport(IShippingMethodsService shippingMethodsService, IShippingMethodsSearchService shippingMethodsSearchService, JsonSerializer jsonSerializer)
         {
-            _shippingMethodsService = shippingMethodsService;
+            _shippingMethodsService = (ICrudService<ShippingMethod>)shippingMethodsService;
             _jsonSerializer = jsonSerializer;
-            _shippingMethodsSearchService = shippingMethodsSearchService;
+            _shippingMethodsSearchService = (ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod>)shippingMethodsSearchService;
         }
 
         public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
@@ -49,7 +50,7 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
                     searchCriteria.Skip = skip;
                     searchCriteria.WithoutTransient = true;
 
-                    var searchResult = await _shippingMethodsSearchService.SearchShippingMethodsAsync(searchCriteria);
+                    var searchResult = await _shippingMethodsSearchService.SearchAsync(searchCriteria);
                     return (GenericSearchResult<ShippingMethod>)searchResult;
                 }, (processedCount, totalCount) =>
                 {
@@ -73,16 +74,13 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
             {
                 while (reader.Read())
                 {
-                    if (reader.TokenType == JsonToken.PropertyName)
+                    if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "ShippingMethods")
                     {
-                        if (reader.Value.ToString() == "ShippingMethods")
+                        await reader.DeserializeJsonArrayWithPagingAsync<ShippingMethod>(_jsonSerializer, _batchSize, items => _shippingMethodsService.SaveChangesAsync(items.ToArray()), processedCount =>
                         {
-                            await reader.DeserializeJsonArrayWithPagingAsync<ShippingMethod>(_jsonSerializer, _batchSize, items => _shippingMethodsService.SaveChangesAsync(items.ToArray()), processedCount =>
-                            {
-                                progressInfo.Description = $"{ processedCount } shipping methods have been imported";
-                                progressCallback(progressInfo);
-                            }, cancellationToken);
-                        }
+                            progressInfo.Description = $"{ processedCount } shipping methods have been imported";
+                            progressCallback(progressInfo);
+                        }, cancellationToken);
                     }
                 }
             }

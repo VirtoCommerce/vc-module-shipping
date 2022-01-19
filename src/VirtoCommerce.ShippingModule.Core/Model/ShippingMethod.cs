@@ -9,7 +9,7 @@ namespace VirtoCommerce.ShippingModule.Core.Model
 {
     public abstract class ShippingMethod : Entity, IHasSettings, ICloneable
     {
-        public ShippingMethod(string code)
+        protected ShippingMethod(string code)
         {
             Code = code;
         }
