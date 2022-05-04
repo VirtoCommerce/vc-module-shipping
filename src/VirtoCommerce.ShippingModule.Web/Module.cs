@@ -28,10 +28,12 @@ namespace VirtoCommerce.ShippingModule.Web
         private IApplicationBuilder _appBuilder;
         public void Initialize(IServiceCollection serviceCollection)
         {
-            var snapshot = serviceCollection.BuildServiceProvider();
-            var configuration = snapshot.GetService<IConfiguration>();
-            var connectionString = configuration.GetConnectionString("VirtoCommerce.Shipping") ?? configuration.GetConnectionString("VirtoCommerce");
-            serviceCollection.AddDbContext<ShippingDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<ShippingDbContext>((provider, options) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
+            });
+
             serviceCollection.AddTransient<IShippingRepository, ShippingRepository>();
             serviceCollection.AddTransient<Func<IShippingRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetService<IShippingRepository>());
 
