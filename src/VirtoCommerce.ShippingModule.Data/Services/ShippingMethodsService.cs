@@ -45,7 +45,7 @@ namespace VirtoCommerce.ShippingModule.Data.Services
 
         protected override ShippingMethod ProcessModel(string responseGroup, StoreShippingMethodEntity entity, ShippingMethod model)
         {
-            var shippingMethod = AbstractTypeFactory<ShippingMethod>.TryCreateInstance(string.IsNullOrEmpty(entity.TypeName) ? entity.Code : entity.TypeName);
+            var shippingMethod = AbstractTypeFactory<ShippingMethod>.TryCreateInstance(string.IsNullOrEmpty(entity.TypeName) ? $"{entity.Code}ShippingMethod" : entity.TypeName);
             if (shippingMethod != null)
             {
                 entity.ToModel(shippingMethod);
