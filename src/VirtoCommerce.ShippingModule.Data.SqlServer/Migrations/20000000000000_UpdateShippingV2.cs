@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace VirtoCommerce.ShippingModule.Data.Migrations
+namespace VirtoCommerce.ShippingModule.Data.SqlServer.Migrations
 {
     public partial class UpdateShippingV2 : Migration
     {

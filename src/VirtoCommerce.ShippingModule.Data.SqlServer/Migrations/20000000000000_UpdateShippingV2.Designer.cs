@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using VirtoCommerce.ShippingModule.Data.Repositories;
 
-namespace VirtoCommerce.ShippingModule.Data.Migrations
+namespace VirtoCommerce.ShippingModule.Data.SqlServer.Migrations
 {
     [DbContext(typeof(ShippingDbContext))]
-    [Migration("20190520140954_InitialShipping")]
-    partial class InitialShipping
+    [Migration("20000000000000_UpdateShippingV2")]
+    partial class UpdateShippingV2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
