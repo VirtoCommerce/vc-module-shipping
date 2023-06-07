@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using VirtoCommerce.Platform.Core.Caching;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.GenericCrud;
+using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.Platform.Data.GenericCrud;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Services;
 using VirtoCommerce.ShippingModule.Data.Model;
 using VirtoCommerce.ShippingModule.Data.Repositories;
-using VirtoCommerce.Platform.Core.Caching;
-using VirtoCommerce.Platform.Core.Common;
-using VirtoCommerce.Platform.Core.GenericCrud;
-using VirtoCommerce.Platform.Data.GenericCrud;
-using System.Threading.Tasks;
-using VirtoCommerce.Platform.Core.Settings;
 
 namespace VirtoCommerce.ShippingModule.Data.Services
 {
@@ -19,8 +20,13 @@ namespace VirtoCommerce.ShippingModule.Data.Services
     {
         private readonly ISettingsManager _settingsManager;
 
-        public ShippingMethodsSearchService(Func<IShippingRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IShippingMethodsService shippingMethodsService, ISettingsManager settingsManager)
-            : base(repositoryFactory, platformMemoryCache, (ICrudService<ShippingMethod>)shippingMethodsService)
+        public ShippingMethodsSearchService(
+            Func<IShippingRepository> repositoryFactory,
+            IPlatformMemoryCache platformMemoryCache,
+            IShippingMethodsService crudService,
+            IOptions<CrudOptions> crudOptions,
+            ISettingsManager settingsManager)
+            : base(repositoryFactory, platformMemoryCache, crudService, crudOptions)
         {
             _settingsManager = settingsManager;
         }
@@ -31,12 +37,15 @@ namespace VirtoCommerce.ShippingModule.Data.Services
 
             if (criteria.Take > 0 && !criteria.WithoutTransient)
             {
-                var transientMethodsQuery = AbstractTypeFactory<ShippingMethod>.AllTypeInfos.Select(x => AbstractTypeFactory<ShippingMethod>.TryCreateInstance(x.Type.Name))
-                                                                              .OfType<ShippingMethod>().AsQueryable();
+                var transientMethodsQuery = AbstractTypeFactory<ShippingMethod>.AllTypeInfos
+                    .Select(x => AbstractTypeFactory<ShippingMethod>.TryCreateInstance(x.Type.Name))
+                    .AsQueryable();
+
                 if (!string.IsNullOrEmpty(criteria.Keyword))
                 {
                     transientMethodsQuery = transientMethodsQuery.Where(x => x.Code.Contains(criteria.Keyword));
                 }
+
                 var allPersistentTypes = result.Results.Select(x => x.GetType()).Distinct();
                 transientMethodsQuery = transientMethodsQuery.Where(x => !allPersistentTypes.Contains(x.GetType()));
 
@@ -50,6 +59,7 @@ namespace VirtoCommerce.ShippingModule.Data.Services
 
                 result.Results = result.Results.Concat(transientProviders).AsQueryable().OrderBySortInfos(sortInfos).ToList();
             }
+
             return result;
         }
 
@@ -81,12 +91,14 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             {
                 query = query.Where(x => x.IsActive == criteria.IsActive.Value);
             }
+
             return query;
         }
 
         protected override IList<SortInfo> BuildSortExpression(ShippingMethodsSearchCriteria criteria)
         {
             var sortInfos = criteria.SortInfos;
+
             if (sortInfos.IsNullOrEmpty())
             {
                 sortInfos = new[]
@@ -94,12 +106,8 @@ namespace VirtoCommerce.ShippingModule.Data.Services
                     new SortInfo{ SortColumn = nameof(StoreShippingMethodEntity.Code) }
                 };
             }
-            return sortInfos;
-        }
 
-        public Task<ShippingMethodsSearchResult> SearchShippingMethodsAsync(ShippingMethodsSearchCriteria criteria)
-        {
-            return SearchAsync(criteria);
+            return sortInfos;
         }
     }
 }

@@ -10,6 +10,6 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
     {
         IQueryable<StoreShippingMethodEntity> ShippingMethods { get; }
 
-        Task<IEnumerable<StoreShippingMethodEntity>> GetByIdsAsync(IEnumerable<string> ids);
+        Task<IList<StoreShippingMethodEntity>> GetByIdsAsync(IList<string> ids);
     }
 }
