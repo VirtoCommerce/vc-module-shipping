@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Services;
-using VirtoCommerce.Platform.Core.GenericCrud;
 
 namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
 {
@@ -12,8 +12,8 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
     [Authorize]
     public class ShippingModuleController : Controller
     {
-        private readonly ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod> _shippingMethodsSearchService;
-        private readonly ICrudService<ShippingMethod> _shippingMethodsService;
+        private readonly IShippingMethodsSearchService _shippingMethodsSearchService;
+        private readonly IShippingMethodsService _shippingMethodsService;
         private readonly IShippingMethodsRegistrar _shippingMethodsRegistrar;
 
         public ShippingModuleController(
@@ -22,8 +22,8 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
             IShippingMethodsRegistrar shippingMethodsRegistrar
             )
         {
-            _shippingMethodsSearchService = (ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod>)shippingMethodsSearchService;
-            _shippingMethodsService = (ICrudService<ShippingMethod>)shippingMethodsService;
+            _shippingMethodsSearchService = shippingMethodsSearchService;
+            _shippingMethodsService = shippingMethodsService;
             _shippingMethodsRegistrar = shippingMethodsRegistrar;
         }
 
@@ -38,14 +38,14 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
         [HttpPost("search")]
         public async Task<ActionResult<ShippingMethodsSearchResult>> SearchShippingMethods([FromBody] ShippingMethodsSearchCriteria criteria)
         {
-            var result = await _shippingMethodsSearchService.SearchAsync(criteria);
+            var result = await _shippingMethodsSearchService.SearchNoCloneAsync(criteria);
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ShippingMethod>> GetShippingMethodById(string id)
         {
-            var result = await _shippingMethodsService.GetByIdAsync(id, null);
+            var result = await _shippingMethodsService.GetNoCloneAsync(id);
             return Ok(result);
         }
 

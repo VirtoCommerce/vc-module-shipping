@@ -1,30 +1,30 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.ExportImport;
-using VirtoCommerce.Platform.Data.ExportImport;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Services;
-using VirtoCommerce.Platform.Core.GenericCrud;
 
 namespace VirtoCommerce.ShippingModule.Data.ExportImport
 {
     public class ShippingExportImport
     {
-        private readonly ICrudService<ShippingMethod> _shippingMethodsService;
-        private readonly ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod> _shippingMethodsSearchService;
+        private readonly IShippingMethodsService _shippingMethodsService;
+        private readonly IShippingMethodsSearchService _shippingMethodsSearchService;
         private readonly JsonSerializer _jsonSerializer;
         private readonly int _batchSize = 50;
 
-        public ShippingExportImport(IShippingMethodsService shippingMethodsService, IShippingMethodsSearchService shippingMethodsSearchService, JsonSerializer jsonSerializer)
+        public ShippingExportImport(
+            IShippingMethodsService shippingMethodsService,
+            IShippingMethodsSearchService shippingMethodsSearchService,
+            JsonSerializer jsonSerializer)
         {
-            _shippingMethodsService = (ICrudService<ShippingMethod>)shippingMethodsService;
+            _shippingMethodsService = shippingMethodsService;
             _jsonSerializer = jsonSerializer;
-            _shippingMethodsSearchService = (ISearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod>)shippingMethodsSearchService;
+            _shippingMethodsSearchService = shippingMethodsSearchService;
         }
 
         public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
@@ -43,14 +43,14 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
                 progressCallback(progressInfo);
 
                 await writer.WritePropertyNameAsync("ShippingMethods");
-                await writer.SerializeJsonArrayWithPagingAsync(_jsonSerializer, _batchSize, async (skip, take) =>
+                await writer.SerializeArrayWithPagingAsync(_jsonSerializer, _batchSize, async (skip, take) =>
                 {
                     var searchCriteria = AbstractTypeFactory<ShippingMethodsSearchCriteria>.TryCreateInstance();
                     searchCriteria.Take = take;
                     searchCriteria.Skip = skip;
                     searchCriteria.WithoutTransient = true;
 
-                    var searchResult = await _shippingMethodsSearchService.SearchAsync(searchCriteria);
+                    var searchResult = await _shippingMethodsSearchService.SearchNoCloneAsync(searchCriteria);
                     return (GenericSearchResult<ShippingMethod>)searchResult;
                 }, (processedCount, totalCount) =>
                 {
@@ -72,13 +72,13 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
             using (var streamReader = new StreamReader(inputStream))
             using (var reader = new JsonTextReader(streamReader))
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
                     if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "ShippingMethods")
                     {
-                        await reader.DeserializeJsonArrayWithPagingAsync<ShippingMethod>(_jsonSerializer, _batchSize, items => _shippingMethodsService.SaveChangesAsync(items.ToArray()), processedCount =>
+                        await reader.DeserializeArrayWithPagingAsync<ShippingMethod>(_jsonSerializer, _batchSize, items => _shippingMethodsService.SaveChangesAsync(items), processedCount =>
                         {
-                            progressInfo.Description = $"{ processedCount } shipping methods have been imported";
+                            progressInfo.Description = $"{processedCount} shipping methods have been imported";
                             progressCallback(progressInfo);
                         }, cancellationToken);
                     }

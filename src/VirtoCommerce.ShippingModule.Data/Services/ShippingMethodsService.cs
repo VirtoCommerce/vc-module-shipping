@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Caching;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.Platform.Data.GenericCrud;
+using VirtoCommerce.ShippingModule.Core.Events;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Services;
 using VirtoCommerce.ShippingModule.Data.Model;
 using VirtoCommerce.ShippingModule.Data.Repositories;
-using VirtoCommerce.Platform.Core.Events;
-using VirtoCommerce.Platform.Data.GenericCrud;
-using VirtoCommerce.Platform.Core.Settings;
-using VirtoCommerce.ShippingModule.Core.Events;
 
 namespace VirtoCommerce.ShippingModule.Data.Services
 {
@@ -19,7 +19,11 @@ namespace VirtoCommerce.ShippingModule.Data.Services
     {
         private readonly ISettingsManager _settingManager;
 
-        public ShippingMethodsService(Func<IShippingRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IEventPublisher eventPublisher, ISettingsManager settingManager)
+        public ShippingMethodsService(
+            Func<IShippingRepository> repositoryFactory,
+            IPlatformMemoryCache platformMemoryCache,
+            IEventPublisher eventPublisher,
+            ISettingsManager settingManager)
             : base(repositoryFactory, platformMemoryCache, eventPublisher)
         {
             _settingManager = settingManager;
@@ -37,11 +41,15 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             }
         }
 
-        public Task<ShippingMethod[]> GetRegisteredMethods() =>
-            Task.FromResult(
-                AbstractTypeFactory<ShippingMethod>.AllTypeInfos
+        public Task<ShippingMethod[]> GetRegisteredMethods()
+        {
+            var result = AbstractTypeFactory<ShippingMethod>.AllTypeInfos
                 .Select(x => AbstractTypeFactory<ShippingMethod>.TryCreateInstance(x.Type.Name))
-                .ToArray());
+                .ToArray();
+
+            return Task.FromResult(result);
+        }
+
 
         protected override ShippingMethod ProcessModel(string responseGroup, StoreShippingMethodEntity entity, ShippingMethod model)
         {
@@ -55,36 +63,19 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             return null;
         }
 
-        protected override Task AfterSaveChangesAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        protected override Task AfterSaveChangesAsync(IList<ShippingMethod> models, IList<GenericChangedEntry<ShippingMethod>> changedEntries)
         {
             return _settingManager.DeepSaveSettingsAsync(models);
         }
 
-
-        protected override Task<IEnumerable<StoreShippingMethodEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
+        protected override Task<IList<StoreShippingMethodEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
         {
             return ((IShippingRepository)repository).GetByIdsAsync(ids);
         }
 
-        protected override Task AfterDeleteAsync(IEnumerable<ShippingMethod> models, IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+        protected override Task AfterDeleteAsync(IList<ShippingMethod> models, IList<GenericChangedEntry<ShippingMethod>> changedEntries)
         {
             return _settingManager.DeepRemoveSettingsAsync(models);
-        }
-
-        public async Task<ShippingMethod[]> GetByIdsAsync(string[] ids, string responseGroup)
-        {
-            var result = await base.GetByIdsAsync(ids);
-            return result.ToArray();
-        }
-
-        public Task SaveChangesAsync(ShippingMethod[] shippingMethods)
-        {
-            return base.SaveChangesAsync(shippingMethods);
-        }
-
-        public Task DeleteAsync(string[] ids)
-        {
-            return base.DeleteAsync(ids);
         }
     }
 }

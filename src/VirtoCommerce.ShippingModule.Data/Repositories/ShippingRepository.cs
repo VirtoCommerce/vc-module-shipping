@@ -9,15 +9,18 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
 {
     public class ShippingRepository : DbContextRepositoryBase<ShippingDbContext>, IShippingRepository
     {
-        public ShippingRepository(ShippingDbContext dbContext) : base(dbContext)
+        public ShippingRepository(ShippingDbContext dbContext)
+            : base(dbContext)
         {
         }
 
         public IQueryable<StoreShippingMethodEntity> ShippingMethods => DbContext.Set<StoreShippingMethodEntity>();
 
-        public Task<IEnumerable<StoreShippingMethodEntity>> GetByIdsAsync(IEnumerable<string> ids)
+        public async Task<IList<StoreShippingMethodEntity>> GetByIdsAsync(IList<string> ids)
         {
-            return Task.FromResult<IEnumerable<StoreShippingMethodEntity>>(ShippingMethods.Where(x => ids.Contains(x.Id)).ToList());
+            return await ShippingMethods
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync();
         }
     }
 }
