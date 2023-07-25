@@ -34,8 +34,9 @@ angular.module('virtoCommerce.shippingModule').controller('virtoCommerce.shippin
             blade.isLoading = false;
 
             _.each(data.results, function (item) {
-                var nameTranslationKey = "shipping.labels." + item.typeName + ".name";
-                var descriptionTranslateKey = "shipping.labels." + item.typeName + ".description";
+                
+                var nameTranslationKey = `shipping.labels.${item.typeName}.name`;
+                var descriptionTranslateKey = `shipping.labels.${item.typeName}.description`;
 
                 var nameResult = $translate.instant(nameTranslationKey);
                 var displayDescription = $translate.instant(descriptionTranslateKey);
