@@ -12,6 +12,8 @@ namespace VirtoCommerce.ShippingModule.Data.Model
         [StringLength(128)]
         public string Code { get; set; }
 
+        public string Description { get; set; }
+
         public int Priority { get; set; }
 
         [StringLength(2048)]
@@ -29,11 +31,14 @@ namespace VirtoCommerce.ShippingModule.Data.Model
         public virtual ShippingMethod ToModel(ShippingMethod model)
         {
             if (model == null)
+            {
                 throw new ArgumentNullException(nameof(model));
+            }
 
             model.Id = Id;
             model.IsActive = IsActive;
             model.Code = Code;
+            model.Description = Description;
             model.TaxType = TaxType;
             model.LogoUrl = LogoUrl;
             model.Priority = Priority;
@@ -45,13 +50,16 @@ namespace VirtoCommerce.ShippingModule.Data.Model
         public virtual StoreShippingMethodEntity FromModel(ShippingMethod model, PrimaryKeyResolvingMap pkMap)
         {
             if (model == null)
+            {
                 throw new ArgumentNullException(nameof(model));
+            }
 
             pkMap.AddPair(model, this);
 
             Id = model.Id;
             IsActive = model.IsActive;
             Code = model.Code;
+            Description = model.Description;
             TaxType = model.TaxType;
             LogoUrl = model.LogoUrl;
             Priority = model.Priority;
@@ -64,10 +72,13 @@ namespace VirtoCommerce.ShippingModule.Data.Model
         public virtual void Patch(StoreShippingMethodEntity target)
         {
             if (target == null)
+            {
                 throw new ArgumentNullException(nameof(target));
+            }
 
             target.IsActive = IsActive;
             target.Code = Code;
+            target.Description = Description;
             target.TaxType = TaxType;
             target.LogoUrl = LogoUrl;
             target.Priority = Priority;

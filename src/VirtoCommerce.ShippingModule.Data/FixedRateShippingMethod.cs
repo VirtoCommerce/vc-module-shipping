@@ -11,6 +11,7 @@ namespace VirtoCommerce.ShippingModule.Data
     {
         public FixedRateShippingMethod() : base("FixedRate")
         {
+            Name = "Fixed shipping rate";
         }
 
         private decimal GroundOptionRate
