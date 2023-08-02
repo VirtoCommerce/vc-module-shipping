@@ -1,4 +1,4 @@
-angular.module('virtoCommerce.shippingModule').controller('virtoCommerce.shippingModule.shippingMethodListController', ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.shippingModule.shippingMethods', function ($scope, bladeNavigationService, shippingMethods) {
+angular.module('virtoCommerce.shippingModule').controller('virtoCommerce.shippingModule.shippingMethodListController', ['$scope', '$translate', 'platformWebApp.bladeNavigationService', 'virtoCommerce.shippingModule.shippingMethods', function ($scope, $translate, bladeNavigationService, shippingMethods) {
     var blade = $scope.blade;
 
     function initializeBlade() {
@@ -32,6 +32,18 @@ angular.module('virtoCommerce.shippingModule').controller('virtoCommerce.shippin
             storeId: blade.storeId
         }, function (data) {
             blade.isLoading = false;
+
+            _.each(data.results, function (item) {
+                var nameTranslationKey = `shipping.labels.${item.typeName}.name`;
+                var descriptionTranslateKey = `shipping.labels.${item.typeName}.description`;
+
+                var nameResult = $translate.instant(nameTranslationKey);
+                var displayDescription = $translate.instant(descriptionTranslateKey);
+
+                item.displayName = nameResult === nameTranslationKey ? item.name : nameResult;
+                item.displayDescription = displayDescription === descriptionTranslateKey ? item.description : displayDescription;
+            });
+
             blade.currentEntities = data.results;
             blade.selectedShippingMethods = _.findWhere(blade.currentEntities, { isActive: true });
         }, function (error) {

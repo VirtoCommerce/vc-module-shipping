@@ -19,11 +19,9 @@ namespace VirtoCommerce.ShippingModule.Core.Model
         /// </summary>
         public string Code { get; set; }
 
-        /// <summary>
-        /// It's the same as <see>Code</see>. Left for backward compatibility. Should be removed in future.
-        /// </summary>
-        [Obsolete("Left for backward compatibility. Should be removed in future. Use Code.")]
-        public string Name => Code;
+        public string Name { get; set; }
+
+        public string Description { get; set; }
 
         public string LogoUrl { get; set; }
         public bool IsActive { get; set; }
