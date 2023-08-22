@@ -46,19 +46,16 @@ namespace VirtoCommerce.ShippingModule.Data.Services
                     transientMethodsQuery = transientMethodsQuery.Where(x => x.Code.Contains(criteria.Keyword) || x.Id.Contains(criteria.Keyword));
                 }
 
-                if (!criteria.StoreId.IsNullOrEmpty())
-                {
-                    transientMethodsQuery = transientMethodsQuery.Where(x => x.StoreId == criteria.StoreId);
-                }
-
                 if (!criteria.Codes.IsNullOrEmpty())
                 {
                     transientMethodsQuery = transientMethodsQuery.Where(x => criteria.Codes.Contains(x.Code));
                 }
+
                 if (!criteria.TaxType.IsNullOrEmpty())
                 {
                     transientMethodsQuery = transientMethodsQuery.Where(x => criteria.TaxType.Contains(x.TaxType));
                 }
+
                 if (criteria.IsActive.HasValue)
                 {
                     transientMethodsQuery = transientMethodsQuery.Where(x => x.IsActive == criteria.IsActive.Value);
