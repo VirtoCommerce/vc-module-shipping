@@ -4,7 +4,7 @@ angular.module('virtoCommerce.shippingModule')
             var blade = $scope.blade;
 
             function initializeBlade(data) {
-                blade.title = 'shipping.labels.' + data.typeName + '.name';
+                blade.title = data.name ? data.name : 'shipping.labels.' + data.typeName + '.name';
                 blade.currentEntity = angular.copy(data);
                 blade.origEntity = data;
                 blade.isLoading = false;
