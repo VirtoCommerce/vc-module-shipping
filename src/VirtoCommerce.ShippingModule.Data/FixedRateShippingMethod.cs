@@ -15,10 +15,10 @@ namespace VirtoCommerce.ShippingModule.Data
         }
 
         private decimal GroundOptionRate
-            => Settings.GetSettingValue(ModuleConstants.Settings.FixedRateShippingMethod.GroundRate.Name, 0m);
+            => Settings.GetValue<decimal>(ModuleConstants.Settings.FixedRateShippingMethod.GroundRate);
 
         private decimal AirOptionRate
-            => Settings.GetSettingValue(ModuleConstants.Settings.FixedRateShippingMethod.AirRate.Name, 0m);
+            => Settings.GetValue<decimal>(ModuleConstants.Settings.FixedRateShippingMethod.AirRate);
 
         public override IEnumerable<ShippingRate> CalculateRates(IEvaluationContext context)
         {
