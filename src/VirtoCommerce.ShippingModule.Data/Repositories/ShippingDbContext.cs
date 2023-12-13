@@ -2,10 +2,11 @@ using System.Reflection;
 using EntityFrameworkCore.Triggers;
 using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.ShippingModule.Data.Model;
+using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.ShippingModule.Data.Repositories
 {
-    public class ShippingDbContext : DbContextWithTriggers
+    public class ShippingDbContext : DbContextBase
     {
         public ShippingDbContext(DbContextOptions<ShippingDbContext> options) : base(options)
         {
