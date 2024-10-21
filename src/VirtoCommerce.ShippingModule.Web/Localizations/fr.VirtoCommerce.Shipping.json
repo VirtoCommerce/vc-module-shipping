@@ -1,0 +1,61 @@
+{
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "subtitle": "Modifier le mode de livraison",
+        "labels": {
+          "is-active": "Est actif",
+          "name": "Nom",
+          "code": "Code",
+          "tax-type": "Type de taxe",
+          "description": "Description",
+          "settings": "Paramètres",
+          "logoUrl": "URL du logo"
+        },
+        "placeholders": {
+          "tax-type": "Sélectionner...",
+          "description": "Entrer la description"
+        }
+      },
+      "shipping-method-list": {
+        "subtitle": "",
+        "labels": {
+          "is-active": "Est actif",
+          "shipping-method": "Mode de livraison",
+          "note": "Organisez l'ordre dans lequel les modes de livraison sont affichés dans la boutique en ligne. Utilisez le glisser-déposer pour les réorganiser"
+        }
+      }
+    },
+    "dialogs": {
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "Modes de livraison",
+        "blade-subtitle": "Modes de livraison"
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "Tarif de livraison fixe",
+        "description": "Mode de livraison à tarif fixe"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "Tarif de livraison aérienne",
+        "description": "Tarif de livraison aérienne fixe"
+      },
+      "Ground.Rate": {
+        "title": "Tarif de livraison terrestre",
+        "description": "Tarif de livraison terrestre fixe"
+      }
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "Exporter/Importer les paramètres des modes de livraison"
+    }
+  }
+}

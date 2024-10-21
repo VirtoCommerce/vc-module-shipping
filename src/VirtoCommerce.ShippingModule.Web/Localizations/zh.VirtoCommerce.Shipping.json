@@ -1,0 +1,61 @@
+{
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "subtitle": "编辑配送方式",
+        "labels": {
+          "is-active": "是否激活",
+          "name": "名称",
+          "code": "代码",
+          "tax-type": "税种",
+          "description": "描述",
+          "settings": "设置",
+          "logoUrl": "Logo URL"
+        },
+        "placeholders": {
+          "tax-type": "选择...",
+          "description": "输入描述"
+        }
+      },
+      "shipping-method-list": {
+        "subtitle": "",
+        "labels": {
+          "is-active": "是否激活",
+          "shipping-method": "配送方式",
+          "note": "安排在网上商店中显示配送方式的顺序。使用拖放功能重新排序"
+        }
+      }
+    },
+    "dialogs": {
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "配送方式",
+        "blade-subtitle": "配送方式"
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "固定运费",
+        "description": "固定运费配送方式"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "航空运费",
+        "description": "固定航空运费"
+      },
+      "Ground.Rate": {
+        "title": "陆运费",
+        "description": "固定陆运费"
+      }
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "导出/导入配送方式设置"
+    }
+  }
+}
