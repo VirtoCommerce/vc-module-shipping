@@ -1,55 +1,61 @@
 {
-    "shipping": {
-        "blades": {
-            "shipping-method-detail": {
-                "subtitle": "Versandart eingeben",
-                "labels": {
-                    "is-active": "Ist aktiv",
-                    "name": "Name",
-                    "code": "Code",
-                    "tax-type": "Steuertyp",
-                    "description": "Beschreibung",
-                    "settings": "Einstellungen"
-                },
-                "placeholders": {
-                    "tax-type": "Wählen Sie aus...",
-                    "description": "Beschreibung eingeben"
-                }
-            },
-            "shipping-method-list": {
-                "subtitle": "",
-                "labels": {
-                    "is-active": "Ist aktiv",
-                    "shipping-method": "Versandart",
-                    "note": "Legen Sie den Auftrag fest, wie die Versandmethoden im Web Store sortiert werden. Ziehen und loslassen, um die Reihenfolge zu ändern."
-                }
-            }
-        },
-        "dialogs": {
-        },
-        "widgets": {
-            "store-shipping-widget": {
-                "title": "Versandarten",
-                "blade-subtitle": "Versandarten"
-            }
-        },
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "subtitle": "Versandmethode bearbeiten",
         "labels": {
-            "FixedRateShippingMethod": {
-                "name": "Versandart festpreis",
-                "description": "Versandart festpreis"
-            }
+          "is-active": "Ist aktiv",
+          "name": "Name",
+          "code": "Code",
+          "tax-type": "Steuerart",
+          "description": "Beschreibung",
+          "settings": "Einstellungen",
+          "logoUrl": "Logo-URL"
+        },
+        "placeholders": {
+          "tax-type": "Auswählen...",
+          "description": "Beschreibung eingeben"
         }
+      },
+      "shipping-method-list": {
+        "subtitle": "",
+        "labels": {
+          "is-active": "Ist aktiv",
+          "shipping-method": "Versandmethode",
+          "note": "Ordnen Sie die Reihenfolge an, in der die Versandmethoden im Webshop angezeigt werden. Verwenden Sie Drag & Drop, um sie neu anzuordnen"
+        }
+      }
     },
-    "settings": {
-        "VirtoCommerce.Shipping.FixedRateShippingMethod": {
-            "Air.Rate": {
-                "title": "Luftfracht rate",
-                "description": "Feste luftfracht"
-            },
-            "Ground.Rate": {
-                "title": "Grundverschiffenrate",
-                "description": "Feste grundversandrate"
-            }
-        }
+    "dialogs": {
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "Versandmethoden",
+        "blade-subtitle": "Versandmethoden"
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "Fester Versandtarif",
+        "description": "Versandmethode mit festem Tarif"
+      }
     }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "Luftfrachtpreis",
+        "description": "Fester Luftfrachtpreis"
+      },
+      "Ground.Rate": {
+        "title": "Bodenversandpreis",
+        "description": "Fester Bodenversandpreis"
+      }
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "Exportieren/Importieren von Einstellungen für Versandmethoden"
+    }
+  }
 }

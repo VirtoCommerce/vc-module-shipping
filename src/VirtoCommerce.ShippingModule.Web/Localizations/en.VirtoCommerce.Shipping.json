@@ -10,7 +10,7 @@
           "tax-type": "Tax type",
           "description": "Description",
           "settings": "Settings",
-          "logoUrl": "Logo Url"
+          "logoUrl": "Logo URL"
         },
         "placeholders": {
           "tax-type": "Select...",
@@ -22,7 +22,7 @@
         "labels": {
           "is-active": "Is active",
           "shipping-method": "Shipping method",
-          "note": "Set the order how shipping methods appear sorted in web store. Drag and drop to change the order."
+          "note": "Arrange the order in which shipping methods are displayed in the web store. Use drag and drop to reorder them"
         }
       }
     },
@@ -45,11 +45,11 @@
     "VirtoCommerce.Shipping.FixedRateShippingMethod": {
       "Air.Rate": {
         "title": "Air shipping rate",
-        "description": "Fixed Air shipping rate"
+        "description": "Fixed air shipping rate"
       },
       "Ground.Rate": {
         "title": "Ground shipping rate",
-        "description": "Fixed Ground shipping rate"
+        "description": "Fixed ground shipping rate"
       }
     }
   },

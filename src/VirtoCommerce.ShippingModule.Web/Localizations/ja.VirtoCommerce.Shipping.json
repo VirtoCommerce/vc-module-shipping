@@ -1,0 +1,61 @@
+{
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "subtitle": "配送方法を編集",
+        "labels": {
+          "is-active": "アクティブ",
+          "name": "名前",
+          "code": "コード",
+          "tax-type": "税タイプ",
+          "description": "説明",
+          "settings": "設定",
+          "logoUrl": "ロゴのURL"
+        },
+        "placeholders": {
+          "tax-type": "選択...",
+          "description": "説明を入力"
+        }
+      },
+      "shipping-method-list": {
+        "subtitle": "",
+        "labels": {
+          "is-active": "アクティブ",
+          "shipping-method": "配送方法",
+          "note": "ウェブストアに表示される配送方法の順序を整理します。ドラッグアンドドロップを使用して順序を変更します"
+        }
+      }
+    },
+    "dialogs": {
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "配送方法",
+        "blade-subtitle": "配送方法"
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "固定配送料金",
+        "description": "固定料金の配送方法"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "航空配送料金",
+        "description": "固定航空配送料金"
+      },
+      "Ground.Rate": {
+        "title": "陸上配送料金",
+        "description": "固定陸上配送料金"
+      }
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "配送方法の設定をエクスポート/インポート"
+    }
+  }
+}
