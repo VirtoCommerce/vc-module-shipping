@@ -1,0 +1,61 @@
+{
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "subtitle": "Edytuj metodę wysyłki",
+        "labels": {
+          "is-active": "Jest aktywna",
+          "name": "Nazwa",
+          "code": "Kod",
+          "tax-type": "Typ podatku",
+          "description": "Opis",
+          "settings": "Ustawienia",
+          "logoUrl": "URL logo"
+        },
+        "placeholders": {
+          "tax-type": "Wybierz...",
+          "description": "Wprowadź opis"
+        }
+      },
+      "shipping-method-list": {
+        "subtitle": "",
+        "labels": {
+          "is-active": "Jest aktywna",
+          "shipping-method": "Metoda wysyłki",
+          "note": "Ułóż kolejność, w jakiej metody wysyłki są wyświetlane w sklepie internetowym. Użyj przeciągania i upuszczania, aby je uporządkować"
+        }
+      }
+    },
+    "dialogs": {
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "Metody wysyłki",
+        "blade-subtitle": "Metody wysyłki"
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "Stała stawka wysyłki",
+        "description": "Metoda wysyłki ze stałą stawką"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "Stawka wysyłki lotniczej",
+        "description": "Stała stawka wysyłki lotniczej"
+      },
+      "Ground.Rate": {
+        "title": "Stawka wysyłki lądowej",
+        "description": "Stała stawka wysyłki lądowej"
+      }
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "Eksportuj/Importuj ustawienia metod wysyłki"
+    }
+  }
+}

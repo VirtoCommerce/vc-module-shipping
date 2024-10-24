@@ -1,0 +1,61 @@
+{
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "subtitle": "Editar método de envio",
+        "labels": {
+          "is-active": "Está ativo",
+          "name": "Nome",
+          "code": "Código",
+          "tax-type": "Tipo de imposto",
+          "description": "Descrição",
+          "settings": "Configurações",
+          "logoUrl": "URL do logo"
+        },
+        "placeholders": {
+          "tax-type": "Selecionar...",
+          "description": "Digite a descrição"
+        }
+      },
+      "shipping-method-list": {
+        "subtitle": "",
+        "labels": {
+          "is-active": "Está ativo",
+          "shipping-method": "Método de envio",
+          "note": "Organize a ordem em que os métodos de envio são exibidos na loja online. Use arrastar e soltar para reordená-los"
+        }
+      }
+    },
+    "dialogs": {
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "Métodos de envio",
+        "blade-subtitle": "Métodos de envio"
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "Tarifa de envio fixa",
+        "description": "Método de envio com tarifa fixa"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "Tarifa de envio aéreo",
+        "description": "Tarifa fixa de envio aéreo"
+      },
+      "Ground.Rate": {
+        "title": "Tarifa de envio terrestre",
+        "description": "Tarifa fixa de envio terrestre"
+      }
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "Exportar/Importar configurações de métodos de envio"
+    }
+  }
+}
