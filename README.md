@@ -1,30 +1,30 @@
-# Overview
+# Virto Commerce Shipping Module
 
 [![CI status](https://github.com/VirtoCommerce/vc-module-shipping/workflows/Module%20CI/badge.svg?branch=dev)](https://github.com/VirtoCommerce/vc-module-shipping/actions?query=workflow%3A"Module+CI") [![Quality gate](https://sonarcloud.io/api/project_badges/measure?project=VirtoCommerce_vc-module-shipping&metric=alert_status&branch=dev)](https://sonarcloud.io/dashboard?id=VirtoCommerce_vc-module-shipping) [![Reliability rating](https://sonarcloud.io/api/project_badges/measure?project=VirtoCommerce_vc-module-shipping&metric=reliability_rating&branch=dev)](https://sonarcloud.io/dashboard?id=VirtoCommerce_vc-module-shipping) [![Security rating](https://sonarcloud.io/api/project_badges/measure?project=VirtoCommerce_vc-module-shipping&metric=security_rating&branch=dev)](https://sonarcloud.io/dashboard?id=VirtoCommerce_vc-module-shipping) [![Sqale rating](https://sonarcloud.io/api/project_badges/measure?project=VirtoCommerce_vc-module-shipping&metric=sqale_rating&branch=dev)](https://sonarcloud.io/dashboard?id=VirtoCommerce_vc-module-shipping)
 
 The Shipping Module provides the ability to extend shipping provider list with custom providers and also provides an interface and API for managing these shipping providers.
 
-## Key Features
+## Key features
 
-1. Register shipping methods using the code;
-1. Receive the list of Shipping methods on UI on admin side;
-1. Edit shipping method settings;
-1. Connect the shipping methods to a Store;
-1. API to work with shipping method list.
+* Register shipping methods using the code
+* Receive the list of Shipping methods on UI on admin side
+* Edit shipping method settings
+* Connect the shipping methods to a Store
+* API to work with shipping method list
 
 ## Documentation
 
-1. [Shipping Module Document](/docs/index.md)
-
-1. [View on Github](https://github.com/VirtoCommerce/vc-module-shipping)
+* [Shipping module user documentation](https://docs.virtocommerce.org/platform/user-guide/shipping/overview/)
+* [REST API](https://virtostart-demo-admin.govirto.com/docs/index.html?urls.primaryName=VirtoCommerce.Shipping)
+* [View on GitHub](https://github.com/VirtoCommerce/vc-module-shipping)
 
 ## References
 
-1. Deploy: https://virtocommerce.com/docs/latest/developer-guide/deploy-module-from-source-code/
-1. Installation: https://www.virtocommerce.com/docs/latest/user-guide/modules/
-1. Home: https://virtocommerce.com
-1. Community: https://www.virtocommerce.org
-1. [Download Latest Release](https://github.com/VirtoCommerce/vc-module-shipping/releases)
+* [Deployment](https://docs.virtocommerce.org/platform/developer-guide/Tutorials-and-How-tos/Tutorials/deploy-module-from-source-code/)
+* [Installation](https://docs.virtocommerce.org/platform/user-guide/modules-installation/)
+* [Home](https://virtocommerce.com)
+* [Community](https://www.virtocommerce.org)
+* [Download latest release](https://github.com/VirtoCommerce/vc-module-shipping/releases/latest)
 
 ## License
 
