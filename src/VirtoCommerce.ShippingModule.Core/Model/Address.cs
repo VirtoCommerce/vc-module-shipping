@@ -6,6 +6,7 @@ namespace VirtoCommerce.ShippingModule.Core.Model;
 
 public class Address : ValueObject, IHasOuterId
 {
+    public string Id { get; set; }
     public string Key { get; set; }
     public string Name { get; set; }
     public string Organization { get; set; }
