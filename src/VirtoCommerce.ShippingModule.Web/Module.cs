@@ -59,6 +59,9 @@ namespace VirtoCommerce.ShippingModule.Web
             serviceCollection.AddTransient<IShippingMethodsService, ShippingMethodsService>();
             serviceCollection.AddTransient<IShippingMethodsRegistrar, ShippingMethodsService>();
             serviceCollection.AddTransient<IShippingMethodsSearchService, ShippingMethodsSearchService>();
+
+            serviceCollection.AddTransient<IPickupService, PickupService>();
+
             serviceCollection.AddTransient<ShippingExportImport>();
         }
 
