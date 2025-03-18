@@ -12,6 +12,7 @@ using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.Extensions;
 using VirtoCommerce.ShippingModule.Core;
+using VirtoCommerce.ShippingModule.Core.Extensions;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Services;
 using VirtoCommerce.ShippingModule.Data;
@@ -71,6 +72,11 @@ namespace VirtoCommerce.ShippingModule.Web
 
             var shippingMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IShippingMethodsRegistrar>();
             shippingMethodsRegistrar.RegisterShippingMethod<FixedRateShippingMethod>();
+
+            if (Configuration.IsPickupEnabled())
+            {
+                shippingMethodsRegistrar.RegisterShippingMethod<BuyOnlinePickupInStoreShippingMethod>();
+            }
 
             PolymorphJsonConverter.RegisterTypeForDiscriminator(typeof(ShippingMethod), nameof(ShippingMethod.TypeName));
 
