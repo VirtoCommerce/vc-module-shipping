@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using VirtoCommerce.CoreModule.Core.Common;
 using VirtoCommerce.ShippingModule.Core.Model;
@@ -13,6 +14,15 @@ public class BuyOnlinePickupInStoreShippingMethod : ShippingMethod
 
     public override IEnumerable<ShippingRate> CalculateRates(IEvaluationContext context)
     {
-        return [];
+        if (!(context is ShippingRateEvaluationContext shippingContext))
+        {
+            throw new ArgumentException(nameof(context));
+        }
+        return [
+            new ShippingRate
+            {
+                Rate = 0, Currency = shippingContext.Currency, ShippingMethod = this, OptionName = "Pickup"
+            }
+        ];
     }
 }
