@@ -13,6 +13,7 @@ public class PickupService : IPickupService
         {
             new ()
             {
+                Id = "92C3D5D5-06A7-4D78-85E9-94149296E412",
                 Key = "ADDR-0001",
                 Name = "CVS Pharmacy",
                 Organization = "CVS Pharmacy",
@@ -32,6 +33,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCDA",
                 Key = "ADDR-0002",
                 Name = "Shell Gas Station",
                 Organization = "Shell Gas Station",
@@ -51,6 +53,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD1",
                 Key = "ADDR-0003",
                 Name = "Best Buy",
                 Organization = "Best Buy",
@@ -70,6 +73,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD2",
                 Key = "ADDR-0004",
                 Name = "Walgreens",
                 Organization = "Walgreens",
@@ -89,6 +93,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD3",
                 Key = "ADDR-0005",
                 Name = "Costco Wholesale",
                 Organization = "Costco Wholesale",
@@ -108,6 +113,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD4",
                 Key = "ADDR-0006",
                 Name = "7-Eleven",
                 Organization = "7-Eleven",
@@ -127,6 +133,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD5",
                 Key = "ADDR-0007",
                 Name = "Subway",
                 Organization = "Subway",
@@ -146,6 +153,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD6",
                 Key = "ADDR-0008",
                 Name = "Starbucks",
                 Organization = "Starbucks",
@@ -165,6 +173,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD7",
                 Key = "ADDR-0009",
                 Name = "PetSmart",
                 Organization = "PetSmart",
@@ -184,6 +193,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD8",
                 Key = "ADDR-0010",
                 Name = "Office Depot",
                 Organization = "Office Depot",
@@ -203,6 +213,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD9",
                 Key = "ADDR-0011",
                 Name = "Kroger",
                 Organization = "Kroger",
@@ -222,6 +233,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CCD0",
                 Key = "ADDR-0012",
                 Name = "Walmart Supercenter",
                 Organization = "Walmart Supercenter",
@@ -241,6 +253,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CC1A",
                 Key = "ADDR-0013",
                 Name = "Dollar Tree",
                 Organization = "Dollar Tree",
@@ -260,6 +273,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CC11",
                 Key = "ADDR-0014",
                 Name = "Home Depot",
                 Organization = "Home Depot",
@@ -279,6 +293,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CC12",
                 Key = "ADDR-0015",
                 Name = "GameStop",
                 Organization = "GameStop",
@@ -298,6 +313,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CC13",
                 Key = "ADDR-0016",
                 Name = "Trader Joe's",
                 Organization = "Trader Joe's",
@@ -317,6 +333,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CC14",
                 Key = "ADDR-0017",
                 Name = "IKEA",
                 Organization = "IKEA",
@@ -336,6 +353,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CC15",
                 Key = "ADDR-0018",
                 Name = "AutoZone",
                 Organization = "AutoZone",
@@ -355,6 +373,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CC16",
                 Key = "ADDR-0019",
                 Name = "Whole Foods Market",
                 Organization = "Whole Foods Market",
@@ -374,6 +393,7 @@ public class PickupService : IPickupService
             },
             new ()
             {
+                Id = "F4A5E818-3E21-42DB-9577-1192E487CC17",
                 Key = "ADDR-0020",
                 Name = "Best Buy",
                 Organization = "Best Buy",
