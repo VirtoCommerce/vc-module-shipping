@@ -12,6 +12,7 @@ namespace VirtoCommerce.ShippingModule.Core.Model
         protected ShippingMethod(string code)
         {
             Code = code;
+            Name = TypeName;
         }
 
         /// <summary>

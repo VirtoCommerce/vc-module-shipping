@@ -40,7 +40,7 @@ angular.module('virtoCommerce.shippingModule').controller('virtoCommerce.shippin
                 var nameResult = $translate.instant(nameTranslationKey);
                 var displayDescription = $translate.instant(descriptionTranslateKey);
 
-                item.displayName = nameResult === nameTranslationKey ? item.name : nameResult;
+                item.displayName = nameResult === nameTranslationKey ? (item.name || item.typeName) : nameResult;
                 item.displayDescription = displayDescription === descriptionTranslateKey ? item.description : displayDescription;
             });
 
