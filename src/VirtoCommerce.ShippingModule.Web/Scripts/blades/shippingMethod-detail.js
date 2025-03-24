@@ -1,13 +1,18 @@
 angular.module('virtoCommerce.shippingModule')
-    .controller('virtoCommerce.shippingModule.shippingMethodDetailController', ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.shippingModule.shippingMethods', 'platformWebApp.settings',
-        function ($scope, bladeNavigationService, shippingMethods, settings) {
+    .controller('virtoCommerce.shippingModule.shippingMethodDetailController', ['$scope', '$translate', 'platformWebApp.bladeNavigationService', 'virtoCommerce.shippingModule.shippingMethods', 'platformWebApp.settings',
+        function ($scope, $translate, bladeNavigationService, shippingMethods, settings) {
             var blade = $scope.blade;
 
             function initializeBlade(data) {
-                blade.title = data.name ? data.name : 'shipping.labels.' + data.typeName + '.name';
                 blade.currentEntity = angular.copy(data);
                 blade.origEntity = data;
                 blade.isLoading = false;
+
+                var nameTranslationKey = `shipping.labels.${blade.currentEntity.typeName}.name`;
+                var nameResult = $translate.instant(nameTranslationKey);
+
+                blade.displayName = nameResult === nameTranslationKey ? (blade.currentEntity.name || blade.currentEntity.typeName) : nameResult;
+                blade.title = blade.displayName;
             }
 
             blade.refresh = function (parentRefresh) {
