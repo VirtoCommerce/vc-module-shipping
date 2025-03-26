@@ -57,7 +57,6 @@ angular.module('virtoCommerce.shippingModule').controller('virtoCommerce.shippin
             id: 'shippingMethodDetail',
             shippingMethod: node,
             storeId: blade.storeId,
-            subtitle: 'shipping.blades.shipping-method-detail.subtitle',
             controller: 'virtoCommerce.shippingModule.shippingMethodDetailController',
             template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/blades/shippingMethod-detail.tpl.html'
         };

@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Edit shipping method",
         "labels": {
           "is-active": "Is active",
           "name": "Name",
@@ -18,11 +17,16 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "Is active",
           "shipping-method": "Shipping method",
           "note": "Arrange the order in which shipping methods are displayed in the web store. Use drag and drop to reorder them"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "Active",
+          "name": "Name"
         }
       }
     },
@@ -31,7 +35,11 @@
     "widgets": {
       "store-shipping-widget": {
         "title": "Shipping methods",
-        "blade-subtitle": "Shipping methods"
+        "blade-title": "Shipping methods"
+      },
+      "pickup-locations-widget": {
+        "title": "Pickup locations",
+        "blade-title": "Pickup locations"
       }
     },
     "labels": {

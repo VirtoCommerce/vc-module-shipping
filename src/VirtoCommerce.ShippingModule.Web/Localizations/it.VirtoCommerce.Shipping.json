@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Modifica metodo di spedizione",
         "labels": {
           "is-active": "È attivo",
           "name": "Nome",
@@ -18,11 +17,16 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "È attivo",
           "shipping-method": "Metodo di spedizione",
           "note": "Organizza l'ordine in cui i metodi di spedizione vengono visualizzati nel negozio online. Usa il drag and drop per riordinarli"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "È attivo",
+          "name": "Nome"
         }
       }
     },
@@ -31,7 +35,11 @@
     "widgets": {
       "store-shipping-widget": {
         "title": "Metodi di spedizione",
-        "blade-subtitle": "Metodi di spedizione"
+        "blade-title": "Metodi di spedizione"
+      },
+      "pickup-locations-widget": {
+        "title": "Punti di ritiro",
+        "blade-title": "Punti di ritiro"
       }
     },
     "labels": {

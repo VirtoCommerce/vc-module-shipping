@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Редактировать способ доставки",
         "labels": {
           "is-active": "Активен",
           "name": "Название",
@@ -18,11 +17,16 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "Активен",
           "shipping-method": "Способ доставки",
           "note": "Измените порядок, в котором способы доставки отображаются в интернет-магазине. Перетаскивайте наименования для изменения порядка"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "Активен",
+          "name": "Название"
         }
       }
     },
@@ -31,7 +35,11 @@
     "widgets": {
       "store-shipping-widget": {
         "title": "Способы доставки",
-        "blade-subtitle": "Способы доставки"
+        "blade-title": "Способы доставки"
+      },
+      "pickup-locations-widget": {
+        "title": "Пункты самовывоза",
+        "blade-title": "Пункты самовывоза"
       }
     },
     "labels": {

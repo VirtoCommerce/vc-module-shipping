@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Modifier le mode de livraison",
         "labels": {
           "is-active": "Est actif",
           "name": "Nom",
@@ -18,11 +17,16 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "Est actif",
           "shipping-method": "Mode de livraison",
           "note": "Organisez l'ordre dans lequel les modes de livraison sont affichés dans la boutique en ligne. Utilisez le glisser-déposer pour les réorganiser"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "Est actif",
+          "name": "Nom"
         }
       }
     },
@@ -31,7 +35,11 @@
     "widgets": {
       "store-shipping-widget": {
         "title": "Modes de livraison",
-        "blade-subtitle": "Modes de livraison"
+        "blade-title": "Modes de livraison"
+      },
+      "pickup-locations-widget": {
+        "title": "Points de retrait",
+        "blade-title": "Points de retrait"
       }
     },
     "labels": {

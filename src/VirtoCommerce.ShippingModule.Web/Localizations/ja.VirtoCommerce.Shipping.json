@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "配送方法を編集",
         "labels": {
           "is-active": "アクティブ",
           "name": "名前",
@@ -18,11 +17,16 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "アクティブ",
           "shipping-method": "配送方法",
           "note": "ウェブストアに表示される配送方法の順序を整理します。ドラッグアンドドロップを使用して順序を変更します"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "アクティブ",
+          "name": "名前"
         }
       }
     },
@@ -31,7 +35,11 @@
     "widgets": {
       "store-shipping-widget": {
         "title": "配送方法",
-        "blade-subtitle": "配送方法"
+        "blade-title": "配送方法"
+      },
+      "pickup-locations-widget": {
+        "title": "受け取り場所",
+        "blade-title": "受け取り場所"
       }
     },
     "labels": {

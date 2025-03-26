@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "编辑配送方式",
         "labels": {
           "is-active": "是否激活",
           "name": "名称",
@@ -18,11 +17,16 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "是否激活",
           "shipping-method": "配送方式",
           "note": "安排在网上商店中显示配送方式的顺序。使用拖放功能重新排序"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "是否激活",
+          "name": "名称"
         }
       }
     },
@@ -31,7 +35,11 @@
     "widgets": {
       "store-shipping-widget": {
         "title": "配送方式",
-        "blade-subtitle": "配送方式"
+        "blade-title": "配送方式"
+      },
+      "pickup-locations-widget": {
+        "title": "自提点",
+        "blade-title": "自提点"
       }
     },
     "labels": {

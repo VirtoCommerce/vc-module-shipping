@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Versandmethode bearbeiten",
         "labels": {
           "is-active": "Ist aktiv",
           "name": "Name",
@@ -18,11 +17,16 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "Ist aktiv",
           "shipping-method": "Versandmethode",
           "note": "Ordnen Sie die Reihenfolge an, in der die Versandmethoden im Webshop angezeigt werden. Verwenden Sie Drag & Drop, um sie neu anzuordnen"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "Ist aktiv",
+          "name": "Name"
         }
       }
     },
@@ -31,7 +35,11 @@
     "widgets": {
       "store-shipping-widget": {
         "title": "Versandmethoden",
-        "blade-subtitle": "Versandmethoden"
+        "blade-title": "Versandmethoden"
+      },
+      "pickup-locations-widget": {
+        "title": "Abholorte",
+        "blade-title": "Abholorte"
       }
     },
     "labels": {

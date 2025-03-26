@@ -1,8 +1,7 @@
 using System.Reflection;
-using EntityFrameworkCore.Triggers;
 using Microsoft.EntityFrameworkCore;
-using VirtoCommerce.ShippingModule.Data.Model;
 using VirtoCommerce.Platform.Data.Infrastructure;
+using VirtoCommerce.ShippingModule.Data.Model;
 
 namespace VirtoCommerce.ShippingModule.Data.Repositories
 {
@@ -26,6 +25,16 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
             modelBuilder.Entity<StoreShippingMethodEntity>().HasIndex(x => new { x.TypeName, x.StoreId })
                 .HasDatabaseName("IX_StoreShippingMethodEntity_TypeName_StoreId")
                 .IsUnique();
+
+            modelBuilder.Entity<PickupLocationEntity>().ToTable("PickupLocations").HasKey(x => x.Id);
+            modelBuilder.Entity<PickupLocationEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<PickupFulfillmentRelationEntity>().ToTable("PickupFulfillmentCenter").HasKey(x => x.Id);
+            modelBuilder.Entity<PickupFulfillmentRelationEntity>().Property(x => x.Id).HasMaxLength(128)
+                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<PickupFulfillmentRelationEntity>().HasOne(x => x.PickupLocation)
+                .WithMany(x => x.TransferFulfillmentCenters)
+                .HasForeignKey(x => x.PickupLocationId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
 

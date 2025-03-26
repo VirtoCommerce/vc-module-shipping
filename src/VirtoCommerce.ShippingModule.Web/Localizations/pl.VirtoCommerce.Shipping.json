@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Edytuj metodę wysyłki",
         "labels": {
           "is-active": "Jest aktywna",
           "name": "Nazwa",
@@ -18,11 +17,16 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "Jest aktywna",
           "shipping-method": "Metoda wysyłki",
           "note": "Ułóż kolejność, w jakiej metody wysyłki są wyświetlane w sklepie internetowym. Użyj przeciągania i upuszczania, aby je uporządkować"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "Jest aktywny",
+          "name": "Nazwa"
         }
       }
     },
@@ -31,7 +35,11 @@
     "widgets": {
       "store-shipping-widget": {
         "title": "Metody wysyłki",
-        "blade-subtitle": "Metody wysyłki"
+        "blade-title": "Metody wysyłki"
+      },
+      "pickup-locations-widget": {
+        "title": "Punkty odbioru",
+        "blade-title": "Punkty odbioru"
       }
     },
     "labels": {
