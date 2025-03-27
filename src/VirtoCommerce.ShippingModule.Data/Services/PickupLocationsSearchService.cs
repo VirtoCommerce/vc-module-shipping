@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Options;
 using VirtoCommerce.Platform.Core.Caching;
@@ -36,5 +37,18 @@ public class PickupLocationsSearchService(Func<IPickupLocationsRepository> repos
         }
 
         return query;
+    }
+
+
+    protected override IList<SortInfo> BuildSortExpression(PickupLocationsSearchCriteria criteria)
+    {
+        var sortInfos = criteria.SortInfos;
+
+        if (sortInfos.IsNullOrEmpty())
+        {
+            sortInfos = new[] { new SortInfo { SortColumn = nameof(PickupLocationEntity.CreatedDate), SortDirection = SortDirection.Descending } };
+        }
+
+        return sortInfos;
     }
 }

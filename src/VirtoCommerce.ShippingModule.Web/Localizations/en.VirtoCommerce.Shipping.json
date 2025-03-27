@@ -28,6 +28,35 @@
           "active": "Active",
           "name": "Name"
         }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "name": "Name",
+          "geoLocation": "Location",
+          "outerId": "Outer ID",
+          "description": "Description",
+          "working-hours": "Working hours",
+          "contactEmail": "Contact email",
+          "contactPhone": "Contact phone"
+        },
+        "descriptions": {
+          "name": "Name of the pickup location point",
+          "geoLocation": "Enter latitude and longitude separated by a comma without spaces, e.g. 41.40338,8.17403",
+          "outerId": "Unique ID to connect pickup location to external system",
+          "description": "Description for the pickup location point",
+          "working-hours": "Information about working hours of the pickup point",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Enter name",
+          "geoLocation": "Enter latitude and longitude",
+          "outerId": "Enter ID in an outer system",
+          "description": "Provide description for the pickup location point",
+          "working-hours": "Porvide info about working hours",
+          "contactEmail": "Provide contact email",
+          "contactPhone": "Provide contact phone number"
+        }
       }
     },
     "dialogs": {

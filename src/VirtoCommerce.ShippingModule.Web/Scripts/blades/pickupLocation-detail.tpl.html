@@ -1,0 +1,101 @@
+<div class="blade-content __xlarge-wide">
+  <div class="blade-inner">
+    <div class="inner-block clearfix">
+      <form class="form" name="detailForm">
+        <div class="form-group" ng-init="setForm(detailForm)">
+          <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.name' | translate }}</label>
+          <div class="form-input">
+            <input ng-model="blade.currentEntity.name" focus-on="" placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.name' | translate }}" required />
+            <span class="table-descr">{{ 'shipping.blades.pickup-location-detail.descriptions.name' | translate }}</span>
+          </div>
+        </div>
+
+        <div column-count="6" class="blade-gray-box">
+          <div class="columns clearfix">
+            <div class="column">
+              <div class="form-group">
+                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.geoLocation' | translate }}</label>
+                <div class="form-input">
+                  <input ng-model="blade.currentEntity.geoLocation"
+                         name="geoLocation"
+                         ng-pattern="/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/"
+                         placeholder="{{ 'shipping.blades.pickup-location-details.placeholders.geoLocation' | translate }}"
+                         type="text">
+                  <span class="table-descr">{{ 'shipping.blades.pickup-location-details.descriptions.geoLocation' | translate }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="form-group">
+                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.outerId' | translate }}</label>
+                <div class="form-input">
+                  <input ng-model="blade.currentEntity.outerId"
+                         name="outerId"
+                         placeholder="{{ 'shipping.blades.pickup-locations-detail.placeholders.outerId' | translate }}"
+                         type="text">
+                  <span class="table-descr">{{ 'shipping.blades.pickup-locations-detail.descriptions.outerId' | translate }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="form-group">
+                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.contactEmail' | translate }}</label>
+                <div class="form-input">
+                  <input ng-model="blade.currentEntity.contactEmail"
+                         name="contactEmail"
+                         ng-pattern="/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/"
+                         placeholder="{{ 'shipping.blades.pickup-location-details.placeholders.contactEmail' | translate }}"
+                         type="text">
+                  <span class="table-descr">{{ 'shipping.blades.pickup-location-details.descriptions.contactEmail' | translate }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="form-group">
+                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.contactPhone' | translate }}</label>
+                <div class="form-input">
+                  <input ng-model="blade.currentEntity.contactPhone"
+                         name="contactPhone"
+                         placeholder="{{ 'shipping.blades.pickup-locations-detail.placeholders.contactPhone' | translate }}"
+                         type="text">
+                  <span class="table-descr">{{ 'shipping.blades.pickup-locations-detail.descriptions.contactPhone' | translate }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <va-widget-container group="fulfillmentCenterDetail" blade="blade" gridster-opts="{columns: 6}"></va-widget-container>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.description' | translate }}</label>
+          <div class="form-input" style="margin: 0">
+            <textarea class="form-control"
+                      style="height: 150px"
+                      placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.description' | translate }}"
+                      ng-model="blade.currentEntity.description"
+                      id="descriptionEditor"></textarea>
+            <span class="table-descr">{{ 'shipping.blades.pickup-location-detail.descriptions.description' | translate }}</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.working-hours' | translate }}</label>
+          <div class="form-input" style="margin: 0">
+            <input id="fileUploader" type="file" multiple style="display: none;" uploader="fileUploader" nv-file-select />
+            <textarea class="form-control"
+                      vc-uk-htmleditor placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.working-hours' | translate }}"
+                      ng-model="blade.currentEntity.workingHours"
+                      file-uploader="fileUploader"
+                      id="workingHoursEditor"></textarea>
+            <span class="table-descr">{{ 'shipping.blades.pickup-location-detail.descriptions.working-hours' | translate }}</span>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

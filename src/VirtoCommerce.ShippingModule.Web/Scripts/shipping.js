@@ -20,6 +20,7 @@ angular.module(moduleName, ['ngSanitize'])
 
         widgetService.registerWidget({
             controller: 'virtoCommerce.shippingModule.pickupLocationsWidgetController',
+            permission: 'pickup:read',
             template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/widgets/pickupLocationsWidgetController.tpl.html',
             isVisible: function (blade) {
                 return blade.shippingMethod?.typeName === 'BuyOnlinePickupInStoreShippingMethod';

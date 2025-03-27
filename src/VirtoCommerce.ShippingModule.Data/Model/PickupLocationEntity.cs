@@ -64,23 +64,23 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
     public PickupLocation ToModel(PickupLocation model)
     {
         model.Id = Id;
-        model.CreatedBy = CreatedBy;
-        model.CreatedDate = CreatedDate;
-        model.ModifiedBy = ModifiedBy;
-        model.ModifiedDate = ModifiedDate;
-        model.Name = Name;
-        model.StoreId = StoreId;
-        model.OuterId = OuterId;
-        model.Active = Active;
-        model.GeoLocation = GeoLocation;
-        model.Description = Description;
-        model.FulfillmentCenterId = FulfillmentCenterId;
+        model.CreatedBy = CreatedBy;                        //
+        model.CreatedDate = CreatedDate;                    //
+        model.ModifiedBy = ModifiedBy;                      //
+        model.ModifiedDate = ModifiedDate;                  //
+        model.Name = Name;                                  // +
+        model.StoreId = StoreId;                            //
+        model.OuterId = OuterId;                            // +
+        model.Active = Active;                              // -
+        model.GeoLocation = GeoLocation;                    // +
+        model.Description = Description;                    // +
+        model.FulfillmentCenterId = FulfillmentCenterId;    // -
         model.TransferFulfillmentCenterIds = TransferFulfillmentCenters.Select(x => x.FulfillmentCenterId).ToList();
-        model.ContactEmail = ContactEmail;
-        model.ContactPhone = ContactPhone;
-        model.WorkingHours = WorkingHours;
+        model.ContactEmail = ContactEmail;                  // -
+        model.ContactPhone = ContactPhone;                  // -
+        model.WorkingHours = WorkingHours;                  // +
 
-        model.Address = AbstractTypeFactory<Address>.TryCreateInstance();
+        model.Address = AbstractTypeFactory<PickupLocationAddress>.TryCreateInstance();
 
         model.Address.Id = Id;
         model.Address.Name = Name;

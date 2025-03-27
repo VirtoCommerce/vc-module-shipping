@@ -23,17 +23,17 @@ public class PickupLocation : AuditableEntity, ICloneable
     public string WorkingHours { get; set; }
 
     public string GeoLocation { get; set; }
-    public Address Address { get; set; }
+    public PickupLocationAddress Address { get; set; }
 
     public string OuterId { get; set; }
 
     public object Clone()
     {
-        var result = MemberwiseClone() as PickupLocation;
+        var result = (PickupLocation)MemberwiseClone();
 
         if (Address != null)
         {
-            result.Address = Address.Clone() as Address;
+            result.Address = (PickupLocationAddress)Address.Clone();
         }
 
         return result;

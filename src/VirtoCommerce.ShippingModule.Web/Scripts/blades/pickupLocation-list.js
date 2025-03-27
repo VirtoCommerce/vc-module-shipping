@@ -1,28 +1,49 @@
 angular.module('virtoCommerce.shippingModule')
     .controller('virtoCommerce.shippingModule.pickupLocationListController',
         ['$scope', '$translate', 'platformWebApp.bladeNavigationService',
+            'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
             'virtoCommerce.shippingModule.pickupLocations',
-            function ($scope, $translate, bladeNavigationService, pickupLocations) {
-                var blade = $scope.blade;
+            function ($scope, $translate, bladeNavigationService, bladeUtils, uiGridConstants, uiGridHelper, pickupLocations) {
+                $scope.uiGridConstants = uiGridConstants;
 
-                function initializeBlade() {
-                    blade.isLoading = false;
+                var blade = $scope.blade;
+                blade.isLoading = false;
+
+                // function initializeBlade() {
+                    
                     blade.headIcon = 'fa fa-truck';
 
                     blade.toolbarCommands = [
                         {
                             name: "platform.commands.refresh", icon: 'fa fa-refresh',
-                            executeMethod: blade.refresh,
+                            executeMethod: function () {
+                                blade.refresh();
+                            },
                             canExecuteMethod: function () { return true; }
+                        },
+                        {
+                            name: "platform.commands.add", icon: 'fas fa-plus',
+                            executeMethod: function () {
+                                showDetailBlade();
+                            },
+                            canExecuteMethod: function () {
+                                return true;
+                            },
                         }
                     ];
 
-                    blade.refresh();
-                };
+                    // blade.refresh();
+                // };
 
                 blade.refresh = function () {
                     blade.isLoading = true;
-                    pickupLocations.getAll({ storeId: blade.storeId }, function (data) {
+                    pickupLocations.search({
+                        storeId: blade.storeId,
+                        keyword: $scope.filter.keyword,
+                        sort: uiGridHelper.getSortExpression($scope),
+                        skip: ($scope.pageSettings.currentPage - 1) * $scope.pageSettings.itemsPerPageCount,
+                        take: $scope.pageSettings.itemsPerPageCount,
+                    }, function (data) {
                         blade.isLoading = false;
                         blade.currentEntities = data;
                     }, function (error) {
@@ -63,6 +84,32 @@ angular.module('virtoCommerce.shippingModule')
                     //bladeNavigationService.showBlade(newBlade, $scope.blade);
                 };
 
-                initializeBlade();
+                // simple and advanced filtering
+                var filter = $scope.filter = {};
 
+                filter.criteriaChanged = function () {
+                    if ($scope.pageSettings.currentPage > 1) {
+                        $scope.pageSettings.currentPage = 1;
+                    } else {
+                        blade.refresh();
+                    }
+                };
+
+                function showDetailBlade(node) {
+                    var newBlade = {
+                        id: 'pickupLocationDetail',
+                        storeId: blade.storeId,
+                        controller: 'virtoCommerce.shippingModule.pickupLocationDetailController',
+                        template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/blades/pickupLocation-detail.tpl.html'
+                    };
+                    bladeNavigationService.showBlade(newBlade, blade);
+                }
+
+                // ui-grid
+                $scope.setGridOptions = function (gridOptions) {
+                    uiGridHelper.initialize($scope, gridOptions, function (gridApi) {
+                        uiGridHelper.bindRefreshOnSortChanged($scope);
+                    });
+                    bladeUtils.initializePagination($scope);
+                };
             }]);

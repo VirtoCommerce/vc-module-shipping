@@ -9,6 +9,7 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.ExportImport;
 using VirtoCommerce.Platform.Core.JsonConverters;
 using VirtoCommerce.Platform.Core.Modularity;
+using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.Extensions;
 using VirtoCommerce.ShippingModule.Core;
@@ -79,6 +80,9 @@ namespace VirtoCommerce.ShippingModule.Web
             settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
             settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.FixedRateShippingMethod.AllSettings, typeof(FixedRateShippingMethod).Name);
 
+            var permissionsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();
+            permissionsRegistrar.RegisterPermissions(ModuleInfo.Id, "Pickup locations", ModuleConstants.Security.Permissions.AllPermissions);
+
             var shippingMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IShippingMethodsRegistrar>();
             shippingMethodsRegistrar.RegisterShippingMethod<FixedRateShippingMethod>();
 
@@ -89,17 +93,15 @@ namespace VirtoCommerce.ShippingModule.Web
 
             PolymorphJsonConverter.RegisterTypeForDiscriminator(typeof(ShippingMethod), nameof(ShippingMethod.TypeName));
 
-            using (var serviceScope = appBuilder.ApplicationServices.CreateScope())
-            {
-                var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
+            using var serviceScope = appBuilder.ApplicationServices.CreateScope();
+            var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
 
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ShippingDbContext>();
-                if (databaseProvider == "SqlServer")
-                {
-                    dbContext.Database.MigrateIfNotApplied(MigrationName.GetUpdateV2MigrationName(ModuleInfo.Id));
-                }
-                dbContext.Database.Migrate();
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<ShippingDbContext>();
+            if (databaseProvider == "SqlServer")
+            {
+                dbContext.Database.MigrateIfNotApplied(MigrationName.GetUpdateV2MigrationName(ModuleInfo.Id));
             }
+            dbContext.Database.Migrate();
         }
 
         public void Uninstall()

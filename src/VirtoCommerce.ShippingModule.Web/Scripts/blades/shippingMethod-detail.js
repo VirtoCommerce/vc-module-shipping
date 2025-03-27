@@ -13,10 +13,6 @@ angular.module('virtoCommerce.shippingModule')
 
                 blade.displayName = nameResult === nameTranslationKey ? (blade.currentEntity.name || blade.currentEntity.typeName) : nameResult;
                 blade.title = blade.displayName;
-
-                if (blade.currentEntity.code === 'BuyOnlinePickupInStoreShippingMethod') {
-                    
-                }
             }
 
             blade.refresh = function (parentRefresh) {
