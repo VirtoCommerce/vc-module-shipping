@@ -1,40 +1,33 @@
 angular.module('virtoCommerce.shippingModule')
     .controller('virtoCommerce.shippingModule.pickupLocationDetailController',
-        ['$scope', '$translate', 'platformWebApp.bladeNavigationService',
-            'virtoCommerce.shippingModule.pickupLocations', 'platformWebApp.settings',
-        function ($scope, $translate, bladeNavigationService, shippingMethods, settings) {
+        ['$scope', '$injector', '$translate', 'platformWebApp.bladeNavigationService',
+            'virtoCommerce.shippingModule.pickupLocations',
+            function ($scope, $injector, $translate, bladeNavigationService, pickupLocations) {
             var blade = $scope.blade;
+            $scope.inventoryModuleInstalled = $injector.has('virtoCommerce.inventoryModule.fulfillments')
 
             function initializeBlade(data) {
-                //blade.currentEntity = angular.copy(data);
-                //blade.origEntity = data;
-                //blade.isLoading = false;
+                blade.currentEntity = angular.copy(data);
+                blade.origEntity = data;
+                blade.isLoading = false;
 
-                //var nameTranslationKey = `shipping.labels.${blade.currentEntity.typeName}.name`;
-                //var nameResult = $translate.instant(nameTranslationKey);
-
-                //blade.displayName = nameResult === nameTranslationKey ? (blade.currentEntity.name || blade.currentEntity.typeName) : nameResult;
-                //blade.title = blade.displayName;
-
-                //if (blade.currentEntity.code === 'BuyOnlinePickupInStoreShippingMethod') {
-                    
-                //}
+                if (!blade.title) {
+                    blade.title = $translate.instant('shipping.blades.pickup-location-detail.labels.create');
+                }
             }
 
-            blade.refresh = function (parentRefresh) {
-                //blade.isLoading = true;
-                //if (blade.shippingMethod.id) {
-                //    shippingMethods.get({ id: blade.shippingMethod.id }, function (data) {
-                //        initializeBlade(data);
-                //        if (parentRefresh) {
-                //            blade.parentBlade.refresh();
-                //        }
-                //    },
-                //        function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
-                //}
-                //else {
-                //    initializeBlade(blade.shippingMethod);
-                //}
+            blade.refresh = function (refreshParent) {
+                if (!!blade.currentEntity.id) {
+                    blade.isLoading = true;
+                    pickupLocations.get({ id: blade.currentEntity.id }, function (data) {
+                        initializeBlade(data);
+                        if (refreshParent) {
+                            blade.parentBlade.refresh();
+                        }
+                    }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                } else {
+                    initializeBlade({});
+                }
             }
 
             function isDirty() {
@@ -42,11 +35,11 @@ angular.module('virtoCommerce.shippingModule')
             }
 
             function canSave() {
-                return isDirty();
+                return $scope.formScope && $scope.formScope.$valid && isDirty();
             }
 
             blade.onClose = function (closeCallback) {
-                bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, $scope.saveChanges, closeCallback, "shipping.dialogs.shipping-method-save.title", "shipping.dialogs.shipping-method-save.message");
+                bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, $scope.saveChanges, closeCallback, "shipping.dialogs.pickup-location-save.title", "shipping.dialogs.pickup-location-save.message");
             };
 
             $scope.cancelChanges = function () {
@@ -54,12 +47,12 @@ angular.module('virtoCommerce.shippingModule')
             };
 
             $scope.saveChanges = function () {
-                //blade.isLoading = true;
-                //blade.currentEntity.storeId = blade.storeId;
-                //shippingMethods.update({}, blade.currentEntity, function (data) {
-                //    blade.shippingMethod.id = data.id;
-                //    blade.refresh(true);
-                //}, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                blade.isLoading = true;
+                blade.currentEntity.storeId = blade.storeId;
+                pickupLocations.update({}, blade.currentEntity, function (data) {
+                    blade.currentEntity.id = data.id;
+                    blade.refresh(true);
+                }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
             };
 
             $scope.setForm = function (form) {
@@ -68,25 +61,6 @@ angular.module('virtoCommerce.shippingModule')
 
             $scope.getDictionaryValues = function (setting, callback) {
                 callback(setting.allowedValues);
-            };
-
-            blade.openDictionarySettingManagement = function (setting) {
-                //var newBlade = {
-                //    id: 'settingDetailChild',
-                //    isApiSave: true,
-                //    controller: 'platformWebApp.settingDictionaryController',
-                //    template: '$(Platform)/Scripts/app/settings/blades/setting-dictionary.tpl.html'
-                //};
-                //switch (setting) {
-                //    case 'TaxTypes':
-                //        _.extend(newBlade, {
-                //            currentEntityId: 'VirtoCommerce.Core.General.TaxTypes',
-                //            parentRefresh: function (data) { blade.taxTypes = data; }
-                //        });
-                //        break;
-                //}
-
-                //bladeNavigationService.showBlade(newBlade, blade);
             };
 
             blade.headIcon = 'fa fa-archive';
@@ -109,6 +83,13 @@ angular.module('virtoCommerce.shippingModule')
                     permission: blade.updatePermission
                 }
             ];
+
+            blade.fetchFulfillmentCenters = function (criteria) {
+                criteria.storeId = blade.storeId;
+                var fulfillmentsApi = $injector.get('virtoCommerce.inventoryModule.fulfillments');
+
+                return fulfillmentsApi.search(criteria);
+            }
 
             blade.refresh();
 

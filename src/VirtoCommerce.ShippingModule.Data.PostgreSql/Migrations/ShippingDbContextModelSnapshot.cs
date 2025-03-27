@@ -56,7 +56,6 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
@@ -67,7 +66,6 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CountryCode")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
@@ -95,7 +93,6 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                         .HasColumnType("character varying(64)");
 
                     b.Property<string>("Line1")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("character varying(1024)");
 
@@ -119,7 +116,6 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                         .HasColumnType("character varying(128)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
 

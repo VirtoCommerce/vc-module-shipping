@@ -31,13 +31,17 @@
       },
       "pickup-location-detail": {
         "labels": {
+          "create": "Create new pickup location",
           "name": "Name",
+          "active": "Active",
           "geoLocation": "Location",
           "outerId": "Outer ID",
           "description": "Description",
           "working-hours": "Working hours",
           "contactEmail": "Contact email",
-          "contactPhone": "Contact phone"
+          "contactPhone": "Contact phone",
+          "fulfillmentCenter": "Fulfillment center",
+          "transferFulfillmentCenter": "Transfer fulfillment centers"
         },
         "descriptions": {
           "name": "Name of the pickup location point",
@@ -55,20 +59,43 @@
           "description": "Provide description for the pickup location point",
           "working-hours": "Porvide info about working hours",
           "contactEmail": "Provide contact email",
-          "contactPhone": "Provide contact phone number"
+          "contactPhone": "Provide contact phone number",
+          "fulfillmentCenter": "Provide fulfillment center",
+          "transferFulfillmentCenter": "Provide transfer fulfillment Centers"
         }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "Delete pickup location",
+        "message": "Are you sure you want to delete the pickup location?"
+      },
+      "pickup-location-save": {
+        "title": "Save pickup location",
+        "message": "The pickup location has been modified. Do you want to save changes?"
+      },
+      "shipping-method-save": {
+        "title": "Save shipping method",
+        "message": "The shipping method has been modified. Do you want to save changes?"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
         "title": "Shipping methods",
         "blade-title": "Shipping methods"
       },
-      "pickup-locations-widget": {
+      "pickup-location-widget": {
         "title": "Pickup locations",
         "blade-title": "Pickup locations"
+      },
+      "pickupLocationAddress": {
+        "no-address": "No address set",
+        "address-detail": {
+          "city": "City",
+          "address1": "Line 1",
+          "address2": "Line 2",
+          "zip-code": "Postal code"
+        }
       }
     },
     "labels": {

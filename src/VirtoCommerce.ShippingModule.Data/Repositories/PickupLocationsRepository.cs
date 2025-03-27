@@ -20,7 +20,7 @@ public class PickupLocationsRepository(ShippingDbContext db) : DbContextReposito
             return [];
         }
 
-        var result = await PickupLocations.Where(x => ids.Contains(x.Id)).ToArrayAsync();
+        var result = await PickupLocations.Include(x => x.TransferFulfillmentCenters).Where(x => ids.Contains(x.Id)).ToArrayAsync();
 
         return !result.Any() ? [] : result;
     }

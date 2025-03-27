@@ -9,8 +9,20 @@
             <span class="table-descr">{{ 'shipping.blades.pickup-location-detail.descriptions.name' | translate }}</span>
           </div>
         </div>
-
-        <div column-count="6" class="blade-gray-box">
+        <div class="form-group clearfix">
+          <div class="column">
+            <div class="form-group __info list">
+              <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.active' | translate }}</label>
+              <div class="form-input">
+                <label class="form-label __switch">
+                  <input type="checkbox" ng-model="blade.currentEntity.active" />
+                  <span class="switch"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="blade-gray-box">
           <div class="columns clearfix">
             <div class="column">
               <div class="form-group">
@@ -19,9 +31,9 @@
                   <input ng-model="blade.currentEntity.geoLocation"
                          name="geoLocation"
                          ng-pattern="/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/"
-                         placeholder="{{ 'shipping.blades.pickup-location-details.placeholders.geoLocation' | translate }}"
+                         placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.geoLocation' | translate }}"
                          type="text">
-                  <span class="table-descr">{{ 'shipping.blades.pickup-location-details.descriptions.geoLocation' | translate }}</span>
+                  <span class="table-descr">{{ 'shipping.blades.pickup-location-detail.descriptions.geoLocation' | translate }}</span>
                 </div>
               </div>
             </div>
@@ -31,22 +43,23 @@
                 <div class="form-input">
                   <input ng-model="blade.currentEntity.outerId"
                          name="outerId"
-                         placeholder="{{ 'shipping.blades.pickup-locations-detail.placeholders.outerId' | translate }}"
+                         placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.outerId' | translate }}"
                          type="text">
-                  <span class="table-descr">{{ 'shipping.blades.pickup-locations-detail.descriptions.outerId' | translate }}</span>
+                  <span class="table-descr">{{ 'shipping.blades.pickup-location-detail.descriptions.outerId' | translate }}</span>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="columns clearfix">
             <div class="column">
               <div class="form-group">
                 <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.contactEmail' | translate }}</label>
                 <div class="form-input">
                   <input ng-model="blade.currentEntity.contactEmail"
                          name="contactEmail"
-                         ng-pattern="/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/"
-                         placeholder="{{ 'shipping.blades.pickup-location-details.placeholders.contactEmail' | translate }}"
+                         placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.contactEmail' | translate }}"
                          type="text">
-                  <span class="table-descr">{{ 'shipping.blades.pickup-location-details.descriptions.contactEmail' | translate }}</span>
+                  <span class="table-descr">{{ 'shipping.blades.pickup-location-detail.descriptions.contactEmail' | translate }}</span>
                 </div>
               </div>
             </div>
@@ -56,9 +69,34 @@
                 <div class="form-input">
                   <input ng-model="blade.currentEntity.contactPhone"
                          name="contactPhone"
-                         placeholder="{{ 'shipping.blades.pickup-locations-detail.placeholders.contactPhone' | translate }}"
+                         placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.contactPhone' | translate }}"
                          type="text">
-                  <span class="table-descr">{{ 'shipping.blades.pickup-locations-detail.descriptions.contactPhone' | translate }}</span>
+                  <span class="table-descr">{{ 'shipping.blades.pickup-location-detail.descriptions.contactPhone' | translate }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columns clearfix" ng-if="inventoryModuleInstalled">
+            <div class="column">
+              <div class="form-group">
+                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.fulfillmentCenter' | translate }}</label>
+                <div class="form-input">
+                  <ui-scroll-drop-down data="blade.fetchFulfillmentCenters(criteria)"
+                                       ng-model="blade.currentEntity.fulfillmentCenterId"
+                                       placeholder="'shipping.blades.pickup-location-detail.placeholders.fulfillmentCenter'">
+                  </ui-scroll-drop-down>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="form-group">
+                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.transferFulfillmentCenter' | translate }}</label>
+                <div class="form-input">
+                  <ui-scroll-drop-down data="blade.fetchFulfillmentCenters(criteria)"
+                                       multiple="true"
+                                       ng-model="blade.currentEntity.transferFulfillmentCenterIds"
+                                       placeholder="'shipping.blades.pickup-location-detail.placeholders.transferFulfillmentCenter'">
+                  </ui-scroll-drop-down>
                 </div>
               </div>
             </div>
@@ -66,7 +104,7 @@
         </div>
 
         <div class="form-group">
-          <va-widget-container group="fulfillmentCenterDetail" blade="blade" gridster-opts="{columns: 6}"></va-widget-container>
+          <va-widget-container group="pickupLocationAddress" blade="blade" gridster-opts="{columns: 6}"></va-widget-container>
         </div>
 
         <div class="form-group">
@@ -84,7 +122,6 @@
         <div class="form-group">
           <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.working-hours' | translate }}</label>
           <div class="form-input" style="margin: 0">
-            <input id="fileUploader" type="file" multiple style="display: none;" uploader="fileUploader" nv-file-select />
             <textarea class="form-control"
                       vc-uk-htmleditor placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.working-hours' | translate }}"
                       ng-model="blade.currentEntity.workingHours"

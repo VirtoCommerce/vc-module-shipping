@@ -56,7 +56,6 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
@@ -67,7 +66,6 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CountryCode")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("varchar(64)");
 
@@ -95,7 +93,6 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("varchar(64)");
 
                     b.Property<string>("Line1")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("varchar(1024)");
 
@@ -119,7 +116,6 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("varchar(32)");
 

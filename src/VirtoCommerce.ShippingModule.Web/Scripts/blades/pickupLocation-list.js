@@ -2,38 +2,34 @@ angular.module('virtoCommerce.shippingModule')
     .controller('virtoCommerce.shippingModule.pickupLocationListController',
         ['$scope', '$translate', 'platformWebApp.bladeNavigationService',
             'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
-            'virtoCommerce.shippingModule.pickupLocations',
-            function ($scope, $translate, bladeNavigationService, bladeUtils, uiGridConstants, uiGridHelper, pickupLocations) {
+            'virtoCommerce.shippingModule.pickupLocations', 'platformWebApp.dialogService',
+            function ($scope, $translate, bladeNavigationService, bladeUtils,
+                uiGridConstants, uiGridHelper, pickupLocations, dialogService) {
                 $scope.uiGridConstants = uiGridConstants;
 
                 var blade = $scope.blade;
                 blade.isLoading = false;
 
-                // function initializeBlade() {
-                    
-                    blade.headIcon = 'fa fa-truck';
+                blade.headIcon = 'fa fa-truck';
 
-                    blade.toolbarCommands = [
-                        {
-                            name: "platform.commands.refresh", icon: 'fa fa-refresh',
-                            executeMethod: function () {
-                                blade.refresh();
-                            },
-                            canExecuteMethod: function () { return true; }
+                blade.toolbarCommands = [
+                    {
+                        name: "platform.commands.refresh", icon: 'fa fa-refresh',
+                        executeMethod: function () {
+                            blade.refresh();
                         },
-                        {
-                            name: "platform.commands.add", icon: 'fas fa-plus',
-                            executeMethod: function () {
-                                showDetailBlade();
-                            },
-                            canExecuteMethod: function () {
-                                return true;
-                            },
-                        }
-                    ];
-
-                    // blade.refresh();
-                // };
+                        canExecuteMethod: function () { return true; }
+                    },
+                    {
+                        name: "platform.commands.add", icon: 'fas fa-plus',
+                        executeMethod: function () {
+                            showDetailBlade();
+                        },
+                        canExecuteMethod: function () {
+                            return true;
+                        },
+                    }
+                ];
 
                 blade.refresh = function () {
                     blade.isLoading = true;
@@ -45,44 +41,44 @@ angular.module('virtoCommerce.shippingModule')
                         take: $scope.pageSettings.itemsPerPageCount,
                     }, function (data) {
                         blade.isLoading = false;
-                        blade.currentEntities = data;
+                        blade.currentEntities = data.results;
+                        $scope.pageSettings.totalItems = data.totalCount;
                     }, function (error) {
                         bladeNavigationService.setError('Error ' + error.status, blade);
-                    })
-                    //pickupLocations.search({
-                    //    storeId: blade.storeId
-                    //}, function (data) {
-                    //    blade.isLoading = false;
-
-                    //    _.each(data.results, function (item) {
-                    //        var nameTranslationKey = `shipping.labels.${item.typeName}.name`;
-                    //        var descriptionTranslateKey = `shipping.labels.${item.typeName}.description`;
-
-                    //        var nameResult = $translate.instant(nameTranslationKey);
-                    //        var displayDescription = $translate.instant(descriptionTranslateKey);
-
-                    //        item.displayName = nameResult === nameTranslationKey ? (item.name || item.typeName) : nameResult;
-                    //        item.displayDescription = displayDescription === descriptionTranslateKey ? item.description : displayDescription;
-                    //    });
-
-                    //    blade.currentEntities = data.results;
-                    //    blade.selectedShippingMethods = _.findWhere(blade.currentEntities, { isActive: true });
-                    //}, function (error) {
-                    //    bladeNavigationService.setError('Error ' + error.status, blade);
-                    //});
+                    });
                 }
 
-                $scope.selectNode = function (node) {
-                    //$scope.selectedNodeId = node.typeName;
-                    //var newBlade = {
-                    //    id: 'shippingMethodDetail',
-                    //    shippingMethod: node,
-                    //    storeId: blade.storeId,
-                    //    controller: 'virtoCommerce.shippingModule.shippingMethodDetailController',
-                    //    template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/blades/shippingMethod-detail.tpl.html'
-                    //};
-                    //bladeNavigationService.showBlade(newBlade, $scope.blade);
+                blade.selectNode = function (node) {
+                    $scope.selectedNodeId = node.id;
+                    var newBlade = {
+                        id: 'pickupLocationDetail',
+                        currentEntity: node,
+                        storeId: blade.storeId,
+                        controller: 'virtoCommerce.shippingModule.pickupLocationDetailController',
+                        template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/blades/pickupLocation-detail.tpl.html'
+                    };
+                    bladeNavigationService.showBlade(newBlade, $scope.blade);
                 };
+
+                $scope.delete = function (item) {
+                    var dialog = {
+                        id: "confirmPickupLocationDelete",
+                        title: "shipping.dialogs.pickup-location-delete.title",
+                        message: "shipping.dialogs.pickup-location-delete.message",
+                        callback: function (remove) {
+                            if (remove) {
+                                blade.isLoading = true;
+                                pickupLocations.remove({ id: item.id }, function () {
+                                    blade.refresh(true);
+                                    blade.isLoading = false;
+                                }, function (error) {
+                                    bladeNavigationService.setError('Error ' + error.status, blade);
+                                });
+                            }
+                        }
+                    }
+                    dialogService.showConfirmationDialog(dialog);
+                }
 
                 // simple and advanced filtering
                 var filter = $scope.filter = {};
@@ -99,6 +95,7 @@ angular.module('virtoCommerce.shippingModule')
                     var newBlade = {
                         id: 'pickupLocationDetail',
                         storeId: blade.storeId,
+                        currentEntity: node || {},
                         controller: 'virtoCommerce.shippingModule.pickupLocationDetailController',
                         template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/blades/pickupLocation-detail.tpl.html'
                     };

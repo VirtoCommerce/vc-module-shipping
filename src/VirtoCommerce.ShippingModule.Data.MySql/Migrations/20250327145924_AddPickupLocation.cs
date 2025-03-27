@@ -32,17 +32,17 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Line1 = table.Column<string>(type: "varchar(1024)", maxLength: 1024, nullable: false)
+                    Line1 = table.Column<string>(type: "varchar(1024)", maxLength: 1024, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Line2 = table.Column<string>(type: "varchar(1024)", maxLength: 1024, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    City = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
+                    City = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CountryCode = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                    CountryCode = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CountryName = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PostalCode = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: false)
+                    PostalCode = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RegionId = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),

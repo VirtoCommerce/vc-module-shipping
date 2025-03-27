@@ -12,7 +12,7 @@ using VirtoCommerce.ShippingModule.Data.Repositories;
 namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
 {
     [DbContext(typeof(ShippingDbContext))]
-    [Migration("20250325143113_AddPickupLocation")]
+    [Migration("20250327145924_AddPickupLocation")]
     partial class AddPickupLocation
     {
         /// <inheritdoc />
@@ -59,7 +59,6 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
@@ -70,7 +69,6 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CountryCode")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("varchar(64)");
 
@@ -98,7 +96,6 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("varchar(64)");
 
                     b.Property<string>("Line1")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("varchar(1024)");
 
@@ -122,7 +119,6 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("varchar(32)");
 

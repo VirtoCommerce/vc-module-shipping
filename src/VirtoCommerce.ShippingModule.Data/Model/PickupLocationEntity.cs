@@ -27,25 +27,22 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
 
     [StringLength(128)]
     public string Name { get; set; }
-    [Required]
+
     [StringLength(1024)]
     public string Line1 { get; set; }
 
     [StringLength(1024)]
     public string Line2 { get; set; }
 
-    [Required]
     [StringLength(128)]
     public string City { get; set; }
 
-    [Required]
     [StringLength(64)]
     public string CountryCode { get; set; }
 
     [StringLength(128)]
     public string CountryName { get; set; }
 
-    [Required]
     [StringLength(32)]
     public string PostalCode { get; set; }
 
@@ -64,21 +61,21 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
     public PickupLocation ToModel(PickupLocation model)
     {
         model.Id = Id;
-        model.CreatedBy = CreatedBy;                        //
-        model.CreatedDate = CreatedDate;                    //
-        model.ModifiedBy = ModifiedBy;                      //
-        model.ModifiedDate = ModifiedDate;                  //
-        model.Name = Name;                                  // +
-        model.StoreId = StoreId;                            //
-        model.OuterId = OuterId;                            // +
-        model.Active = Active;                              // -
-        model.GeoLocation = GeoLocation;                    // +
-        model.Description = Description;                    // +
-        model.FulfillmentCenterId = FulfillmentCenterId;    // -
+        model.CreatedBy = CreatedBy;
+        model.CreatedDate = CreatedDate;
+        model.ModifiedBy = ModifiedBy;
+        model.ModifiedDate = ModifiedDate;
+        model.Name = Name;
+        model.StoreId = StoreId;
+        model.OuterId = OuterId;
+        model.Active = Active;
+        model.GeoLocation = GeoLocation;
+        model.Description = Description;
+        model.FulfillmentCenterId = FulfillmentCenterId;
         model.TransferFulfillmentCenterIds = TransferFulfillmentCenters.Select(x => x.FulfillmentCenterId).ToList();
-        model.ContactEmail = ContactEmail;                  // -
-        model.ContactPhone = ContactPhone;                  // -
-        model.WorkingHours = WorkingHours;                  // +
+        model.ContactEmail = ContactEmail;
+        model.ContactPhone = ContactPhone;
+        model.WorkingHours = WorkingHours;
 
         model.Address = AbstractTypeFactory<PickupLocationAddress>.TryCreateInstance();
 
