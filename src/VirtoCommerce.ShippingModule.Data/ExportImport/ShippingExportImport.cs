@@ -33,7 +33,8 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
             _pickupLocationSearchService = pickupLocationSearchService;
         }
 
-        public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+        public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback,
+            ICancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -51,6 +52,7 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
                 await writer.WritePropertyNameAsync("ShippingMethods");
                 await writer.SerializeArrayWithPagingAsync(_jsonSerializer, _batchSize, async (skip, take) =>
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
                     var searchCriteria = AbstractTypeFactory<ShippingMethodsSearchCriteria>.TryCreateInstance();
                     searchCriteria.Take = take;
                     searchCriteria.Skip = skip;
@@ -67,6 +69,7 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
                 await writer.WritePropertyNameAsync("PickupLocations");
                 await writer.SerializeArrayWithPagingAsync(_jsonSerializer, _batchSize, async (skip, take) =>
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
                     var searchCriteria = AbstractTypeFactory<PickupLocationsSearchCriteria>.TryCreateInstance();
                     searchCriteria.Take = take;
                     searchCriteria.Skip = skip;
@@ -84,32 +87,50 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
             }
         }
 
-        public async Task DoImportAsync(Stream inputStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+        public async Task DoImportAsync(Stream inputStream, Action<ExportImportProgressInfo> progressCallback,
+            ICancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var progressInfo = new ExportImportProgressInfo();
 
-            using (var streamReader = new StreamReader(inputStream))
-            using (var reader = new JsonTextReader(streamReader))
+            using var streamReader = new StreamReader(inputStream);
+            await using var reader = new JsonTextReader(streamReader);
+            while (await reader.ReadAsync())
             {
-                while (await reader.ReadAsync())
+                if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "ShippingMethods")
                 {
-                    if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "ShippingMethods")
+                    try
                     {
-                        await reader.DeserializeArrayWithPagingAsync<ShippingMethod>(_jsonSerializer, _batchSize, items => _shippingMethodsService.SaveChangesAsync(items), processedCount =>
-                        {
-                            progressInfo.Description = $"{processedCount} shipping methods have been imported";
-                            progressCallback(progressInfo);
-                        }, cancellationToken);
+                        await reader.DeserializeArrayWithPagingAsync<ShippingMethod>(_jsonSerializer, _batchSize,
+                            items => _shippingMethodsService.SaveChangesAsync(items), processedCount =>
+                            {
+                                progressInfo.Description = $"{processedCount} shipping methods have been imported";
+                                progressCallback(progressInfo);
+                                cancellationToken.ThrowIfCancellationRequested();
+                            }, cancellationToken);
                     }
-                    if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "PickupLocations")
+                    catch (Exception ex)
                     {
-                        await reader.DeserializeArrayWithPagingAsync<PickupLocation>(_jsonSerializer, _batchSize, items => _pickupLocationsService.SaveChangesAsync(items), processedCount =>
-                        {
-                            progressInfo.Description = $"{processedCount} pickup locations have been imported";
-                            progressCallback(progressInfo);
-                        }, cancellationToken);
+                        progressInfo.Errors.Add($"Warning. Could not deserialize shipping method. More details: {ex}");
+                    }
+                }
+
+                if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "PickupLocations")
+                {
+                    try
+                    {
+                        await reader.DeserializeArrayWithPagingAsync<PickupLocation>(_jsonSerializer, _batchSize,
+                            items => _pickupLocationsService.SaveChangesAsync(items), processedCount =>
+                            {
+                                progressInfo.Description = $"{processedCount} pickup locations have been imported";
+                                progressCallback(progressInfo);
+                                cancellationToken.ThrowIfCancellationRequested();
+                            }, cancellationToken);
+                    }
+                    catch (Exception ex)
+                    {
+                        progressInfo.Errors.Add($"Warning. Could not deserialize pickup location. More details: {ex}");
                     }
                 }
             }
