@@ -68,15 +68,15 @@
     "dialogs": {
       "pickup-location-delete": {
         "title": "Supprimer le point de retrait",
-        "message": "Êtes-vous sûr de vouloir supprimer ce point de retrait ?"
+        "message": "Êtes-vous sûr de vouloir supprimer ce point de retrait?"
       },
       "pickup-location-save": {
         "title": "Enregistrer le point de retrait",
-        "message": "Le point de retrait a été modifié. Voulez-vous enregistrer les modifications ?"
+        "message": "Le point de retrait a été modifié. Voulez-vous enregistrer les modifications?"
       },
       "shipping-method-save": {
         "title": "Enregistrer le mode de livraison",
-        "message": "Le mode de livraison a été modifié. Voulez-vous enregistrer les modifications ?"
+        "message": "Le mode de livraison a été modifié. Voulez-vous enregistrer les modifications?"
       }
     },
     "widgets": {
