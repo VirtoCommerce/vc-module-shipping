@@ -13,18 +13,24 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
     public class ShippingExportImport
     {
         private readonly IShippingMethodsService _shippingMethodsService;
+        private readonly IPickupLocationsService _pickupLocationsService;
         private readonly IShippingMethodsSearchService _shippingMethodsSearchService;
+        private readonly IPickupLocationsSearchService _pickupLocationSearchService;
         private readonly JsonSerializer _jsonSerializer;
         private readonly int _batchSize = 50;
 
         public ShippingExportImport(
             IShippingMethodsService shippingMethodsService,
+            IPickupLocationsService pickupLocationsService,
             IShippingMethodsSearchService shippingMethodsSearchService,
+            IPickupLocationsSearchService pickupLocationSearchService,
             JsonSerializer jsonSerializer)
         {
             _shippingMethodsService = shippingMethodsService;
+            _pickupLocationsService = pickupLocationsService;
             _jsonSerializer = jsonSerializer;
             _shippingMethodsSearchService = shippingMethodsSearchService;
+            _pickupLocationSearchService = pickupLocationSearchService;
         }
 
         public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
@@ -58,6 +64,21 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
                     progressCallback(progressInfo);
                 }, cancellationToken);
 
+                await writer.WritePropertyNameAsync("PickupLocations");
+                await writer.SerializeArrayWithPagingAsync(_jsonSerializer, _batchSize, async (skip, take) =>
+                {
+                    var searchCriteria = AbstractTypeFactory<PickupLocationsSearchCriteria>.TryCreateInstance();
+                    searchCriteria.Take = take;
+                    searchCriteria.Skip = skip;
+
+                    var searchResult = await _pickupLocationSearchService.SearchNoCloneAsync(searchCriteria);
+                    return (GenericSearchResult<PickupLocation>)searchResult;
+                }, (processedCount, totalCount) =>
+                {
+                    progressInfo.Description = $"{processedCount} of {totalCount} pickup locations have been exported";
+                    progressCallback(progressInfo);
+                }, cancellationToken);
+
                 await writer.WriteEndObjectAsync();
                 await writer.FlushAsync();
             }
@@ -79,6 +100,14 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport
                         await reader.DeserializeArrayWithPagingAsync<ShippingMethod>(_jsonSerializer, _batchSize, items => _shippingMethodsService.SaveChangesAsync(items), processedCount =>
                         {
                             progressInfo.Description = $"{processedCount} shipping methods have been imported";
+                            progressCallback(progressInfo);
+                        }, cancellationToken);
+                    }
+                    if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "PickupLocations")
+                    {
+                        await reader.DeserializeArrayWithPagingAsync<PickupLocation>(_jsonSerializer, _batchSize, items => _pickupLocationsService.SaveChangesAsync(items), processedCount =>
+                        {
+                            progressInfo.Description = $"{processedCount} pickup locations have been imported";
                             progressCallback(progressInfo);
                         }, cancellationToken);
                     }
