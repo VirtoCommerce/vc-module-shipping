@@ -28,9 +28,56 @@
           "active": "Активен",
           "name": "Название"
         }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Создание точки самовывоза",
+          "name": "Название",
+          "active": "Активен",
+          "geoLocation": "Геоточка",
+          "outerId": "Внешний ID",
+          "description": "Описание",
+          "working-hours": "Рабочее время",
+          "contactEmail": "Контактный Email",
+          "contactPhone": "Контактный телефон",
+          "fulfillmentCenter": "Центр выполнения заказов",
+          "transferFulfillmentCenter": "Дополнительные центры"
+        },
+        "descriptions": {
+          "name": "Название точки самовывоза",
+          "geoLocation": "Введите широту и долготу, через запятую, например 41.40338,8.17403",
+          "outerId": "Внешний ключ для идентификации во внешней системе",
+          "description": "Описание точки самовывоза",
+          "working-hours": "Информация о рабочем времени",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Введите название",
+          "geoLocation": "Введите широту и долготу",
+          "outerId": "Идентификатор во внешней системе",
+          "description": "Опишите точку самовывоза",
+          "working-hours": "Рабочие часы",
+          "contactEmail": "Контактный email",
+          "contactPhone": "Контактный телефон",
+          "fulfillmentCenter": "Выберите цент обеспечения заказов",
+          "transferFulfillmentCenter": "Выберите дополнительные центры обеспечения заказов"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "Удаление точки самовывоза",
+        "message": "Вы действительно хотите удалить точку самовывоза?"
+      },
+      "pickup-location-save": {
+        "title": "Сохранение точки самовывоза",
+        "message": "Данные были изменены. Вы хотите сохранить изменения?"
+      },
+      "shipping-method-save": {
+        "title": "Сохранение способа доставки",
+        "message": "Данные были изменены. Вы хотите сохранить изменения?"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
@@ -40,6 +87,15 @@
       "pickup-location-widget": {
         "title": "Пункты самовывоза",
         "blade-title": "Пункты самовывоза"
+      },
+      "pickupLocationAddress": {
+        "no-address": "Адрес не установлен",
+        "address-detail": {
+          "city": "Город",
+          "address1": "Адресная строка 1",
+          "address2": "Адресная строка 2",
+          "zip-code": "Почтовый индекс"
+        }
       }
     },
     "labels": {

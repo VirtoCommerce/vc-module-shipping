@@ -39,7 +39,9 @@ angular.module('virtoCommerce.shippingModule')
             }
 
             blade.onClose = function (closeCallback) {
-                bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, $scope.saveChanges, closeCallback, "shipping.dialogs.pickup-location-save.title", "shipping.dialogs.pickup-location-save.message");
+                bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade,
+                    $scope.saveChanges, closeCallback,
+                    "shipping.dialogs.pickup-location-save.title", "shipping.dialogs.pickup-location-save.message");
             };
 
             $scope.cancelChanges = function () {

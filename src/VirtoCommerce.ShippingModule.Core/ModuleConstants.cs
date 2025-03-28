@@ -17,7 +17,7 @@ namespace VirtoCommerce.ShippingModule.Core
                 public const string Update = "pickup:update";
                 public const string Delete = "pickup:delete";
 
-                public static string[] AllPermissions = new[] { Read, Create, Update, Delete };
+                public static readonly string[] AllPermissions = new[] { Read, Create, Update, Delete };
             }
         }
         public static class Settings

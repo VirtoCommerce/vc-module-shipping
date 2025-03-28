@@ -28,9 +28,56 @@
           "active": "Jest aktywny",
           "name": "Nazwa"
         }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Utwórz nowy punkt odbioru",
+          "name": "Nazwa",
+          "active": "Aktywny",
+          "geoLocation": "Lokalizacja",
+          "outerId": "Zewnętrzne ID",
+          "description": "Opis",
+          "working-hours": "Godziny otwarcia",
+          "contactEmail": "E-mail kontaktowy",
+          "contactPhone": "Telefon kontaktowy",
+          "fulfillmentCenter": "Centrum realizacji zamówień",
+          "transferFulfillmentCenter": "Centra transferowe"
+        },
+        "descriptions": {
+          "name": "Nazwa punktu odbioru",
+          "geoLocation": "Wprowadź szerokość i długość geograficzną oddzielone przecinkiem bez spacji, np. 41.40338,8.17403",
+          "outerId": "Unikalny identyfikator do połączenia punktu odbioru z systemem zewnętrznym",
+          "description": "Opis punktu odbioru",
+          "working-hours": "Informacje o godzinach otwarcia punktu odbioru",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Wprowadź nazwę",
+          "geoLocation": "Wprowadź szerokość i długość geograficzną",
+          "outerId": "Wprowadź ID w systemie zewnętrznym",
+          "description": "Podaj opis punktu odbioru",
+          "working-hours": "Podaj informacje o godzinach otwarcia",
+          "contactEmail": "Podaj e-mail kontaktowy",
+          "contactPhone": "Podaj numer telefonu kontaktowego",
+          "fulfillmentCenter": "Podaj centrum realizacji zamówień",
+          "transferFulfillmentCenter": "Podaj centra transferowe"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "Usuń punkt odbioru",
+        "message": "Czy na pewno chcesz usunąć ten punkt odbioru?"
+      },
+      "pickup-location-save": {
+        "title": "Zapisz punkt odbioru",
+        "message": "Punkt odbioru został zmieniony. Czy chcesz zapisać zmiany?"
+      },
+      "shipping-method-save": {
+        "title": "Zapisz metodę wysyłki",
+        "message": "Metoda wysyłki została zmieniona. Czy chcesz zapisać zmiany?"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
@@ -40,6 +87,15 @@
       "pickup-location-widget": {
         "title": "Punkty odbioru",
         "blade-title": "Punkty odbioru"
+      },
+      "pickupLocationAddress": {
+        "no-address": "Brak ustawionego adresu",
+        "address-detail": {
+          "city": "Miasto",
+          "address1": "Linia 1",
+          "address2": "Linia 2",
+          "zip-code": "Kod pocztowy"
+        }
       }
     },
     "labels": {

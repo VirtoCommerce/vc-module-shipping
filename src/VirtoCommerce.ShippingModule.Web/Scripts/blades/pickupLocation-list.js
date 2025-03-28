@@ -1,9 +1,9 @@
 angular.module('virtoCommerce.shippingModule')
     .controller('virtoCommerce.shippingModule.pickupLocationListController',
-        ['$scope', '$translate', 'platformWebApp.bladeNavigationService',
+        ['$scope', 'platformWebApp.bladeNavigationService',
             'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
             'virtoCommerce.shippingModule.pickupLocations', 'platformWebApp.dialogService',
-            function ($scope, $translate, bladeNavigationService, bladeUtils,
+            function ($scope, bladeNavigationService, bladeUtils,
                 uiGridConstants, uiGridHelper, pickupLocations, dialogService) {
                 $scope.uiGridConstants = uiGridConstants;
 

@@ -28,9 +28,56 @@
           "active": "Está activo",
           "name": "Nombre"
         }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Crear nuevo punto de recogida",
+          "name": "Nombre",
+          "active": "Activo",
+          "geoLocation": "Ubicación",
+          "outerId": "ID externa",
+          "description": "Descripción",
+          "working-hours": "Horario de atención",
+          "contactEmail": "Correo electrónico de contacto",
+          "contactPhone": "Teléfono de contacto",
+          "fulfillmentCenter": "Centro de distribución",
+          "transferFulfillmentCenter": "Centros de transferencia"
+        },
+        "descriptions": {
+          "name": "Nombre del punto de recogida",
+          "geoLocation": "Ingrese la latitud y longitud separadas por una coma sin espacios, por ejemplo: 41.40338,8.17403",
+          "outerId": "ID única para conectar el punto de recogida con un sistema externo",
+          "description": "Descripción del punto de recogida",
+          "working-hours": "Información sobre el horario del punto de recogida",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Introduzca el nombre",
+          "geoLocation": "Introduzca latitud y longitud",
+          "outerId": "Introduzca la ID del sistema externo",
+          "description": "Proporcione una descripción del punto de recogida",
+          "working-hours": "Proporcione el horario de atención",
+          "contactEmail": "Proporcione el correo de contacto",
+          "contactPhone": "Proporcione el número de teléfono de contacto",
+          "fulfillmentCenter": "Indique el centro de distribución",
+          "transferFulfillmentCenter": "Indique los centros de transferencia"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "Eliminar punto de recogida",
+        "message": "¿Está seguro de que desea eliminar el punto de recogida?"
+      },
+      "pickup-location-save": {
+        "title": "Guardar punto de recogida",
+        "message": "El punto de recogida ha sido modificado. ¿Desea guardar los cambios?"
+      },
+      "shipping-method-save": {
+        "title": "Guardar método de envío",
+        "message": "El método de envío ha sido modificado. ¿Desea guardar los cambios?"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
@@ -40,6 +87,15 @@
       "pickup-location-widget": {
         "title": "Puntos de recogida",
         "blade-title": "Puntos de recogida"
+      },
+      "pickupLocationAddress": {
+        "no-address": "No se ha establecido una dirección",
+        "address-detail": {
+          "city": "Ciudad",
+          "address1": "Línea 1",
+          "address2": "Línea 2",
+          "zip-code": "Código postal"
+        }
       }
     },
     "labels": {

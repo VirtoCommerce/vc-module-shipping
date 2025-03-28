@@ -28,9 +28,56 @@
           "active": "Ist aktiv",
           "name": "Name"
         }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Neue Abholstation erstellen",
+          "name": "Name",
+          "active": "Aktiv",
+          "geoLocation": "Standort",
+          "outerId": "Externe ID",
+          "description": "Beschreibung",
+          "working-hours": "Öffnungszeiten",
+          "contactEmail": "Kontakt-E-Mail",
+          "contactPhone": "Kontakttelefon",
+          "fulfillmentCenter": "Versandzentrum",
+          "transferFulfillmentCenter": "Umlagerungszentren"
+        },
+        "descriptions": {
+          "name": "Name der Abholstation",
+          "geoLocation": "Geben Sie Breitengrad und Längengrad ein, getrennt durch ein Komma ohne Leerzeichen, z. B. 41.40338,8.17403",
+          "outerId": "Eindeutige ID zur Verknüpfung der Abholstation mit einem externen System",
+          "description": "Beschreibung der Abholstation",
+          "working-hours": "Informationen zu den Öffnungszeiten der Abholstation",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Name eingeben",
+          "geoLocation": "Breitengrad und Längengrad eingeben",
+          "outerId": "ID im externen System eingeben",
+          "description": "Beschreibung der Abholstation eingeben",
+          "working-hours": "Informationen zu den Öffnungszeiten eingeben",
+          "contactEmail": "Kontakt-E-Mail eingeben",
+          "contactPhone": "Kontakttelefonnummer eingeben",
+          "fulfillmentCenter": "Versandzentrum angeben",
+          "transferFulfillmentCenter": "Umlagerungszentren angeben"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "Abholstation löschen",
+        "message": "Möchten Sie die Abholstation wirklich löschen?"
+      },
+      "pickup-location-save": {
+        "title": "Abholstation speichern",
+        "message": "Die Abholstation wurde geändert. Möchten Sie die Änderungen speichern?"
+      },
+      "shipping-method-save": {
+        "title": "Versandart speichern",
+        "message": "Die Versandart wurde geändert. Möchten Sie die Änderungen speichern?"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
@@ -40,6 +87,15 @@
       "pickup-location-widget": {
         "title": "Abholorte",
         "blade-title": "Abholorte"
+      },
+      "pickupLocationAddress": {
+        "no-address": "Keine Adresse festgelegt",
+        "address-detail": {
+          "city": "Stadt",
+          "address1": "Adresszeile 1",
+          "address2": "Adresszeile 2",
+          "zip-code": "Postleitzahl"
+        }
       }
     },
     "labels": {

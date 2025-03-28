@@ -28,9 +28,56 @@
           "active": "是否激活",
           "name": "名称"
         }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "创建新的自提点",
+          "name": "名称",
+          "active": "启用",
+          "geoLocation": "位置",
+          "outerId": "外部ID",
+          "description": "描述",
+          "working-hours": "营业时间",
+          "contactEmail": "联系邮箱",
+          "contactPhone": "联系电话",
+          "fulfillmentCenter": "履约中心",
+          "transferFulfillmentCenter": "转运履约中心"
+        },
+        "descriptions": {
+          "name": "自提点的名称",
+          "geoLocation": "请输入经纬度，用英文逗号分隔且不带空格，例如：41.40338,8.17403",
+          "outerId": "用于将自提点连接到外部系统的唯一ID",
+          "description": "自提点的描述信息",
+          "working-hours": "关于自提点营业时间的信息",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "请输入名称",
+          "geoLocation": "请输入经纬度",
+          "outerId": "请输入外部系统中的ID",
+          "description": "请输入自提点描述信息",
+          "working-hours": "请输入营业时间信息",
+          "contactEmail": "请输入联系邮箱",
+          "contactPhone": "请输入联系电话",
+          "fulfillmentCenter": "请输入履约中心",
+          "transferFulfillmentCenter": "请输入转运履约中心"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "删除自提点",
+        "message": "您确定要删除该自提点吗？"
+      },
+      "pickup-location-save": {
+        "title": "保存自提点",
+        "message": "自提点已被修改。是否保存更改？"
+      },
+      "shipping-method-save": {
+        "title": "保存配送方式",
+        "message": "配送方式已被修改。是否保存更改？"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
@@ -40,6 +87,15 @@
       "pickup-location-widget": {
         "title": "自提点",
         "blade-title": "自提点"
+      },
+      "pickupLocationAddress": {
+        "no-address": "未设置地址",
+        "address-detail": {
+          "city": "城市",
+          "address1": "地址行 1",
+          "address2": "地址行 2",
+          "zip-code": "邮政编码"
+        }
       }
     },
     "labels": {
