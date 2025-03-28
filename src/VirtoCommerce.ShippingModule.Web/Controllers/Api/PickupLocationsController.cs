@@ -7,6 +7,7 @@ using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Services;
+using VirtoCommerce.ShippingModule.Data.Authorization;
 
 namespace VirtoCommerce.ShippingModule.Web.Controllers.Api;
 
@@ -14,53 +15,74 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api;
 [Authorize]
 public class PickupLocationsController(
     IPickupLocationsService pickupLocationsService,
-    IPickupLocationsSearchService pickupLocationsSearchService
+    IPickupLocationsSearchService pickupLocationsSearchService,
+    IAuthorizationService authorizationService
     ) : Controller
 {
     [HttpPost]
     [Route("search")]
-    [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<IEnumerable<PickupLocation>>> Search([FromBody] PickupLocationsSearchCriteria criteria)
     {
-        // todo: validate storeId
+        var authorizationResult = await authorizationService.AuthorizeAsync(User, criteria,
+            new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Read));
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
+        }
         var result = await pickupLocationsSearchService.SearchAsync(criteria);
         return Ok(result);
     }
 
     [HttpPost]
     [Route("")]
-    [Authorize(ModuleConstants.Security.Permissions.Create)]
     public async Task<ActionResult> CreatePickupLocation([FromBody] PickupLocation pickupLocation)
     {
-        // todo: validate storeId
+        var authorizationResult = await authorizationService.AuthorizeAsync(User, pickupLocation,
+            new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Create));
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
+        }
         await pickupLocationsService.SaveChangesAsync([pickupLocation]);
         return Ok();
     }
 
     [HttpGet]
-    [Route("{id}")]
-    [Authorize(ModuleConstants.Security.Permissions.Read)]
-    public async Task<ActionResult<PickupLocation>> GetPickupLocationById(string id)
+    [Route("{storeId}/{id}")]
+    public async Task<ActionResult<PickupLocation>> GetPickupLocationById([FromRoute] string id, [FromRoute] string storeId)
     {
-        // todo: validate storeId
+        var authorizationResult = await authorizationService.AuthorizeAsync(User, storeId,
+            new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Read));
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
+        }
         var result = await pickupLocationsService.GetNoCloneAsync(id);
         return Ok(result);
     }
 
     [HttpPut("")]
-    [Authorize(ModuleConstants.Security.Permissions.Update)]
     public async Task<ActionResult<PickupLocation>> UpdatePickupLocation([FromBody] PickupLocation pickupLocation)
     {
-        // todo: validate storeId
+        var authorizationResult = await authorizationService.AuthorizeAsync(User, pickupLocation,
+            new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Update));
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
+        }
         await pickupLocationsService.SaveChangesAsync([pickupLocation]);
         return Ok(pickupLocation);
     }
 
-    [HttpDelete("{id}")]
-    [Authorize(ModuleConstants.Security.Permissions.Delete)]
-    public async Task<ActionResult> DeletePickupLocation(string id)
+    [HttpDelete("{storeId}/{id}")]
+    public async Task<ActionResult> DeletePickupLocation([FromRoute] string id, [FromRoute] string storeId)
     {
-        // todo: validate storeId
+        var authorizationResult = await authorizationService.AuthorizeAsync(User, storeId,
+            new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Delete));
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
+        }
         await pickupLocationsService.DeleteAsync([id]);
         return Ok();
     }

@@ -68,7 +68,7 @@ angular.module('virtoCommerce.shippingModule')
                         callback: function (remove) {
                             if (remove) {
                                 blade.isLoading = true;
-                                pickupLocations.remove({ id: item.id }, function () {
+                                pickupLocations.remove({ id: item.id, storeId: blade.storeId }, function () {
                                     blade.refresh(true);
                                     blade.isLoading = false;
                                 }, function (error) {

@@ -19,7 +19,7 @@ angular.module('virtoCommerce.shippingModule')
             blade.refresh = function (refreshParent) {
                 if (!!blade.currentEntity.id) {
                     blade.isLoading = true;
-                    pickupLocations.get({ id: blade.currentEntity.id }, function (data) {
+                    pickupLocations.get({ id: blade.currentEntity.id, storeId: blade.storeId }, function (data) {
                         initializeBlade(data);
                         if (refreshParent) {
                             blade.parentBlade.refresh();
