@@ -14,6 +14,7 @@ public class PickupFulfillmentRelationEntity : Entity
 
     public virtual void Patch(PickupFulfillmentRelationEntity target)
     {
-        ArgumentNullException.ThrowIfNull(target, nameof(target));
+        ArgumentNullException.ThrowIfNull(target);
+        target.FulfillmentCenterId = FulfillmentCenterId;
     }
 }

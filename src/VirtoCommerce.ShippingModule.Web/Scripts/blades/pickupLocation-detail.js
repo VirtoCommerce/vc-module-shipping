@@ -3,96 +3,96 @@ angular.module('virtoCommerce.shippingModule')
         ['$scope', '$injector', '$translate', 'platformWebApp.bladeNavigationService',
             'virtoCommerce.shippingModule.pickupLocations',
             function ($scope, $injector, $translate, bladeNavigationService, pickupLocations) {
-            var blade = $scope.blade;
-            $scope.inventoryModuleInstalled = $injector.has('virtoCommerce.inventoryModule.fulfillments')
+                var blade = $scope.blade;
+                $scope.inventoryModuleInstalled = $injector.has('virtoCommerce.inventoryModule.fulfillments')
 
-            function initializeBlade(data) {
-                blade.currentEntity = angular.copy(data);
-                blade.origEntity = data;
-                blade.isLoading = false;
+                function initializeBlade(data) {
+                    blade.currentEntity = angular.copy(data);
+                    blade.origEntity = data;
+                    blade.isLoading = false;
 
-                if (!blade.title) {
-                    blade.title = $translate.instant('shipping.blades.pickup-location-detail.labels.create');
+                    if (!blade.title) {
+                        blade.title = $translate.instant('shipping.blades.pickup-location-detail.labels.create');
+                    }
                 }
-            }
 
-            blade.refresh = function (refreshParent) {
-                if (!!blade.currentEntity.id) {
+                blade.refresh = function (refreshParent) {
+                    if (!!blade.currentEntity.id) {
+                        blade.isLoading = true;
+                        pickupLocations.get({ id: blade.currentEntity.id, storeId: blade.storeId }, function (data) {
+                            initializeBlade(data);
+                            if (refreshParent) {
+                                blade.parentBlade.refresh();
+                            }
+                        }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                    } else {
+                        initializeBlade({});
+                    }
+                }
+
+                function isDirty() {
+                    return !angular.equals(blade.currentEntity, blade.origEntity) && blade.hasUpdatePermission();
+                }
+
+                function canSave() {
+                    return $scope.formScope && $scope.formScope.$valid && isDirty();
+                }
+
+                blade.onClose = function (closeCallback) {
+                    bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade,
+                        $scope.saveChanges, closeCallback,
+                        "shipping.dialogs.pickup-location-save.title", "shipping.dialogs.pickup-location-save.message");
+                };
+
+                $scope.cancelChanges = function () {
+                    $scope.bladeClose();
+                };
+
+                $scope.saveChanges = function () {
                     blade.isLoading = true;
-                    pickupLocations.get({ id: blade.currentEntity.id, storeId: blade.storeId }, function (data) {
-                        initializeBlade(data);
-                        if (refreshParent) {
-                            blade.parentBlade.refresh();
-                        }
+                    blade.currentEntity.storeId = blade.storeId;
+                    pickupLocations.update({}, blade.currentEntity, function (data) {
+                        blade.currentEntity.id = data.id;
+                        blade.refresh(true);
                     }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
-                } else {
-                    initializeBlade({});
+                };
+
+                $scope.setForm = function (form) {
+                    $scope.formScope = form;
                 }
-            }
 
-            function isDirty() {
-                return !angular.equals(blade.currentEntity, blade.origEntity) && blade.hasUpdatePermission();
-            }
+                $scope.getDictionaryValues = function (setting, callback) {
+                    callback(setting.allowedValues);
+                };
 
-            function canSave() {
-                return $scope.formScope && $scope.formScope.$valid && isDirty();
-            }
+                blade.headIcon = 'fa fa-archive';
 
-            blade.onClose = function (closeCallback) {
-                bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade,
-                    $scope.saveChanges, closeCallback,
-                    "shipping.dialogs.pickup-location-save.title", "shipping.dialogs.pickup-location-save.message");
-            };
-
-            $scope.cancelChanges = function () {
-                $scope.bladeClose();
-            };
-
-            $scope.saveChanges = function () {
-                blade.isLoading = true;
-                blade.currentEntity.storeId = blade.storeId;
-                pickupLocations.update({}, blade.currentEntity, function (data) {
-                    blade.currentEntity.id = data.id;
-                    blade.refresh(true);
-                }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
-            };
-
-            $scope.setForm = function (form) {
-                $scope.formScope = form;
-            }
-
-            $scope.getDictionaryValues = function (setting, callback) {
-                callback(setting.allowedValues);
-            };
-
-            blade.headIcon = 'fa fa-archive';
-
-            blade.toolbarCommands = [             
-                {
-                    name: "platform.commands.save",
-                    icon: 'fa fa-save',
-                    executeMethod: $scope.saveChanges,
-                    canExecuteMethod: canSave,
-                    permission: blade.updatePermission
-                },
-                {
-                    name: "platform.commands.reset",
-                    icon: 'fa fa-undo',
-                    executeMethod: function () {
-                        angular.copy(blade.origEntity, blade.currentEntity);
+                blade.toolbarCommands = [
+                    {
+                        name: "platform.commands.save",
+                        icon: 'fa fa-save',
+                        executeMethod: $scope.saveChanges,
+                        canExecuteMethod: canSave,
+                        permission: blade.updatePermission
                     },
-                    canExecuteMethod: isDirty,
-                    permission: blade.updatePermission
+                    {
+                        name: "platform.commands.reset",
+                        icon: 'fa fa-undo',
+                        executeMethod: function () {
+                            angular.copy(blade.origEntity, blade.currentEntity);
+                        },
+                        canExecuteMethod: isDirty,
+                        permission: blade.updatePermission
+                    }
+                ];
+
+                blade.fetchFulfillmentCenters = function (criteria) {
+                    criteria.storeId = blade.storeId;
+                    var fulfillmentsApi = $injector.get('virtoCommerce.inventoryModule.fulfillments');
+
+                    return fulfillmentsApi.search(criteria);
                 }
-            ];
 
-            blade.fetchFulfillmentCenters = function (criteria) {
-                criteria.storeId = blade.storeId;
-                var fulfillmentsApi = $injector.get('virtoCommerce.inventoryModule.fulfillments');
+                blade.refresh();
 
-                return fulfillmentsApi.search(criteria);
-            }
-
-            blade.refresh();
-
-        }]);
+            }]);
