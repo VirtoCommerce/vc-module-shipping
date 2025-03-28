@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
 
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<ShippingMethod>> GetRegisteredShippingMethods()
+        public async Task<ActionResult<IEnumerable<ShippingMethod>>> GetRegisteredShippingMethods()
         {
             var result = await _shippingMethodsRegistrar.GetRegisteredMethods();
             return Ok(result);

@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Modifier le mode de livraison",
         "labels": {
           "is-active": "Est actif",
           "name": "Nom",
@@ -18,20 +17,85 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "Est actif",
           "shipping-method": "Mode de livraison",
           "note": "Organisez l'ordre dans lequel les modes de livraison sont affichés dans la boutique en ligne. Utilisez le glisser-déposer pour les réorganiser"
         }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "Est actif",
+          "name": "Nom"
+        }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Créer un nouveau point de retrait",
+          "name": "Nom",
+          "active": "Actif",
+          "geoLocation": "Emplacement",
+          "outerId": "ID externe",
+          "description": "Description",
+          "working-hours": "Heures d'ouverture",
+          "contactEmail": "E-mail de contact",
+          "contactPhone": "Téléphone de contact",
+          "fulfillmentCenter": "Centre de distribution",
+          "transferFulfillmentCenter": "Centres de transfert"
+        },
+        "descriptions": {
+          "name": "Nom du point de retrait",
+          "geoLocation": "Saisissez la latitude et la longitude séparées par une virgule sans espace, par ex. : 41.40338,8.17403",
+          "outerId": "ID unique pour connecter le point de retrait à un système externe",
+          "description": "Description du point de retrait",
+          "working-hours": "Informations sur les heures d'ouverture du point de retrait",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Entrez le nom",
+          "geoLocation": "Entrez la latitude et la longitude",
+          "outerId": "Entrez l'ID dans un système externe",
+          "description": "Fournissez une description du point de retrait",
+          "working-hours": "Fournissez les heures d'ouverture",
+          "contactEmail": "Fournissez l'e-mail de contact",
+          "contactPhone": "Fournissez le numéro de téléphone de contact",
+          "fulfillmentCenter": "Indiquez le centre de distribution",
+          "transferFulfillmentCenter": "Indiquez les centres de transfert"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "Supprimer le point de retrait",
+        "message": "Êtes-vous sûr de vouloir supprimer ce point de retrait?"
+      },
+      "pickup-location-save": {
+        "title": "Enregistrer le point de retrait",
+        "message": "Le point de retrait a été modifié. Voulez-vous enregistrer les modifications?"
+      },
+      "shipping-method-save": {
+        "title": "Enregistrer le mode de livraison",
+        "message": "Le mode de livraison a été modifié. Voulez-vous enregistrer les modifications?"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
         "title": "Modes de livraison",
-        "blade-subtitle": "Modes de livraison"
+        "blade-title": "Modes de livraison"
+      },
+      "pickup-location-widget": {
+        "title": "Points de retrait",
+        "blade-title": "Points de retrait"
+      },
+      "pickupLocationAddress": {
+        "no-address": "Aucune adresse définie",
+        "address-detail": {
+          "city": "Ville",
+          "address1": "Ligne 1",
+          "address2": "Ligne 2",
+          "zip-code": "Code postal"
+        }
       }
     },
     "labels": {

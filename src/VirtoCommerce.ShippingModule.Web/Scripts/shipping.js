@@ -18,4 +18,18 @@ angular.module(moduleName, ['ngSanitize'])
             template: '$(Platform)/Scripts/app/settings/widgets/entitySettingsWidget.tpl.html'
         }, 'shippingMethodDetail');
 
+        widgetService.registerWidget({
+            controller: 'virtoCommerce.shippingModule.pickupLocationsWidgetController',
+            permission: 'pickup:read',
+            template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/widgets/pickupLocationsWidget.tpl.html',
+            isVisible: function (blade) {
+                return blade.shippingMethod?.typeName === 'BuyOnlinePickupInStoreShippingMethod';
+            },
+        }, 'shippingMethodDetail');
+
+        widgetService.registerWidget({
+            size: [2, 1],
+            controller: 'virtoCommerce.shippingModule.pickupLocationsAddressWidgetController',
+            template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/widgets/pickupLocationsAddressWidget.tpl.html'
+        }, 'pickupLocationAddress');
     }]);

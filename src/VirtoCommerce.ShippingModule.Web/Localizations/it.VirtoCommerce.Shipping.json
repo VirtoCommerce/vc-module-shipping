@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Modifica metodo di spedizione",
         "labels": {
           "is-active": "È attivo",
           "name": "Nome",
@@ -18,20 +17,85 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "È attivo",
           "shipping-method": "Metodo di spedizione",
           "note": "Organizza l'ordine in cui i metodi di spedizione vengono visualizzati nel negozio online. Usa il drag and drop per riordinarli"
         }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "È attivo",
+          "name": "Nome"
+        }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Crea un nuovo punto di ritiro",
+          "name": "Nome",
+          "active": "Attivo",
+          "geoLocation": "Posizione",
+          "outerId": "ID esterno",
+          "description": "Descrizione",
+          "working-hours": "Orari di apertura",
+          "contactEmail": "Email di contatto",
+          "contactPhone": "Telefono di contatto",
+          "fulfillmentCenter": "Centro logistico",
+          "transferFulfillmentCenter": "Centri di trasferimento"
+        },
+        "descriptions": {
+          "name": "Nome del punto di ritiro",
+          "geoLocation": "Inserisci latitudine e longitudine separate da una virgola senza spazi, es. 41.40338,8.17403",
+          "outerId": "ID univoco per collegare il punto di ritiro a un sistema esterno",
+          "description": "Descrizione del punto di ritiro",
+          "working-hours": "Informazioni sugli orari di apertura del punto di ritiro",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Inserisci il nome",
+          "geoLocation": "Inserisci latitudine e longitudine",
+          "outerId": "Inserisci l'ID nel sistema esterno",
+          "description": "Fornisci una descrizione del punto di ritiro",
+          "working-hours": "Fornisci informazioni sugli orari di apertura",
+          "contactEmail": "Fornisci l'email di contatto",
+          "contactPhone": "Fornisci il numero di telefono di contatto",
+          "fulfillmentCenter": "Indica il centro logistico",
+          "transferFulfillmentCenter": "Indica i centri di trasferimento"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "Elimina punto di ritiro",
+        "message": "Sei sicuro di voler eliminare il punto di ritiro?"
+      },
+      "pickup-location-save": {
+        "title": "Salva punto di ritiro",
+        "message": "Il punto di ritiro è stato modificato. Vuoi salvare le modifiche?"
+      },
+      "shipping-method-save": {
+        "title": "Salva metodo di spedizione",
+        "message": "Il metodo di spedizione è stato modificato. Vuoi salvare le modifiche?"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
         "title": "Metodi di spedizione",
-        "blade-subtitle": "Metodi di spedizione"
+        "blade-title": "Metodi di spedizione"
+      },
+      "pickup-location-widget": {
+        "title": "Punti di ritiro",
+        "blade-title": "Punti di ritiro"
+      },
+      "pickupLocationAddress": {
+        "no-address": "Nessun indirizzo impostato",
+        "address-detail": {
+          "city": "Città",
+          "address1": "Linea 1",
+          "address2": "Linea 2",
+          "zip-code": "CAP"
+        }
       }
     },
     "labels": {

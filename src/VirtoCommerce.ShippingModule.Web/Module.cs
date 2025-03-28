@@ -9,9 +9,11 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.ExportImport;
 using VirtoCommerce.Platform.Core.JsonConverters;
 using VirtoCommerce.Platform.Core.Modularity;
+using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.Extensions;
 using VirtoCommerce.ShippingModule.Core;
+using VirtoCommerce.ShippingModule.Core.Extensions;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Services;
 using VirtoCommerce.ShippingModule.Data;
@@ -55,9 +57,18 @@ namespace VirtoCommerce.ShippingModule.Web
             serviceCollection.AddTransient<IShippingRepository, ShippingRepository>();
             serviceCollection.AddTransient<Func<IShippingRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetService<IShippingRepository>());
 
+            serviceCollection.AddTransient<IPickupLocationsRepository, PickupLocationsRepository>();
+            serviceCollection.AddTransient<Func<IPickupLocationsRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetService<IPickupLocationsRepository>());
+
+            serviceCollection.AddTransient<IPickupLocationsService, PickupLocationsService>();
+            serviceCollection.AddTransient<IPickupLocationsSearchService, PickupLocationsSearchService>();
+
             serviceCollection.AddTransient<IShippingMethodsService, ShippingMethodsService>();
             serviceCollection.AddTransient<IShippingMethodsRegistrar, ShippingMethodsService>();
             serviceCollection.AddTransient<IShippingMethodsSearchService, ShippingMethodsSearchService>();
+
+            serviceCollection.AddTransient<IPickupLocationsService, PickupLocationsService>();
+
             serviceCollection.AddTransient<ShippingExportImport>();
         }
 
@@ -69,22 +80,28 @@ namespace VirtoCommerce.ShippingModule.Web
             settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
             settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.FixedRateShippingMethod.AllSettings, typeof(FixedRateShippingMethod).Name);
 
+            var permissionsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();
+            permissionsRegistrar.RegisterPermissions(ModuleInfo.Id, "Pickup locations", ModuleConstants.Security.Permissions.AllPermissions);
+
             var shippingMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IShippingMethodsRegistrar>();
             shippingMethodsRegistrar.RegisterShippingMethod<FixedRateShippingMethod>();
 
+            if (Configuration.IsPickupEnabled())
+            {
+                shippingMethodsRegistrar.RegisterShippingMethod<BuyOnlinePickupInStoreShippingMethod>();
+            }
+
             PolymorphJsonConverter.RegisterTypeForDiscriminator(typeof(ShippingMethod), nameof(ShippingMethod.TypeName));
 
-            using (var serviceScope = appBuilder.ApplicationServices.CreateScope())
-            {
-                var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
+            using var serviceScope = appBuilder.ApplicationServices.CreateScope();
+            var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
 
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ShippingDbContext>();
-                if (databaseProvider == "SqlServer")
-                {
-                    dbContext.Database.MigrateIfNotApplied(MigrationName.GetUpdateV2MigrationName(ModuleInfo.Id));
-                }
-                dbContext.Database.Migrate();
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<ShippingDbContext>();
+            if (databaseProvider == "SqlServer")
+            {
+                dbContext.Database.MigrateIfNotApplied(MigrationName.GetUpdateV2MigrationName(ModuleInfo.Id));
             }
+            dbContext.Database.Migrate();
         }
 
         public void Uninstall()

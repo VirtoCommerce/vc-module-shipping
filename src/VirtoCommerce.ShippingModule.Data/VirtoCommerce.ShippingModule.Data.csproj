@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.853.0" />
+    <PackageReference Include="VirtoCommerce.Platform.Security" Version="3.853.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.ShippingModule.Core\VirtoCommerce.ShippingModule.Core.csproj" />

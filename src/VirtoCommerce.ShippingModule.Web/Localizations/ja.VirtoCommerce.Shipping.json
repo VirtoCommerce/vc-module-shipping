@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "配送方法を編集",
         "labels": {
           "is-active": "アクティブ",
           "name": "名前",
@@ -18,20 +17,85 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "アクティブ",
           "shipping-method": "配送方法",
           "note": "ウェブストアに表示される配送方法の順序を整理します。ドラッグアンドドロップを使用して順序を変更します"
         }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "アクティブ",
+          "name": "名前"
+        }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "新しい受け取り場所を作成",
+          "name": "名称",
+          "active": "有効",
+          "geoLocation": "位置情報",
+          "outerId": "外部ID",
+          "description": "説明",
+          "working-hours": "営業時間",
+          "contactEmail": "連絡用メールアドレス",
+          "contactPhone": "連絡用電話番号",
+          "fulfillmentCenter": "フルフィルメントセンター",
+          "transferFulfillmentCenter": "転送フルフィルメントセンター"
+        },
+        "descriptions": {
+          "name": "受け取り場所の名称",
+          "geoLocation": "緯度と経度をスペースなしでカンマ区切りで入力してください（例：41.40338,8.17403）",
+          "outerId": "受け取り場所を外部システムと接続するための一意のID",
+          "description": "受け取り場所の説明",
+          "working-hours": "受け取り場所の営業時間に関する情報",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "名称を入力",
+          "geoLocation": "緯度と経度を入力",
+          "outerId": "外部システムのIDを入力",
+          "description": "受け取り場所の説明を入力",
+          "working-hours": "営業時間の情報を入力",
+          "contactEmail": "連絡用メールアドレスを入力",
+          "contactPhone": "連絡用電話番号を入力",
+          "fulfillmentCenter": "フルフィルメントセンターを入力",
+          "transferFulfillmentCenter": "転送フルフィルメントセンターを入力"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "受け取り場所の削除",
+        "message": "この受け取り場所を削除してもよろしいですか？"
+      },
+      "pickup-location-save": {
+        "title": "受け取り場所の保存",
+        "message": "受け取り場所が変更されました。変更を保存しますか？"
+      },
+      "shipping-method-save": {
+        "title": "配送方法の保存",
+        "message": "配送方法が変更されました。変更を保存しますか？"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
         "title": "配送方法",
-        "blade-subtitle": "配送方法"
+        "blade-title": "配送方法"
+      },
+      "pickup-location-widget": {
+        "title": "受け取り場所",
+        "blade-title": "受け取り場所"
+      },
+      "pickupLocationAddress": {
+        "no-address": "住所が設定されていません",
+        "address-detail": {
+          "city": "市区町村",
+          "address1": "住所1行目",
+          "address2": "住所2行目",
+          "zip-code": "郵便番号"
+        }
       }
     },
     "labels": {
