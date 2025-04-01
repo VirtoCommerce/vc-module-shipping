@@ -21,25 +21,28 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<StoreShippingMethodEntity>().ToTable("StoreShippingMethod").HasKey(x => x.Id);
-            modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
-            modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.StoreId).HasMaxLength(128);
+            modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
+            modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.StoreId).HasMaxLength(IdLength);
             modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.TypeName).HasMaxLength(128);
             modelBuilder.Entity<StoreShippingMethodEntity>().HasIndex(x => new { x.TypeName, x.StoreId })
                 .HasDatabaseName("IX_StoreShippingMethodEntity_TypeName_StoreId")
                 .IsUnique();
 
             modelBuilder.Entity<PickupLocationEntity>().ToTable("PickupLocation").HasKey(x => x.Id);
-            modelBuilder.Entity<PickupLocationEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
+            modelBuilder.Entity<PickupLocationEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<PickupFulfillmentRelationEntity>().ToTable("PickupFulfillmentRelation").HasKey(x => x.Id);
-            modelBuilder.Entity<PickupFulfillmentRelationEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
-            modelBuilder.Entity<PickupFulfillmentRelationEntity>().HasOne(x => x.PickupLocation)
+            modelBuilder.Entity<PickupFulfillmentRelationEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
+            modelBuilder.Entity<PickupFulfillmentRelationEntity>()
+                .HasOne(x => x.PickupLocation)
                 .WithMany(x => x.TransferFulfillmentCenters)
-                .HasForeignKey(x => x.PickupLocationId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(x => x.PickupLocationId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Allows configuration for an entity type for different database types.
             // Applies configuration from all <see cref="IEntityTypeConfiguration{TEntity}" in VirtoCommerce.ShippingModule.Data.XXX project. /> 
-            switch (this.Database.ProviderName)
+            switch (Database.ProviderName)
             {
                 case "Pomelo.EntityFrameworkCore.MySql":
                     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("VirtoCommerce.ShippingModule.Data.MySql"));

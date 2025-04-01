@@ -46,7 +46,7 @@ public class PickupLocationSearchService(Func<IShippingRepository> repositoryFac
 
         if (sortInfos.IsNullOrEmpty())
         {
-            sortInfos = new[] { new SortInfo { SortColumn = nameof(PickupLocationEntity.CreatedDate), SortDirection = SortDirection.Descending } };
+            sortInfos = [new SortInfo { SortColumn = nameof(PickupLocationEntity.CreatedDate), SortDirection = SortDirection.Descending }];
         }
 
         return sortInfos;
