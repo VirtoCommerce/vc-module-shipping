@@ -14,17 +14,17 @@ using VirtoCommerce.ShippingModule.Data.Repositories;
 
 namespace VirtoCommerce.ShippingModule.Data.Services;
 
-public class PickupLocationsSearchService(Func<IPickupLocationsRepository> repositoryFactory,
+public class PickupLocationSearchService(Func<IShippingRepository> repositoryFactory,
     IPlatformMemoryCache platformMemoryCache,
-    IPickupLocationsService crudService,
+    IPickupLocationService crudService,
     IOptions<CrudOptions> crudOptions)
-    : SearchService<PickupLocationsSearchCriteria, PickupLocationsSearchResult, PickupLocation, PickupLocationEntity>
+    : SearchService<PickupLocationSearchCriteria, PickupLocationSearchResult, PickupLocation, PickupLocationEntity>
         (repositoryFactory, platformMemoryCache, crudService, crudOptions),
-        IPickupLocationsSearchService
+        IPickupLocationSearchService
 {
-    protected override IQueryable<PickupLocationEntity> BuildQuery(IRepository repository, PickupLocationsSearchCriteria criteria)
+    protected override IQueryable<PickupLocationEntity> BuildQuery(IRepository repository, PickupLocationSearchCriteria criteria)
     {
-        var query = ((IPickupLocationsRepository)repository).PickupLocations;
+        var query = ((IShippingRepository)repository).PickupLocations;
 
         if (!string.IsNullOrEmpty(criteria.Keyword))
         {
@@ -40,7 +40,7 @@ public class PickupLocationsSearchService(Func<IPickupLocationsRepository> repos
     }
 
 
-    protected override IList<SortInfo> BuildSortExpression(PickupLocationsSearchCriteria criteria)
+    protected override IList<SortInfo> BuildSortExpression(PickupLocationSearchCriteria criteria)
     {
         var sortInfos = criteria.SortInfos;
 

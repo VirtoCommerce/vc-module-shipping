@@ -12,14 +12,15 @@ namespace VirtoCommerce.ShippingModule.Core
         {
             public static class Permissions
             {
-                public const string Read = "pickup:read";
-                public const string Create = "pickup:create";
-                public const string Update = "pickup:update";
-                public const string Delete = "pickup:delete";
+                public const string Read = "shipping:read";
+                public const string Create = "shipping:create";
+                public const string Update = "shipping:update";
+                public const string Delete = "shipping:delete";
 
-                public static readonly string[] AllPermissions = new[] { Read, Create, Update, Delete };
+                public static readonly string[] AllPermissions = [Read, Create, Update, Delete];
             }
         }
+
         public static class Settings
         {
             public static class General

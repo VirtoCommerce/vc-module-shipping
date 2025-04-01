@@ -18,6 +18,8 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<StoreShippingMethodEntity>().ToTable("StoreShippingMethod").HasKey(x => x.Id);
             modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
             modelBuilder.Entity<StoreShippingMethodEntity>().Property(x => x.StoreId).HasMaxLength(128);
@@ -26,17 +28,14 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
                 .HasDatabaseName("IX_StoreShippingMethodEntity_TypeName_StoreId")
                 .IsUnique();
 
-            modelBuilder.Entity<PickupLocationEntity>().ToTable("PickupLocations").HasKey(x => x.Id);
+            modelBuilder.Entity<PickupLocationEntity>().ToTable("PickupLocation").HasKey(x => x.Id);
             modelBuilder.Entity<PickupLocationEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<PickupFulfillmentRelationEntity>().ToTable("PickupFulfillmentCenter").HasKey(x => x.Id);
-            modelBuilder.Entity<PickupFulfillmentRelationEntity>().Property(x => x.Id).HasMaxLength(128)
-                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<PickupFulfillmentRelationEntity>().ToTable("PickupFulfillmentRelation").HasKey(x => x.Id);
+            modelBuilder.Entity<PickupFulfillmentRelationEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
             modelBuilder.Entity<PickupFulfillmentRelationEntity>().HasOne(x => x.PickupLocation)
                 .WithMany(x => x.TransferFulfillmentCenters)
                 .HasForeignKey(x => x.PickupLocationId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-
-            base.OnModelCreating(modelBuilder);
 
             // Allows configuration for an entity type for different database types.
             // Applies configuration from all <see cref="IEntityTypeConfiguration{TEntity}" in VirtoCommerce.ShippingModule.Data.XXX project. /> 

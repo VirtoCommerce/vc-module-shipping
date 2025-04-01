@@ -13,15 +13,15 @@ using VirtoCommerce.ShippingModule.Data.Repositories;
 
 namespace VirtoCommerce.ShippingModule.Data.Services;
 
-public class PickupLocationsService(
-    Func<IPickupLocationsRepository> repositoryFactory,
+public class PickupLocationService(
+    Func<IShippingRepository> repositoryFactory,
     IPlatformMemoryCache platformMemoryCache,
     IEventPublisher eventPublisher
-) : CrudService<PickupLocation, PickupLocationEntity, PickupLocationChangeEvent, PickupLocationChangedEvent>(repositoryFactory, platformMemoryCache, eventPublisher),
-        IPickupLocationsService
+) : CrudService<PickupLocation, PickupLocationEntity, PickupLocationChangingEvent, PickupLocationChangedEvent>(repositoryFactory, platformMemoryCache, eventPublisher),
+        IPickupLocationService
 {
     protected override async Task<IList<PickupLocationEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {
-        return await ((IPickupLocationsRepository)repository).GetPickupLocationsByIdsAsync(ids);
+        return await ((IShippingRepository)repository).GetPickupLocationsByIdsAsync(ids);
     }
 }

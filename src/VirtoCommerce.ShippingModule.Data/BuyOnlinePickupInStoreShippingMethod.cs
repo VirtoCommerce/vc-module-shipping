@@ -14,14 +14,18 @@ public class BuyOnlinePickupInStoreShippingMethod : ShippingMethod
 
     public override IEnumerable<ShippingRate> CalculateRates(IEvaluationContext context)
     {
-        if (!(context is ShippingRateEvaluationContext shippingContext))
+        if (context is not ShippingRateEvaluationContext shippingContext)
         {
-            throw new ArgumentException(nameof(context));
+            throw new ArgumentException($"Expected context of type {nameof(ShippingRateEvaluationContext)}.", nameof(context));
         }
+
         return [
             new ShippingRate
             {
-                Rate = 0, Currency = shippingContext.Currency, ShippingMethod = this, OptionName = "Pickup"
+                Rate = 0,
+                Currency = shippingContext.Currency,
+                ShippingMethod = this,
+                OptionName = "Pickup"
             }
         ];
     }

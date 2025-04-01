@@ -6,23 +6,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPickupLocation : Migration
+    public partial class AddPickupLocations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "PickupLocations",
+                name: "PickupLocation",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     StoreId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    Active = table.Column<bool>(type: "boolean", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     Description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     FulfillmentCenterId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    ContactPhone = table.Column<string>(type: "text", nullable: true),
-                    ContactEmail = table.Column<string>(type: "text", nullable: true),
-                    WorkingHours = table.Column<string>(type: "text", nullable: true),
+                    ContactPhone = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    ContactEmail = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    WorkingHours = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     Line1 = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Line2 = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
@@ -41,11 +41,11 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PickupLocations", x => x.Id);
+                    table.PrimaryKey("PK_PickupLocation", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PickupFulfillmentCenter",
+                name: "PickupFulfillmentRelation",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
@@ -54,18 +54,18 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PickupFulfillmentCenter", x => x.Id);
+                    table.PrimaryKey("PK_PickupFulfillmentRelation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PickupFulfillmentCenter_PickupLocations_PickupLocationId",
+                        name: "FK_PickupFulfillmentRelation_PickupLocation_PickupLocationId",
                         column: x => x.PickupLocationId,
-                        principalTable: "PickupLocations",
+                        principalTable: "PickupLocation",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PickupFulfillmentCenter_PickupLocationId",
-                table: "PickupFulfillmentCenter",
+                name: "IX_PickupFulfillmentRelation_PickupLocationId",
+                table: "PickupFulfillmentRelation",
                 column: "PickupLocationId");
         }
 
@@ -73,10 +73,10 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PickupFulfillmentCenter");
+                name: "PickupFulfillmentRelation");
 
             migrationBuilder.DropTable(
-                name: "PickupLocations");
+                name: "PickupLocation");
         }
     }
 }

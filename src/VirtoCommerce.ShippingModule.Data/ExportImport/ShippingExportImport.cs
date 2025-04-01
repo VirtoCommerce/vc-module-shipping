@@ -12,15 +12,14 @@ namespace VirtoCommerce.ShippingModule.Data.ExportImport;
 
 public class ShippingExportImport(
     IShippingMethodsService shippingMethodsService,
-    IPickupLocationsService pickupLocationsService,
+    IPickupLocationService pickupLocationService,
     IShippingMethodsSearchService shippingMethodsSearchService,
-    IPickupLocationsSearchService pickupLocationSearchService,
+    IPickupLocationSearchService pickupLocationSearchService,
     JsonSerializer jsonSerializer)
 {
     private const int _batchSize = 50;
 
-    public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback,
-        ICancellationToken cancellationToken)
+    public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -56,7 +55,7 @@ public class ShippingExportImport(
         await writer.SerializeArrayWithPagingAsync(jsonSerializer, _batchSize, async (skip, take) =>
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var searchCriteria = AbstractTypeFactory<PickupLocationsSearchCriteria>.TryCreateInstance();
+            var searchCriteria = AbstractTypeFactory<PickupLocationSearchCriteria>.TryCreateInstance();
             searchCriteria.Take = take;
             searchCriteria.Skip = skip;
 
@@ -72,8 +71,7 @@ public class ShippingExportImport(
         await writer.FlushAsync();
     }
 
-    public async Task DoImportAsync(Stream inputStream, Action<ExportImportProgressInfo> progressCallback,
-        ICancellationToken cancellationToken)
+    public async Task DoImportAsync(Stream inputStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -107,7 +105,7 @@ public class ShippingExportImport(
                 try
                 {
                     await reader.DeserializeArrayWithPagingAsync<PickupLocation>(jsonSerializer, _batchSize,
-                        pickupLocationsService.SaveChangesAsync,
+                        pickupLocationService.SaveChangesAsync,
                         processedCount =>
                         {
                             progressInfo.Description = $"{processedCount} pickup locations have been imported";

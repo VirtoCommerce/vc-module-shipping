@@ -5,7 +5,7 @@ namespace VirtoCommerce.ShippingModule.Core.Security;
 /// <summary>
 /// Restricts access rights to a particular store
 /// </summary>
-public sealed class StoreSelectedScope : PermissionScope
+public sealed class SelectedStoreScope : PermissionScope
 {
     public string StoreId => Scope;
 }

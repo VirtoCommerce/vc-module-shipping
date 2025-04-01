@@ -22,15 +22,26 @@ namespace VirtoCommerce.ShippingModule.Data
 
         public override IEnumerable<ShippingRate> CalculateRates(IEvaluationContext context)
         {
-            if (!(context is ShippingRateEvaluationContext shippingContext))
+            if (context is not ShippingRateEvaluationContext shippingContext)
             {
-                throw new ArgumentException(nameof(context));
+                throw new ArgumentException($"Expected context of type {nameof(ShippingRateEvaluationContext)}.", nameof(context));
             }
-            return new[]
-            {
-                new ShippingRate { Rate = GroundOptionRate, Currency = shippingContext.Currency, ShippingMethod = this, OptionName = "Ground" },
-                new ShippingRate { Rate = AirOptionRate, Currency = shippingContext.Currency, ShippingMethod = this, OptionName = "Air" }
-            };
+            return [
+                new ShippingRate
+                {
+                    Rate = GroundOptionRate,
+                    Currency = shippingContext.Currency,
+                    ShippingMethod = this,
+                    OptionName = "Ground"
+                },
+                new ShippingRate
+                {
+                    Rate = AirOptionRate,
+                    Currency = shippingContext.Currency,
+                    ShippingMethod = this,
+                    OptionName = "Air"
+                }
+            ];
         }
     }
 }

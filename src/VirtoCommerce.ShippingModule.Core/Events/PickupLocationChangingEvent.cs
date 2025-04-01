@@ -4,5 +4,5 @@ using VirtoCommerce.ShippingModule.Core.Model;
 
 namespace VirtoCommerce.ShippingModule.Core.Events;
 
-public class PickupLocationChangeEvent(IEnumerable<GenericChangedEntry<PickupLocation>> changedEntries)
+public class PickupLocationChangingEvent(IEnumerable<GenericChangedEntry<PickupLocation>> changedEntries)
     : GenericChangedEntryEvent<PickupLocation>(changedEntries);

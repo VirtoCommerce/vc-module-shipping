@@ -57,17 +57,12 @@ namespace VirtoCommerce.ShippingModule.Web
             serviceCollection.AddTransient<IShippingRepository, ShippingRepository>();
             serviceCollection.AddTransient<Func<IShippingRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetService<IShippingRepository>());
 
-            serviceCollection.AddTransient<IPickupLocationsRepository, PickupLocationsRepository>();
-            serviceCollection.AddTransient<Func<IPickupLocationsRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetService<IPickupLocationsRepository>());
-
-            serviceCollection.AddTransient<IPickupLocationsService, PickupLocationsService>();
-            serviceCollection.AddTransient<IPickupLocationsSearchService, PickupLocationsSearchService>();
+            serviceCollection.AddTransient<IPickupLocationService, PickupLocationService>();
+            serviceCollection.AddTransient<IPickupLocationSearchService, PickupLocationSearchService>();
 
             serviceCollection.AddTransient<IShippingMethodsService, ShippingMethodsService>();
             serviceCollection.AddTransient<IShippingMethodsRegistrar, ShippingMethodsService>();
             serviceCollection.AddTransient<IShippingMethodsSearchService, ShippingMethodsSearchService>();
-
-            serviceCollection.AddTransient<IPickupLocationsService, PickupLocationsService>();
 
             serviceCollection.AddTransient<ShippingExportImport>();
         }

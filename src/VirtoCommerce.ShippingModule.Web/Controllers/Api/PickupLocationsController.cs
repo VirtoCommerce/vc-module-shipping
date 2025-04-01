@@ -14,14 +14,14 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api;
 [Route("api/shipping/pickup-locations")]
 [Authorize]
 public class PickupLocationsController(
-    IPickupLocationsService pickupLocationsService,
-    IPickupLocationsSearchService pickupLocationsSearchService,
+    IPickupLocationService pickupLocationService,
+    IPickupLocationSearchService pickupLocationSearchService,
     IAuthorizationService authorizationService
     ) : Controller
 {
     [HttpPost]
     [Route("search")]
-    public async Task<ActionResult<IEnumerable<PickupLocation>>> Search([FromBody] PickupLocationsSearchCriteria criteria)
+    public async Task<ActionResult<IEnumerable<PickupLocation>>> Search([FromBody] PickupLocationSearchCriteria criteria)
     {
         var authorizationResult = await authorizationService.AuthorizeAsync(User, criteria,
             new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Read));
@@ -29,7 +29,7 @@ public class PickupLocationsController(
         {
             return Forbid();
         }
-        var result = await pickupLocationsSearchService.SearchAsync(criteria);
+        var result = await pickupLocationSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
 
@@ -43,7 +43,7 @@ public class PickupLocationsController(
         {
             return Forbid();
         }
-        await pickupLocationsService.SaveChangesAsync([pickupLocation]);
+        await pickupLocationService.SaveChangesAsync([pickupLocation]);
         return Ok();
     }
 
@@ -57,7 +57,7 @@ public class PickupLocationsController(
         {
             return Forbid();
         }
-        var result = await pickupLocationsService.GetNoCloneAsync(id);
+        var result = await pickupLocationService.GetNoCloneAsync(id);
         return Ok(result);
     }
 
@@ -70,7 +70,7 @@ public class PickupLocationsController(
         {
             return Forbid();
         }
-        await pickupLocationsService.SaveChangesAsync([pickupLocation]);
+        await pickupLocationService.SaveChangesAsync([pickupLocation]);
         return Ok(pickupLocation);
     }
 
@@ -83,7 +83,7 @@ public class PickupLocationsController(
         {
             return Forbid();
         }
-        await pickupLocationsService.DeleteAsync([id]);
+        await pickupLocationService.DeleteAsync([id]);
         return Ok();
     }
 }

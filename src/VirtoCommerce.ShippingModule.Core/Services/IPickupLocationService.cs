@@ -3,6 +3,6 @@ using VirtoCommerce.ShippingModule.Core.Model;
 
 namespace VirtoCommerce.ShippingModule.Core.Services;
 
-public interface IPickupLocationsService : ICrudService<PickupLocation>
+public interface IPickupLocationService : ICrudService<PickupLocation>
 {
 }

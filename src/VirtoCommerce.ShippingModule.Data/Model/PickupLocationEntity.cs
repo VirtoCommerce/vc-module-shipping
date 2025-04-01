@@ -11,7 +11,9 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
 {
     [StringLength(128)]
     public string StoreId { get; set; }
-    public bool Active { get; set; }
+
+    public bool IsActive { get; set; }
+
     [StringLength(1024)]
     public string Description { get; set; }
 
@@ -21,8 +23,13 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
     public virtual ObservableCollection<PickupFulfillmentRelationEntity> TransferFulfillmentCenters { get; set; }
         = new NullCollection<PickupFulfillmentRelationEntity>();
 
+    [StringLength(128)]
     public string ContactPhone { get; set; }
+
+    [StringLength(128)]
     public string ContactEmail { get; set; }
+
+    [StringLength(128)]
     public string WorkingHours { get; set; }
 
     [StringLength(128)]
@@ -68,7 +75,7 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
         model.Name = Name;
         model.StoreId = StoreId;
         model.OuterId = OuterId;
-        model.Active = Active;
+        model.IsActive = IsActive;
         model.GeoLocation = GeoLocation;
         model.Description = Description;
         model.FulfillmentCenterId = FulfillmentCenterId;
@@ -102,7 +109,7 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
         ModifiedDate = model.ModifiedDate;
         StoreId = model.StoreId;
         OuterId = model.OuterId;
-        Active = model.Active;
+        IsActive = model.IsActive;
         GeoLocation = model.GeoLocation;
         Name = model.Name; // this name is primary (not from address)
         Description = model.Description;
@@ -144,7 +151,7 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
         target.ModifiedDate = ModifiedDate;
         target.StoreId = StoreId;
         target.OuterId = OuterId;
-        target.Active = Active;
+        target.IsActive = IsActive;
         target.GeoLocation = GeoLocation;
         target.Description = Description;
         target.FulfillmentCenterId = FulfillmentCenterId;

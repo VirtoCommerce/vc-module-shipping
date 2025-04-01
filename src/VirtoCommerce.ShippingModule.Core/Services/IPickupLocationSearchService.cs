@@ -4,5 +4,5 @@ using VirtoCommerce.ShippingModule.Core.Model.Search;
 
 namespace VirtoCommerce.ShippingModule.Core.Services;
 
-public interface IPickupLocationsSearchService
-    : ISearchService<PickupLocationsSearchCriteria, PickupLocationsSearchResult, PickupLocation>;
+public interface IPickupLocationSearchService
+    : ISearchService<PickupLocationSearchCriteria, PickupLocationSearchResult, PickupLocation>;

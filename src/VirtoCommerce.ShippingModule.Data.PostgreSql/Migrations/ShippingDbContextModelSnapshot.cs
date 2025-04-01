@@ -42,7 +42,7 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
 
                     b.HasIndex("PickupLocationId");
 
-                    b.ToTable("PickupFulfillmentCenter", (string)null);
+                    b.ToTable("PickupFulfillmentRelation", (string)null);
                 });
 
             modelBuilder.Entity("VirtoCommerce.ShippingModule.Data.Model.PickupLocationEntity", b =>
@@ -52,18 +52,17 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("City")
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
                     b.Property<string>("ContactEmail")
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("ContactPhone")
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("CountryCode")
                         .HasMaxLength(64)
@@ -91,6 +90,9 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                     b.Property<string>("GeoLocation")
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Line1")
                         .HasMaxLength(1024)
@@ -132,11 +134,12 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                         .HasColumnType("character varying(128)");
 
                     b.Property<string>("WorkingHours")
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PickupLocations", (string)null);
+                    b.ToTable("PickupLocation", (string)null);
                 });
 
             modelBuilder.Entity("VirtoCommerce.ShippingModule.Data.Model.StoreShippingMethodEntity", b =>

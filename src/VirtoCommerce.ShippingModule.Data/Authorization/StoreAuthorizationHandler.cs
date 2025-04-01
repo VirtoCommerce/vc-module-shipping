@@ -9,9 +9,8 @@ using VirtoCommerce.Platform.Security.Authorization;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Security;
-using VirtoCommerce.ShippingModule.Data.Authorization;
 
-namespace VirtoCommerce.ShippingModule.Web.Authorization;
+namespace VirtoCommerce.ShippingModule.Data.Authorization;
 
 public sealed class StoreAuthorizationHandler(IOptions<MvcNewtonsoftJsonOptions> jsonOptions)
     : PermissionAuthorizationHandlerBase<StoreAuthorizationRequirement>
@@ -27,29 +26,53 @@ public sealed class StoreAuthorizationHandler(IOptions<MvcNewtonsoftJsonOptions>
             var userPermission = context.User.FindPermission(requirement.Permission, _jsonOptions.SerializerSettings);
             if (userPermission != null)
             {
-                var storeSelectedScopes = userPermission.AssignedScopes.OfType<StoreSelectedScope>();
+                var storeSelectedScopes = userPermission.AssignedScopes.OfType<SelectedStoreScope>();
                 var allowedStoreIds = storeSelectedScopes.Select(x => x.StoreId).Distinct().ToArray();
-                if (context.Resource is PickupLocationsSearchCriteria criteria)
+                if (context.Resource is ShippingMethodsSearchCriteria shippingMethodsSearchCriteria)
                 {
-                    if (!criteria.ObjectIds.IsNullOrEmpty())
+                    if (!shippingMethodsSearchCriteria.ObjectIds.IsNullOrEmpty())
                     {
-                        var scopedObjectIds = criteria.ObjectIds.Intersect(allowedStoreIds).ToArray();
+                        var scopedObjectIds = shippingMethodsSearchCriteria.ObjectIds.Intersect(allowedStoreIds).ToArray();
                         if (scopedObjectIds.Length == 0)
                         {
                             context.Fail();
                         }
                         else
                         {
-                            criteria.ObjectIds = scopedObjectIds;
+                            shippingMethodsSearchCriteria.ObjectIds = scopedObjectIds;
                             context.Succeed(requirement);
                         }
                     }
-                    else if (criteria.StoreId != null && allowedStoreIds.Contains(criteria.StoreId))
+                    else if (shippingMethodsSearchCriteria.StoreId != null && allowedStoreIds.Contains(shippingMethodsSearchCriteria.StoreId))
+                    {
+                        context.Succeed(requirement);
+                    }
+                }
+                else if (context.Resource is PickupLocationSearchCriteria pickupLocationSearchCriteria)
+                {
+                    if (!pickupLocationSearchCriteria.ObjectIds.IsNullOrEmpty())
+                    {
+                        var scopedObjectIds = pickupLocationSearchCriteria.ObjectIds.Intersect(allowedStoreIds).ToArray();
+                        if (scopedObjectIds.Length == 0)
+                        {
+                            context.Fail();
+                        }
+                        else
+                        {
+                            pickupLocationSearchCriteria.ObjectIds = scopedObjectIds;
+                            context.Succeed(requirement);
+                        }
+                    }
+                    else if (pickupLocationSearchCriteria.StoreId != null && allowedStoreIds.Contains(pickupLocationSearchCriteria.StoreId))
                     {
                         context.Succeed(requirement);
                     }
                 }
                 else if (context.Resource is PickupLocation pickupLocation && allowedStoreIds.Contains(pickupLocation.StoreId))
+                {
+                    context.Succeed(requirement);
+                }
+                else if (context.Resource is ShippingMethod shippingMethod && allowedStoreIds.Contains(shippingMethod.StoreId))
                 {
                     context.Succeed(requirement);
                 }

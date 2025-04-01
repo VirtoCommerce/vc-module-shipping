@@ -9,7 +9,9 @@ namespace VirtoCommerce.ShippingModule.Data.Repositories
     public interface IShippingRepository : IRepository
     {
         IQueryable<StoreShippingMethodEntity> ShippingMethods { get; }
+        IQueryable<PickupLocationEntity> PickupLocations { get; }
 
         Task<IList<StoreShippingMethodEntity>> GetByIdsAsync(IList<string> ids);
+        Task<IList<PickupLocationEntity>> GetPickupLocationsByIdsAsync(IList<string> ids);
     }
 }

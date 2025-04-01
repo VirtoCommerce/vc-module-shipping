@@ -42,7 +42,7 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
 
                     b.HasIndex("PickupLocationId");
 
-                    b.ToTable("PickupFulfillmentCenter", (string)null);
+                    b.ToTable("PickupFulfillmentRelation", (string)null);
                 });
 
             modelBuilder.Entity("VirtoCommerce.ShippingModule.Data.Model.PickupLocationEntity", b =>
@@ -52,18 +52,17 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("City")
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("ContactEmail")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("ContactPhone")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("CountryCode")
                         .HasMaxLength(64)
@@ -91,6 +90,9 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                     b.Property<string>("GeoLocation")
                         .HasMaxLength(64)
                         .HasColumnType("varchar(64)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Line1")
                         .HasMaxLength(1024)
@@ -132,11 +134,12 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("WorkingHours")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PickupLocations", (string)null);
+                    b.ToTable("PickupLocation", (string)null);
                 });
 
             modelBuilder.Entity("VirtoCommerce.ShippingModule.Data.Model.StoreShippingMethodEntity", b =>
