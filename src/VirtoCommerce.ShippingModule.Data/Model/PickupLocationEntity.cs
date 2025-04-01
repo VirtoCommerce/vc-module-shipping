@@ -121,11 +121,14 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
 
         if (model.TransferFulfillmentCenterIds != null)
         {
-            TransferFulfillmentCenters.AddRange(model.TransferFulfillmentCenterIds.Where(x => x != null).Select(x => new PickupFulfillmentRelationEntity
-            {
-                FulfillmentCenterId = x,
-                PickupLocationId = model.Id,
-            }));
+            TransferFulfillmentCenters = new(
+                model.TransferFulfillmentCenterIds.Where(x => x != null)
+                    .Select(x => new PickupFulfillmentRelationEntity
+                    {
+                        FulfillmentCenterId = x,
+                        PickupLocationId = model.Id,
+                    })
+            );
 
         }
 
