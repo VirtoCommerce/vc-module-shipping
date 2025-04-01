@@ -32,15 +32,15 @@ namespace VirtoCommerce.ShippingModule.Data
                     Rate = GroundOptionRate,
                     Currency = shippingContext.Currency,
                     ShippingMethod = this,
-                    OptionName = "Ground"
+                    OptionName = "Ground",
                 },
                 new ShippingRate
                 {
                     Rate = AirOptionRate,
                     Currency = shippingContext.Currency,
                     ShippingMethod = this,
-                    OptionName = "Air"
-                }
+                    OptionName = "Air",
+                },
             ];
         }
     }

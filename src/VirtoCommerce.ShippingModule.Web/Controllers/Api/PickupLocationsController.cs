@@ -16,8 +16,8 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api;
 public class PickupLocationsController(
     IPickupLocationService pickupLocationService,
     IPickupLocationSearchService pickupLocationSearchService,
-    IAuthorizationService authorizationService
-    ) : Controller
+    IAuthorizationService authorizationService)
+    : Controller
 {
     [HttpPost]
     [Route("search")]

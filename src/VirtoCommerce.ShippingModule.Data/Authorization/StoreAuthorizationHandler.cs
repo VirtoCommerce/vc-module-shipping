@@ -17,8 +17,7 @@ public sealed class StoreAuthorizationHandler(IOptions<MvcNewtonsoftJsonOptions>
 {
     private readonly MvcNewtonsoftJsonOptions _jsonOptions = jsonOptions.Value;
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
-        StoreAuthorizationRequirement requirement)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, StoreAuthorizationRequirement requirement)
     {
         await base.HandleRequirementAsync(context, requirement);
         if (!context.HasSucceeded)

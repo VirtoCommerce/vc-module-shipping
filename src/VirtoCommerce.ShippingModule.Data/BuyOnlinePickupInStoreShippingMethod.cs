@@ -25,8 +25,8 @@ public class BuyOnlinePickupInStoreShippingMethod : ShippingMethod
                 Rate = 0,
                 Currency = shippingContext.Currency,
                 ShippingMethod = this,
-                OptionName = "Pickup"
-            }
+                OptionName = "Pickup",
+            },
         ];
     }
 }
