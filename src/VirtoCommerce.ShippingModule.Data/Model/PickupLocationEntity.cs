@@ -102,6 +102,8 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
 
     public PickupLocationEntity FromModel(PickupLocation model, PrimaryKeyResolvingMap pkMap)
     {
+        pkMap.AddPair(model, this);
+
         Id = model.Id;
         CreatedBy = model.CreatedBy;
         CreatedDate = model.CreatedDate;

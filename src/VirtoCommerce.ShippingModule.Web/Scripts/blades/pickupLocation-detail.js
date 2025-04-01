@@ -51,10 +51,16 @@ angular.module('virtoCommerce.shippingModule')
                 $scope.saveChanges = function () {
                     blade.isLoading = true;
                     blade.currentEntity.storeId = blade.storeId;
-                    pickupLocations.update({}, blade.currentEntity, function (data) {
-                        blade.currentEntity.id = data.id;
-                        blade.refresh(true);
-                    }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                    if (blade.currentEntity.id) {
+                        pickupLocations.update({}, blade.currentEntity, function (data) {
+                            blade.refresh(true);
+                        }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                    } else {
+                        pickupLocations.create({}, blade.currentEntity, function (data) {
+                            blade.currentEntity.id = data.id;
+                            blade.refresh(true);
+                        }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                    }
                 };
 
                 $scope.setForm = function (form) {

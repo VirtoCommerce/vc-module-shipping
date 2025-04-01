@@ -35,7 +35,7 @@ public class PickupLocationsController(
 
     [HttpPost]
     [Route("")]
-    public async Task<ActionResult> CreatePickupLocation([FromBody] PickupLocation pickupLocation)
+    public async Task<ActionResult<PickupLocation>> CreatePickupLocation([FromBody] PickupLocation pickupLocation)
     {
         var authorizationResult = await authorizationService.AuthorizeAsync(User, pickupLocation,
             new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Create));
@@ -44,7 +44,7 @@ public class PickupLocationsController(
             return Forbid();
         }
         await pickupLocationService.SaveChangesAsync([pickupLocation]);
-        return Ok();
+        return Ok(pickupLocation);
     }
 
     [HttpGet]
@@ -62,7 +62,7 @@ public class PickupLocationsController(
     }
 
     [HttpPut("")]
-    public async Task<ActionResult<PickupLocation>> UpdatePickupLocation([FromBody] PickupLocation pickupLocation)
+    public async Task<ActionResult> UpdatePickupLocation([FromBody] PickupLocation pickupLocation)
     {
         var authorizationResult = await authorizationService.AuthorizeAsync(User, pickupLocation,
             new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Update));
@@ -71,7 +71,7 @@ public class PickupLocationsController(
             return Forbid();
         }
         await pickupLocationService.SaveChangesAsync([pickupLocation]);
-        return Ok(pickupLocation);
+        return Ok();
     }
 
     [HttpDelete("{storeId}/{id}")]
