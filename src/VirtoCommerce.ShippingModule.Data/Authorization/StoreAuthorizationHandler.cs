@@ -27,7 +27,7 @@ public sealed class StoreAuthorizationHandler(IOptions<MvcNewtonsoftJsonOptions>
             if (userPermission != null)
             {
                 var storeSelectedScopes = userPermission.AssignedScopes.OfType<SelectedStoreScope>();
-                var allowedStoreIds = storeSelectedScopes.Select(x => x.StoreId).Distinct().ToArray();
+                var allowedStoreIds = storeSelectedScopes.Select(x => x.Scope).Distinct().ToArray();
                 if (context.Resource is ShippingMethodsSearchCriteria shippingMethodsSearchCriteria)
                 {
                     if (!shippingMethodsSearchCriteria.ObjectIds.IsNullOrEmpty())

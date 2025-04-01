@@ -15,6 +15,7 @@ using VirtoCommerce.Platform.Data.Extensions;
 using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Extensions;
 using VirtoCommerce.ShippingModule.Core.Model;
+using VirtoCommerce.ShippingModule.Core.Security;
 using VirtoCommerce.ShippingModule.Core.Services;
 using VirtoCommerce.ShippingModule.Data;
 using VirtoCommerce.ShippingModule.Data.ExportImport;
@@ -76,7 +77,20 @@ namespace VirtoCommerce.ShippingModule.Web
             settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.FixedRateShippingMethod.AllSettings, typeof(FixedRateShippingMethod).Name);
 
             var permissionsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();
-            permissionsRegistrar.RegisterPermissions(ModuleInfo.Id, "Pickup locations", ModuleConstants.Security.Permissions.AllPermissions);
+            permissionsRegistrar.RegisterPermissions(ModuleInfo.Id, "Shipping", ModuleConstants.Security.Permissions.AllPermissions);
+
+            // Register permission scopes
+            AbstractTypeFactory<PermissionScope>.RegisterType<SelectedStoreScope>();
+
+            permissionsRegistrar.WithAvailabeScopesForPermissions(
+                [
+                    ModuleConstants.Security.Permissions.Read,
+                    ModuleConstants.Security.Permissions.Update,
+                    ModuleConstants.Security.Permissions.Delete,
+                    ModuleConstants.Security.Permissions.Create,
+                ],
+                new SelectedStoreScope());
+
 
             var shippingMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IShippingMethodsRegistrar>();
             shippingMethodsRegistrar.RegisterShippingMethod<FixedRateShippingMethod>();
