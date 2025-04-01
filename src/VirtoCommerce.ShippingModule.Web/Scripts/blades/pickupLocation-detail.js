@@ -16,13 +16,13 @@ angular.module('virtoCommerce.shippingModule')
                     }
                 }
 
-                blade.refresh = function (refreshParent) {
+                blade.refresh = function (refreshParent, refreshWidget) {
                     if (!!blade.currentEntity.id) {
                         blade.isLoading = true;
                         pickupLocations.get({ id: blade.currentEntity.id, storeId: blade.storeId }, function (data) {
                             initializeBlade(data);
                             if (refreshParent) {
-                                blade.parentBlade.refresh();
+                                blade.parentBlade.refresh(refreshWidget);
                             }
                         }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
                     } else {
@@ -53,12 +53,12 @@ angular.module('virtoCommerce.shippingModule')
                     blade.currentEntity.storeId = blade.storeId;
                     if (blade.currentEntity.id) {
                         pickupLocations.update({}, blade.currentEntity, function (data) {
-                            blade.refresh(true);
+                            blade.refresh(true, false);
                         }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
                     } else {
                         pickupLocations.create({}, blade.currentEntity, function (data) {
                             blade.currentEntity.id = data.id;
-                            blade.refresh(true);
+                            blade.refresh(true, true);
                         }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
                     }
                 };

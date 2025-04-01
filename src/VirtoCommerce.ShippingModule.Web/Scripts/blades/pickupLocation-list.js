@@ -31,7 +31,7 @@ angular.module('virtoCommerce.shippingModule')
                     }
                 ];
 
-                blade.refresh = function () {
+                blade.refresh = function (refreshWidget) {
                     blade.isLoading = true;
                     pickupLocations.search({
                         storeId: blade.storeId,
@@ -46,6 +46,9 @@ angular.module('virtoCommerce.shippingModule')
                     }, function (error) {
                         bladeNavigationService.setError('Error ' + error.status, blade);
                     });
+                    if (refreshWidget) {
+                        blade.refreshWidget();
+                    }
                 }
 
                 blade.selectNode = function (node) {
