@@ -23,10 +23,10 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
     public virtual ObservableCollection<PickupFulfillmentRelationEntity> TransferFulfillmentCenters { get; set; }
         = new NullCollection<PickupFulfillmentRelationEntity>();
 
-    [StringLength(128)]
+    [StringLength(1024)]
     public string ContactPhone { get; set; }
 
-    [StringLength(128)]
+    [StringLength(1024)]
     public string ContactEmail { get; set; }
 
     public string WorkingHours { get; set; }

@@ -1,4 +1,3 @@
-﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -24,9 +23,9 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     FulfillmentCenterId = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ContactPhone = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
+                    ContactPhone = table.Column<string>(type: "varchar(1024)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ContactEmail = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
+                    ContactEmail = table.Column<string>(type: "varchar(1024)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     WorkingHours = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
