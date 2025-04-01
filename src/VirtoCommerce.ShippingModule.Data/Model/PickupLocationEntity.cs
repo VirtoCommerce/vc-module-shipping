@@ -29,7 +29,6 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
     [StringLength(128)]
     public string ContactEmail { get; set; }
 
-    [StringLength(128)]
     public string WorkingHours { get; set; }
 
     [StringLength(128)]

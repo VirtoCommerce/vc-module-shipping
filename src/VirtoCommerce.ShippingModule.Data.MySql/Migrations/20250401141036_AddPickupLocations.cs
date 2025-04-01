@@ -28,7 +28,7 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ContactEmail = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    WorkingHours = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
+                    WorkingHours = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),

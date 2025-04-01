@@ -22,7 +22,7 @@ namespace VirtoCommerce.ShippingModule.Data.SqlServer.Migrations
                     FulfillmentCenterId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     ContactPhone = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     ContactEmail = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    WorkingHours = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    WorkingHours = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     Line1 = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
                     Line2 = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
