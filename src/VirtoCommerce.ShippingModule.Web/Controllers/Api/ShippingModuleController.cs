@@ -22,6 +22,7 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
     {
         [HttpGet]
         [Route("")]
+        [Authorize(ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<IList<ShippingMethod>>> GetRegisteredShippingMethods()
         {
             var result = await shippingMethodsRegistrar.GetRegisteredMethods();
@@ -54,7 +55,7 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api
         public async Task<ActionResult<ShippingMethod>> UpdateShippingMethod([FromBody] ShippingMethod shippingMethod)
         {
             var authorizationResult = await authorizationService.AuthorizeAsync(User, shippingMethod,
-                new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Read));
+                new StoreAuthorizationRequirement(ModuleConstants.Security.Permissions.Update));
             if (!authorizationResult.Succeeded)
             {
                 return Forbid();
