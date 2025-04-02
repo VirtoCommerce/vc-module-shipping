@@ -30,12 +30,12 @@ angular.module('virtoCommerce.shippingModule')
                     }
                 }
 
-                function isDirty() {
-                    return !angular.equals(blade.currentEntity, blade.origEntity) && blade.hasUpdatePermission();
-                }
-
                 function canSave() {
                     return $scope.formScope && $scope.formScope.$valid && isDirty();
+                }
+
+                function isDirty() {
+                    return !angular.equals(blade.currentEntity, blade.origEntity) && blade.hasUpdatePermission();
                 }
 
                 blade.onClose = function (closeCallback) {
