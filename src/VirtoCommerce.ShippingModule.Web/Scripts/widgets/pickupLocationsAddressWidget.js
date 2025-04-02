@@ -17,6 +17,7 @@ angular.module('virtoCommerce.shippingModule')
                         name: 'city',
                         title: 'shipping.widgets.pickupLocationAddress.address-detail.city',
                         valueType: 'ShortText',
+                        isRequired: true,
                         priority: 3
                     }, {
                         name: 'line1',

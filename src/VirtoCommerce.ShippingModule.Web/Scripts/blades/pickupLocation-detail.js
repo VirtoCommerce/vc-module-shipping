@@ -1,8 +1,8 @@
 angular.module('virtoCommerce.shippingModule')
     .controller('virtoCommerce.shippingModule.pickupLocationDetailController',
-        ['$scope', '$injector', '$translate', 'platformWebApp.bladeNavigationService',
+        ['$scope', '$injector', '$timeout', '$translate', 'platformWebApp.bladeNavigationService',
             'virtoCommerce.shippingModule.pickupLocations', 'FileUploader',
-            function ($scope, $injector, $translate, bladeNavigationService, pickupLocations, FileUploader) {
+            function ($scope, $injector, $timeout, $translate, bladeNavigationService, pickupLocations, FileUploader) {
                 var blade = $scope.blade;
                 $scope.inventoryModuleInstalled = $injector.has('virtoCommerce.inventoryModule.fulfillments')
 
@@ -66,6 +66,21 @@ angular.module('virtoCommerce.shippingModule')
                 $scope.setForm = function (form) {
                     $scope.formScope = form;
                 }
+
+                $scope.onIsActiveChange = function () {
+                    var model = blade.currentEntity;
+
+                    // pickup point is not active if address is incorrect
+                    if (!model.address || !model.address.countryName || !model.address.city) {
+                        blade.error = $translate.instant('shipping.blades.pickup-location-detail.errors.checkAddress');
+                        $timeout(function () {
+                            blade.error = undefined;
+                        }, 4000);
+                        $timeout(function () {
+                            blade.currentEntity.isActive = false;                            
+                        }, 400);
+                    }
+                };
 
                 var contentType = 'image';
                 $scope.fileUploader = new FileUploader({

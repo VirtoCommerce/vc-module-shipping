@@ -62,6 +62,9 @@
           "contactPhone": "Provide contact phone number",
           "fulfillmentCenter": "Provide fulfillment center",
           "transferFulfillmentCenter": "Provide transfer fulfillment сenters"
+        },
+        "errors": {
+          "checkAddress": "Please, check address"
         }
       }
     },
