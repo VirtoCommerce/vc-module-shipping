@@ -1,8 +1,8 @@
 angular.module('virtoCommerce.shippingModule')
     .controller('virtoCommerce.shippingModule.pickupLocationDetailController',
         ['$scope', '$injector', '$translate', 'platformWebApp.bladeNavigationService',
-            'virtoCommerce.shippingModule.pickupLocations',
-            function ($scope, $injector, $translate, bladeNavigationService, pickupLocations) {
+            'virtoCommerce.shippingModule.pickupLocations', 'FileUploader',
+            function ($scope, $injector, $translate, bladeNavigationService, pickupLocations, FileUploader) {
                 var blade = $scope.blade;
                 $scope.inventoryModuleInstalled = $injector.has('virtoCommerce.inventoryModule.fulfillments')
 
@@ -67,6 +67,27 @@ angular.module('virtoCommerce.shippingModule')
                     $scope.formScope = form;
                 }
 
+                var contentType = 'image';
+                $scope.fileUploader = new FileUploader({
+                    url: `api/assets?folderUrl=cms-content/${contentType}/assets`,
+                    headers: { Accept: 'application/json' },
+                    autoUpload: true,
+                    removeAfterUpload: true,
+                    onBeforeUploadItem: function (fileItem) {
+                        blade.isLoading = true;
+                    },
+                    onSuccessItem: function (fileItem, response, status, headers) {
+                        $scope.$broadcast('filesUploaded', { items: response });
+                    },
+                    onErrorItem: function (fileItem, response, status, headers) {
+                        bladeNavigationService.setError(`${fileItem._file.name} failed: ${(response.message ? response.message : status)}`, blade);
+                    },
+                    onCompleteAll: function () {
+                        blade.isLoading = false;
+                    }
+                });
+
+
                 $scope.getDictionaryValues = function (setting, callback) {
                     callback(setting.allowedValues);
                 };
@@ -86,6 +107,12 @@ angular.module('virtoCommerce.shippingModule')
                         icon: 'fa fa-undo',
                         executeMethod: function () {
                             angular.copy(blade.origEntity, blade.currentEntity);
+                            $scope.$broadcast('resetContent',
+                                {
+                                    body: blade.currentEntity.workingHours,
+                                    id: "workingHoursEditor"
+                                });
+
                         },
                         canExecuteMethod: isDirty,
                         permission: blade.updatePermission
