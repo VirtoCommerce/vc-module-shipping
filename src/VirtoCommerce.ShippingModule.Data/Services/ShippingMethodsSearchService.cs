@@ -82,6 +82,11 @@ namespace VirtoCommerce.ShippingModule.Data.Services
         {
             var query = ((IShippingRepository)repository).ShippingMethods;
 
+            // Return only registered shipping methods
+            var registeredShippingMethods = AbstractTypeFactory<ShippingMethod>.AllTypeInfos.Select(x => x.TypeName).ToArray();
+            query = query.Where(x => registeredShippingMethods.Contains(x.Code));
+
+
             if (!string.IsNullOrEmpty(criteria.Keyword))
             {
                 query = query.Where(x => x.Code.Contains(criteria.Keyword) || x.Id.Contains(criteria.Keyword));
