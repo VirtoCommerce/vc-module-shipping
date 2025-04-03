@@ -77,7 +77,7 @@ angular.module('virtoCommerce.shippingModule')
                             blade.error = undefined;
                         }, 4000);
                         $timeout(function () {
-                            blade.currentEntity.isActive = false;                            
+                            blade.currentEntity.isActive = false;
                         }, 400);
                     }
                 };
