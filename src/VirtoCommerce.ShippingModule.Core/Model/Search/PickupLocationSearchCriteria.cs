@@ -4,5 +4,6 @@ namespace VirtoCommerce.ShippingModule.Core.Model.Search;
 
 public class PickupLocationSearchCriteria : SearchCriteriaBase
 {
+    public bool? IsActive { get; set; }
     public string StoreId { get; set; }
 }
