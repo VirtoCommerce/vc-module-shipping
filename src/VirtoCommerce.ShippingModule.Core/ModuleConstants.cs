@@ -8,6 +8,19 @@ namespace VirtoCommerce.ShippingModule.Core
     [ExcludeFromCodeCoverage]
     public class ModuleConstants
     {
+        public static class Security
+        {
+            public static class Permissions
+            {
+                public const string Read = "shipping:read";
+                public const string Create = "shipping:create";
+                public const string Update = "shipping:update";
+                public const string Delete = "shipping:delete";
+
+                public static readonly string[] AllPermissions = [Read, Create, Update, Delete];
+            }
+        }
+
         public static class Settings
         {
             public static class General
