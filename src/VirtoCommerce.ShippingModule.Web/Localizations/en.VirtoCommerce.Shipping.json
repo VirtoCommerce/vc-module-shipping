@@ -2,7 +2,6 @@
   "shipping": {
     "blades": {
       "shipping-method-detail": {
-        "subtitle": "Edit shipping method",
         "labels": {
           "is-active": "Is active",
           "name": "Name",
@@ -18,20 +17,88 @@
         }
       },
       "shipping-method-list": {
-        "subtitle": "",
         "labels": {
           "is-active": "Is active",
           "shipping-method": "Shipping method",
           "note": "Arrange the order in which shipping methods are displayed in the web store. Use drag and drop to reorder them"
         }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "active": "Active",
+          "name": "Name"
+        }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Create new pickup location",
+          "name": "Name",
+          "active": "Active",
+          "geoLocation": "Location",
+          "outerId": "Outer ID",
+          "description": "Description",
+          "working-hours": "Working hours",
+          "contactEmail": "Contact email",
+          "contactPhone": "Contact phone",
+          "fulfillmentCenter": "Fulfillment center",
+          "transferFulfillmentCenter": "Transfer fulfillment centers"
+        },
+        "descriptions": {
+          "name": "Name of the pickup location point",
+          "geoLocation": "Enter latitude and longitude separated by a comma without spaces, e.g. 41.40338,8.17403",
+          "outerId": "Unique ID to connect pickup location to external system",
+          "description": "Description for the pickup location point",
+          "working-hours": "Information about working hours of the pickup point",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Enter name",
+          "geoLocation": "Enter latitude and longitude",
+          "outerId": "Enter ID in an outer system",
+          "description": "Provide description for the pickup location point",
+          "working-hours": "Porvide info about working hours",
+          "contactEmail": "Provide contact email",
+          "contactPhone": "Provide contact phone number",
+          "fulfillmentCenter": "Provide fulfillment center",
+          "transferFulfillmentCenter": "Provide transfer fulfillment сenters"
+        },
+        "errors": {
+          "checkAddress": "Please, check address"
+        }
       }
     },
     "dialogs": {
+      "pickup-location-delete": {
+        "title": "Delete pickup location",
+        "message": "Are you sure you want to delete the pickup location?"
+      },
+      "pickup-location-save": {
+        "title": "Save pickup location",
+        "message": "The pickup location has been modified. Do you want to save changes?"
+      },
+      "shipping-method-save": {
+        "title": "Save shipping method",
+        "message": "The shipping method has been modified. Do you want to save changes?"
+      }
     },
     "widgets": {
       "store-shipping-widget": {
         "title": "Shipping methods",
-        "blade-subtitle": "Shipping methods"
+        "blade-title": "Shipping methods"
+      },
+      "pickup-location-widget": {
+        "title": "Pickup locations",
+        "blade-title": "Pickup locations"
+      },
+      "pickupLocationAddress": {
+        "no-address": "No address set",
+        "address-detail": {
+          "city": "City",
+          "address1": "Line 1",
+          "address2": "Line 2",
+          "zip-code": "Postal code"
+        }
       }
     },
     "labels": {

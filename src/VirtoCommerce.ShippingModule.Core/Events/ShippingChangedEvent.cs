@@ -1,13 +1,8 @@
 using System.Collections.Generic;
-using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.ShippingModule.Core.Model;
 
-namespace VirtoCommerce.ShippingModule.Core.Events
-{
-    public class ShippingChangedEvent : GenericChangedEntryEvent<ShippingMethod>
-    {
-        public ShippingChangedEvent(IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries) : base(changedEntries)
-        {
-        }
-    }
-}
+namespace VirtoCommerce.ShippingModule.Core.Events;
+
+public class ShippingChangedEvent(IEnumerable<GenericChangedEntry<ShippingMethod>> changedEntries)
+    : GenericChangedEntryEvent<ShippingMethod>(changedEntries);
