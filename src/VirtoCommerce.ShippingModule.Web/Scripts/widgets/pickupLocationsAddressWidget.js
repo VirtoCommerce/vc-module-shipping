@@ -33,6 +33,7 @@ angular.module('virtoCommerce.shippingModule')
                         name: 'postalCode',
                         title: 'shipping.widgets.pickupLocationAddress.address-detail.zip-code',
                         valueType: 'ShortText',
+                        isRequired: true,
                         priority: 6
                     }];
 

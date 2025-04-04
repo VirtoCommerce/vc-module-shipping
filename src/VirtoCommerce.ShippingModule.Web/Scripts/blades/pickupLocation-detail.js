@@ -38,6 +38,12 @@ angular.module('virtoCommerce.shippingModule')
                     return !angular.equals(blade.currentEntity, blade.origEntity) && blade.hasUpdatePermission();
                 }
 
+                function isAddressValid() {
+                    var model = blade.currentEntity;
+                    return model.address && model.address.countryName
+                        && model.address.city && model.address.postalCode;
+                }
+
                 blade.onClose = function (closeCallback) {
                     bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade,
                         $scope.saveChanges, closeCallback,
@@ -51,6 +57,11 @@ angular.module('virtoCommerce.shippingModule')
                 $scope.saveChanges = function () {
                     blade.isLoading = true;
                     blade.currentEntity.storeId = blade.storeId;
+
+                    if (blade.currentEntity.isActive && !isAddressValid()) {
+                        blade.currentEntity.isActive = false;
+                    }
+
                     if (blade.currentEntity.id) {
                         pickupLocations.update({}, blade.currentEntity, function (data) {
                             blade.refresh(true, false);
@@ -68,10 +79,8 @@ angular.module('virtoCommerce.shippingModule')
                 }
 
                 $scope.onIsActiveChange = function () {
-                    var model = blade.currentEntity;
-
                     // pickup point is not active if address is incorrect
-                    if (!model.address || !model.address.countryName || !model.address.city) {
+                    if (!isAddressValid()) {
                         blade.error = $translate.instant('shipping.blades.pickup-location-detail.errors.checkAddress');
                         $timeout(function () {
                             blade.error = undefined;
