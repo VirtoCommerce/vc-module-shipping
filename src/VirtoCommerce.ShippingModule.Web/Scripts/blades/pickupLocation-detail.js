@@ -71,7 +71,8 @@ angular.module('virtoCommerce.shippingModule')
                     var model = blade.currentEntity;
 
                     // pickup point is not active if address is incorrect
-                    if (!model.address || !model.address.countryName || !model.address.city) {
+                    if (!model.address || !model.address.countryName
+                        || !model.address.city || !model.address.postalCode) {
                         blade.error = $translate.instant('shipping.blades.pickup-location-detail.errors.checkAddress');
                         $timeout(function () {
                             blade.error = undefined;
