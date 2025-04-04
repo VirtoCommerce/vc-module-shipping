@@ -80,7 +80,7 @@ angular.module('virtoCommerce.shippingModule')
 
                 $scope.onIsActiveChange = function () {
                     // pickup point is not active if address is incorrect
-                    if (isAddressValid()) {
+                    if (!isAddressValid()) {
                         blade.error = $translate.instant('shipping.blades.pickup-location-detail.errors.checkAddress');
                         $timeout(function () {
                             blade.error = undefined;
