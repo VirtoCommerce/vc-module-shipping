@@ -53,20 +53,18 @@ namespace VirtoCommerce.ShippingModule.Data.Services
 
         protected override ShippingMethod ProcessModel(string responseGroup, StoreShippingMethodEntity entity, ShippingMethod model)
         {
-            var registered = AbstractTypeFactory<ShippingMethod>.AllTypeInfos;
+            var typeName = string.IsNullOrEmpty(entity.TypeName) ? $"{entity.Code}ShippingMethod" : entity.TypeName;
+            var shippingMethod = AbstractTypeFactory<ShippingMethod>.TryCreateInstance(typeName, defaultObj: null);
 
-            if (registered.Any(x => x.TypeName.EqualsIgnoreCase(entity.TypeName)))
+            if (shippingMethod is null)
             {
-                var shippingMethod = AbstractTypeFactory<ShippingMethod>.TryCreateInstance(string.IsNullOrEmpty(entity.TypeName) ? $"{entity.Code}ShippingMethod" : entity.TypeName);
-                if (shippingMethod != null)
-                {
-                    entity.ToModel(shippingMethod);
-                    _settingManager.DeepLoadSettingsAsync(shippingMethod).GetAwaiter().GetResult();
-                    return shippingMethod;
-                }
+                return null;
             }
 
-            return null;
+            entity.ToModel(shippingMethod);
+            _settingManager.DeepLoadSettingsAsync(shippingMethod).GetAwaiter().GetResult();
+
+            return shippingMethod;
         }
 
         protected override Task AfterSaveChangesAsync(IList<ShippingMethod> models, IList<GenericChangedEntry<ShippingMethod>> changedEntries)
