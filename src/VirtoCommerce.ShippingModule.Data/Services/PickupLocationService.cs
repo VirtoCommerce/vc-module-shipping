@@ -24,7 +24,8 @@ public class PickupLocationService(
 {
     protected override async Task BeforeSaveChanges(IList<PickupLocation> models)
     {
-        await new PickupLocationsValidator().ValidateAndThrowAsync(models);
+        var validator = AbstractTypeFactory<PickupLocationsValidator>.TryCreateInstance();
+        await validator.ValidateAndThrowAsync(models);
         await base.BeforeSaveChanges(models);
     }
 
