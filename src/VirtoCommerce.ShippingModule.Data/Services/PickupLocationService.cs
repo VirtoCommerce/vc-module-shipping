@@ -9,9 +9,9 @@ using VirtoCommerce.Platform.Data.GenericCrud;
 using VirtoCommerce.ShippingModule.Core.Events;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Services;
-using VirtoCommerce.ShippingModule.Core.Validators;
 using VirtoCommerce.ShippingModule.Data.Model;
 using VirtoCommerce.ShippingModule.Data.Repositories;
+using VirtoCommerce.ShippingModule.Data.Validators;
 
 namespace VirtoCommerce.ShippingModule.Data.Services;
 

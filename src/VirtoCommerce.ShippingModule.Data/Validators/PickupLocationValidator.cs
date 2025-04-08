@@ -1,7 +1,7 @@
 using FluentValidation;
 using VirtoCommerce.ShippingModule.Core.Model;
 
-namespace VirtoCommerce.ShippingModule.Core.Validators;
+namespace VirtoCommerce.ShippingModule.Data.Validators;
 
 public class PickupLocationValidator : AbstractValidator<PickupLocation>
 {
