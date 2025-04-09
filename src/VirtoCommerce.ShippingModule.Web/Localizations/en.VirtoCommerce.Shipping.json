@@ -25,15 +25,15 @@
       },
       "pickup-location-list": {
         "labels": {
-          "active": "Active",
-          "name": "Name"
+          "name": "Name",
+          "is-active": "Active"
         }
       },
       "pickup-location-detail": {
         "labels": {
           "create": "Create new pickup location",
           "name": "Name",
-          "active": "Active",
+          "is-active": "Active",
           "geoLocation": "Location",
           "outerId": "Outer ID",
           "description": "Description",

@@ -22,11 +22,15 @@
                 cellTemplate: 'list-actions.cell.html',
                 enableColumnResizing: false,
                 enableSorting: false,
-                pinnedLeft: true,
+                pinnedLeft: true, 
                 width: 30,
             }, {
                 name: 'name',
-                displayName: 'stores.blades.stores-list.labels.name',
+                displayName: 'shipping.blades.pickup-location-list.labels.name',
+            }, {
+                name: 'isActive',
+                displayName: 'shipping.blades.pickup-location-list.labels.is-active',
+                width: 65
             }]
         })">
       <div ui-grid="gridOptions" ui-grid-auto-resize ui-grid-save-state ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid-height></div>
