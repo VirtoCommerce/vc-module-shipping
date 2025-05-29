@@ -8,6 +8,6 @@ public static class ConfigurationExtensions
     public static bool IsPickupEnabled(this IConfiguration configuration)
     {
         var value = configuration["Shipping:IsPickupEnabled"];
-        return value.TryParse(false);
+        return value.TryParse(true);
     }
 }
