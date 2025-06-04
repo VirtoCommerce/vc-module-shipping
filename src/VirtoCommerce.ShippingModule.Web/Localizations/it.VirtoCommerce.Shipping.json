@@ -115,6 +115,14 @@
         "title": "Tariffa di spedizione terrestre",
         "description": "Tariffa fissa di spedizione terrestre"
       }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "Abilita Google Maps per BOPIS",
+      "description": "Mostra le sedi di ritiro in negozio utilizzando Google Maps"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Chiave API di Google Maps",
+      "description": "Chiave API per caricare Google Maps nella visualizzazione del BOPIS"
     }
   },
   "module": {
