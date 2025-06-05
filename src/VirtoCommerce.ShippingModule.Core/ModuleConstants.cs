@@ -23,9 +23,30 @@ namespace VirtoCommerce.ShippingModule.Core
 
         public static class Settings
         {
+            public static SettingDescriptor EnableGoogleMapsForBopis { get; } = new SettingDescriptor
+            {
+                Name = "Shipping.Bopis.GoogleMaps.Enabled",
+                GroupName = "Shipping|Bopis",
+                ValueType = SettingValueType.Boolean,
+                DefaultValue = false,
+                IsPublic = true,
+            };
+
+            public static SettingDescriptor GoogleMapsApiKey { get; } = new SettingDescriptor
+            {
+                Name = "Shipping.Bopis.GoogleMaps.ApiKey",
+                GroupName = "Shipping|Bopis",
+                ValueType = SettingValueType.ShortText,
+                DefaultValue = false,
+                IsPublic = true,
+            };
+
             public static class General
             {
-                public static IEnumerable<SettingDescriptor> AllSettings => Enumerable.Empty<SettingDescriptor>();
+                public static IEnumerable<SettingDescriptor> AllSettings => [
+                    EnableGoogleMapsForBopis,
+                    GoogleMapsApiKey
+                    ];
             }
 
             public static class FixedRateShippingMethod
@@ -56,7 +77,17 @@ namespace VirtoCommerce.ShippingModule.Core
                 }
             }
 
+            public static IEnumerable<SettingDescriptor> StoreSettings
+            {
+                get
+                {
+                    yield return EnableGoogleMapsForBopis;
+                    yield return GoogleMapsApiKey;
+                }
+            }
+
             public static IEnumerable<SettingDescriptor> AllSettings => General.AllSettings.Concat(FixedRateShippingMethod.AllSettings);
+
         }
     }
 }

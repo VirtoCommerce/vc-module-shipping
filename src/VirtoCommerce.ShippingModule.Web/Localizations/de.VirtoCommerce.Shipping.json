@@ -115,6 +115,14 @@
         "title": "Bodenversandpreis",
         "description": "Fester Bodenversandpreis"
       }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "Google Maps für BOPIS aktivieren",
+      "description": "Abholorte im Geschäft mit Google Maps anzeigen"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Google Maps API-Schlüssel",
+      "description": "API-Schlüssel zur Anzeige von Abholorten mit Google Maps"
     }
   },
   "module": {

@@ -115,6 +115,14 @@
         "title": "陸上配送料金",
         "description": "固定陸上配送料金"
       }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "BOPIS 用の Google マップを有効にする",
+      "description": "Google マップで店舗受取場所を表示します。"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Google マップ API キ",
+      "description": "店舗受取に Google マップを読み込むための API キーです。"
     }
   },
   "module": {

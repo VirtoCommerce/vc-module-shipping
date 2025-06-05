@@ -115,6 +115,14 @@
         "title": "Тариф наземной доставки",
         "description": "Фиксированный тариф наземной доставки"
       }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "Включить Google Maps для BOPIS",
+      "description": "Показывать точки самовывоза на карте Google"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Ключ API для Google Maps",
+      "description": "Ключ API для отображения карт Google на экране самовывоза"
     }
   },
   "module": {
