@@ -115,6 +115,14 @@
         "title": "Stawka wysyłki lądowej",
         "description": "Stała stawka wysyłki lądowej"
       }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "Włącz Mapy Google dla BOPIS",
+      "description": "Wyświetl lokalizacje odbioru osobistego za pomocą Map Google"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Klucz API Google Maps",
+      "description": "Klucz API używany do ładowania Map Google dla odbioru osobistego"
     }
   },
   "module": {

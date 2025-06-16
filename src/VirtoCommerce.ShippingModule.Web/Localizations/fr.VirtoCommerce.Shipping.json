@@ -115,7 +115,16 @@
         "title": "Tarif de livraison terrestre",
         "description": "Tarif de livraison terrestre fixe"
       }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "Activer Google Maps pour le BOPIS",
+      "description": "Afficher les points de retrait en magasin avec Google Maps"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Clé API Google Maps",
+      "description": "Clé API pour afficher Google Maps dans les options de retrait en magasin"
     }
+
   },
   "module": {
     "VirtoCommerce.Shipping": {
