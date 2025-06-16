@@ -115,6 +115,14 @@
         "title": "陆运费",
         "description": "固定陆运费"
       }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "启用 BOPIS 的 Google 地图显示",
+      "description": "使用 Google 地图显示门店自提地点。"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Google 地图 API 密钥",
+      "description": "用于加载门店自提地图的 Google Maps API 密钥。"
     }
   },
   "module": {

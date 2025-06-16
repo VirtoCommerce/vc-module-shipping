@@ -20,7 +20,7 @@
   <iconUrl>Modules/$(VirtoCommerce.Shipping)/Content/logo.png</iconUrl>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
   <releaseNotes />
-  <copyright>Copyright © 2011-2024 Virto Commerce. All rights reserved</copyright>
+  <copyright>Copyright © 2011-2025 Virto Commerce. All rights reserved</copyright>
   <tags>shipping</tags>
   <assemblyFile>VirtoCommerce.ShippingModule.Web.dll</assemblyFile>
   <moduleType>VirtoCommerce.ShippingModule.Web.Module, VirtoCommerce.ShippingModule.Web</moduleType>

@@ -24,6 +24,7 @@ using VirtoCommerce.ShippingModule.Data.PostgreSql;
 using VirtoCommerce.ShippingModule.Data.Repositories;
 using VirtoCommerce.ShippingModule.Data.Services;
 using VirtoCommerce.ShippingModule.Data.SqlServer;
+using VirtoCommerce.StoreModule.Core.Model;
 
 namespace VirtoCommerce.ShippingModule.Web
 {
@@ -75,6 +76,7 @@ namespace VirtoCommerce.ShippingModule.Web
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
             settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
             settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.FixedRateShippingMethod.AllSettings, typeof(FixedRateShippingMethod).Name);
+            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.StoreSettings, nameof(Store));
 
             var permissionsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();
             permissionsRegistrar.RegisterPermissions(ModuleInfo.Id, "Shipping", ModuleConstants.Security.Permissions.AllPermissions);
