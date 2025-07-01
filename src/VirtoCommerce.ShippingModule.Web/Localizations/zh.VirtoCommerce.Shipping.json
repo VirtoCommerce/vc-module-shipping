@@ -42,8 +42,8 @@
           "contactPhone": "联系电话",
           "fulfillmentCenter": "履约中心",
           "transferFulfillmentCenter": "转运履约中心",
-          "readyForPickup": "准备取货所需天数",
-          "pickupDeadline": "取货可用时长（天）"
+          "deliveryDays": "准备取货所需天数",
+          "storageDays": "取货可用时长（天）"
         },
         "descriptions": {
           "name": "自提点的名称",
@@ -64,8 +64,8 @@
           "contactPhone": "请输入联系电话",
           "fulfillmentCenter": "请输入履约中心",
           "transferFulfillmentCenter": "请输入转运履约中心",
-          "readyForPickup": "",
-          "pickupDeadline": ""
+          "deliveryDays": "",
+          "storageDays": ""
         }
       }
     },

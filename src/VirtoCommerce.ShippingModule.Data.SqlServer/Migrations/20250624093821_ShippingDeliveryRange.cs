@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,13 +11,13 @@ namespace VirtoCommerce.ShippingModule.Data.SqlServer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "PickupDeadline",
+                name: "StorageDays",
                 table: "PickupLocation",
                 type: "int",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "ReadyForPickup",
+                name: "DeliveryDays",
                 table: "PickupLocation",
                 type: "int",
                 nullable: true);
@@ -27,11 +27,11 @@ namespace VirtoCommerce.ShippingModule.Data.SqlServer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "PickupDeadline",
+                name: "StorageDays",
                 table: "PickupLocation");
 
             migrationBuilder.DropColumn(
-                name: "ReadyForPickup",
+                name: "DeliveryDays",
                 table: "PickupLocation");
         }
     }

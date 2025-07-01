@@ -42,8 +42,8 @@
           "contactPhone": "Telefon kontaktowy",
           "fulfillmentCenter": "Centrum realizacji zamówień",
           "transferFulfillmentCenter": "Centra transferowe",
-          "readyForPickup": "Liczba dni do przygotowania do odbioru",
-          "pickupDeadline": "Czas dostępności zamówienia do odbioru (w dniach)"
+          "deliveryDays": "Liczba dni do przygotowania do odbioru",
+          "storageDays": "Czas dostępności zamówienia do odbioru (w dniach)"
         },
         "descriptions": {
           "name": "Nazwa punktu odbioru",
@@ -64,8 +64,8 @@
           "contactPhone": "Podaj numer telefonu kontaktowego",
           "fulfillmentCenter": "Podaj centrum realizacji zamówień",
           "transferFulfillmentCenter": "Podaj centra transferowe",
-          "readyForPickup": "",
-          "pickupDeadline": ""
+          "deliveryDays": "",
+          "storageDays": ""
         }
       }
     },

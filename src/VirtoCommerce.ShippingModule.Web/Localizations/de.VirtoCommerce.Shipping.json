@@ -42,8 +42,8 @@
           "contactPhone": "Kontakttelefon",
           "fulfillmentCenter": "Versandzentrum",
           "transferFulfillmentCenter": "Umlagerungszentren",
-          "readyForPickup": "Tage bis zur Abholbereitschaft",
-          "pickupDeadline": "Abholdauer in Tagen"
+          "deliveryDays": "Tage bis zur Abholbereitschaft",
+          "storageDays": "Abholdauer in Tagen"
         },
         "descriptions": {
           "name": "Name der Abholstation",
@@ -64,8 +64,8 @@
           "contactPhone": "Kontakttelefonnummer eingeben",
           "fulfillmentCenter": "Versandzentrum angeben",
           "transferFulfillmentCenter": "Umlagerungszentren angeben",
-          "readyForPickup": "",
-          "pickupDeadline": ""
+          "deliveryDays": "",
+          "storageDays": ""
         }
       }
     },

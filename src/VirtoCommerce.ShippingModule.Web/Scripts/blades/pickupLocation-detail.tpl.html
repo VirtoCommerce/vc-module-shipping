@@ -105,23 +105,23 @@
           <div class="columns clearfix">
             <div class="column">
               <div class="form-group">
-                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.readyForPickup' | translate }}</label>
+                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.deliveryDays' | translate }}</label>
                 <div class="form-input __number">
                   <input smart-float num-type="integer"
                          ng-required="false"
-                         ng-model="blade.currentEntity.readyForPickup"
-                         placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.readyForPickup' | translate }}" />
+                         ng-model="blade.currentEntity.deliveryDays"
+                         placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.deliveryDays' | translate }}" />
                 </div>
               </div>
             </div>
             <div class="column">
               <div class="form-group">
-                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.pickupDeadline' | translate }}</label>
+                <label class="form-label">{{ 'shipping.blades.pickup-location-detail.labels.storageDays' | translate }}</label>
                 <div class="form-input __number">
                   <input smart-float num-type="integer"
                          ng-required="false"
-                         ng-model="blade.currentEntity.pickupDeadline"
-                         placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.pickupDeadline' | translate }}" />
+                         ng-model="blade.currentEntity.storageDays"
+                         placeholder="{{ 'shipping.blades.pickup-location-detail.placeholders.storageDays' | translate }}" />
                 </div>
               </div>
             </div>

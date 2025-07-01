@@ -42,8 +42,8 @@
           "contactPhone": "Telefono di contatto",
           "fulfillmentCenter": "Centro logistico",
           "transferFulfillmentCenter": "Centri di trasferimento",
-          "readyForPickup": "Giorni prima che sia pronto per il ritiro",
-          "pickupDeadline": "Durata del ritiro in giorni"
+          "deliveryDays": "Giorni prima che sia pronto per il ritiro",
+          "storageDays": "Durata del ritiro in giorni"
         },
         "descriptions": {
           "name": "Nome del punto di ritiro",
@@ -64,8 +64,8 @@
           "contactPhone": "Fornisci il numero di telefono di contatto",
           "fulfillmentCenter": "Indica il centro logistico",
           "transferFulfillmentCenter": "Indica i centri di trasferimento",
-          "readyForPickup": "",
-          "pickupDeadline": ""
+          "deliveryDays": "",
+          "storageDays": ""
         }
       }
     },

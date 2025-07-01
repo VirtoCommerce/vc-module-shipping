@@ -42,8 +42,8 @@
           "contactPhone": "Téléphone de contact",
           "fulfillmentCenter": "Centre de distribution",
           "transferFulfillmentCenter": "Centres de transfert",
-          "readyForPickup": "Jours avant disponibilité pour le retrait",
-          "pickupDeadline": "Durée de disponibilité en point de retrait (en jours)"
+          "deliveryDays": "Jours avant disponibilité pour le retrait",
+          "storageDays": "Durée de disponibilité en point de retrait (en jours)"
         },
         "descriptions": {
           "name": "Nom du point de retrait",
@@ -64,8 +64,8 @@
           "contactPhone": "Fournissez le numéro de téléphone de contact",
           "fulfillmentCenter": "Indiquez le centre de distribution",
           "transferFulfillmentCenter": "Indiquez les centres de transfert",
-          "readyForPickup": "",
-          "pickupDeadline": ""
+          "deliveryDays": "",
+          "storageDays": ""
         }
       }
     },
