@@ -41,7 +41,9 @@
           "contactEmail": "連絡用メールアドレス",
           "contactPhone": "連絡用電話番号",
           "fulfillmentCenter": "フルフィルメントセンター",
-          "transferFulfillmentCenter": "転送フルフィルメントセンター"
+          "transferFulfillmentCenter": "転送フルフィルメントセンター",
+          "readyForPickup": "受け取り準備までの日数",
+          "pickupDeadline": "受け取り可能な期間（日数）"
         },
         "descriptions": {
           "name": "受け取り場所の名称",
@@ -61,7 +63,9 @@
           "contactEmail": "連絡用メールアドレスを入力",
           "contactPhone": "連絡用電話番号を入力",
           "fulfillmentCenter": "フルフィルメントセンターを入力",
-          "transferFulfillmentCenter": "転送フルフィルメントセンターを入力"
+          "transferFulfillmentCenter": "転送フルフィルメントセンターを入力",
+          "readyForPickup": "",
+          "pickupDeadline": ""
         }
       }
     },

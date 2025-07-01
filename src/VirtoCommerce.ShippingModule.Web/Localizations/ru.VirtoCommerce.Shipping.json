@@ -41,7 +41,9 @@
           "contactEmail": "Контактный Email",
           "contactPhone": "Контактный телефон",
           "fulfillmentCenter": "Центр выполнения заказов",
-          "transferFulfillmentCenter": "Дополнительные центры"
+          "transferFulfillmentCenter": "Дополнительные центры",
+          "readyForPickup": "Дней до готовности к выдаче",
+          "pickupDeadline": "Срок хранения на пункте выдачи (в днях)"
         },
         "descriptions": {
           "name": "Название точки самовывоза",
@@ -61,7 +63,9 @@
           "contactEmail": "Контактный email",
           "contactPhone": "Контактный телефон",
           "fulfillmentCenter": "Выберите центр обеспечения заказов",
-          "transferFulfillmentCenter": "Выберите дополнительные центры обеспечения заказов"
+          "transferFulfillmentCenter": "Выберите дополнительные центры обеспечения заказов",
+          "readyForPickup": "",
+          "pickupDeadline": ""
         }
       }
     },

@@ -41,7 +41,9 @@
           "contactEmail": "Contact email",
           "contactPhone": "Contact phone",
           "fulfillmentCenter": "Fulfillment center",
-          "transferFulfillmentCenter": "Transfer fulfillment centers"
+          "transferFulfillmentCenter": "Transfer fulfillment centers",
+          "readyForPickup": "Days until ready for pickup",
+          "pickupDeadline": "Pickup duration in days"
         },
         "descriptions": {
           "name": "Name of the pickup location point",
@@ -61,7 +63,9 @@
           "contactEmail": "Provide contact email",
           "contactPhone": "Provide contact phone number",
           "fulfillmentCenter": "Provide fulfillment center",
-          "transferFulfillmentCenter": "Provide transfer fulfillment сenters"
+          "transferFulfillmentCenter": "Provide transfer fulfillment сenters",
+          "readyForPickup": "",
+          "pickupDeadline": ""
         },
         "errors": {
           "checkAddress": "Please, check address"

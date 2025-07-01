@@ -29,6 +29,9 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
     [StringLength(1024)]
     public string ContactEmail { get; set; }
 
+    public int? ReadyForPickup { get; set; }
+    public int? PickupDeadline { get; set; }
+
     public string WorkingHours { get; set; }
 
     [StringLength(128)]
@@ -82,6 +85,8 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
         model.ContactEmail = ContactEmail;
         model.ContactPhone = ContactPhone;
         model.WorkingHours = WorkingHours;
+        model.ReadyForPickup = ReadyForPickup;
+        model.PickupDeadline = PickupDeadline;
 
         model.Address = AbstractTypeFactory<PickupLocationAddress>.TryCreateInstance();
 
@@ -118,6 +123,8 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
         ContactEmail = model.ContactEmail;
         ContactPhone = model.ContactPhone;
         WorkingHours = model.WorkingHours;
+        ReadyForPickup = model.ReadyForPickup;
+        PickupDeadline = model.PickupDeadline;
 
         if (model.TransferFulfillmentCenterIds != null)
         {
@@ -171,6 +178,8 @@ public class PickupLocationEntity : AuditableEntity, IDataEntity<PickupLocationE
         target.PostalCode = PostalCode;
         target.RegionId = RegionId;
         target.RegionName = RegionName;
+        target.ReadyForPickup = ReadyForPickup;
+        target.PickupDeadline = PickupDeadline;
 
         if (!TransferFulfillmentCenters.IsNullCollection())
         {

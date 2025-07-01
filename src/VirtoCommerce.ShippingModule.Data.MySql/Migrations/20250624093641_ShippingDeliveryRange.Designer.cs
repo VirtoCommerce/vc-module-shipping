@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtoCommerce.ShippingModule.Data.Repositories;
 
@@ -11,9 +12,11 @@ using VirtoCommerce.ShippingModule.Data.Repositories;
 namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
 {
     [DbContext(typeof(ShippingDbContext))]
-    partial class ShippingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250624093641_ShippingDeliveryRange")]
+    partial class ShippingDeliveryRange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
