@@ -41,7 +41,9 @@
           "contactEmail": "E-mail kontaktowy",
           "contactPhone": "Telefon kontaktowy",
           "fulfillmentCenter": "Centrum realizacji zamówień",
-          "transferFulfillmentCenter": "Centra transferowe"
+          "transferFulfillmentCenter": "Centra transferowe",
+          "deliveryDays": "Liczba dni do przygotowania do odbioru",
+          "storageDays": "Czas dostępności zamówienia do odbioru (w dniach)"
         },
         "descriptions": {
           "name": "Nazwa punktu odbioru",
@@ -61,7 +63,9 @@
           "contactEmail": "Podaj e-mail kontaktowy",
           "contactPhone": "Podaj numer telefonu kontaktowego",
           "fulfillmentCenter": "Podaj centrum realizacji zamówień",
-          "transferFulfillmentCenter": "Podaj centra transferowe"
+          "transferFulfillmentCenter": "Podaj centra transferowe",
+          "deliveryDays": "",
+          "storageDays": ""
         }
       }
     },

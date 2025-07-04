@@ -41,7 +41,9 @@
           "contactEmail": "Correo electrónico de contacto",
           "contactPhone": "Teléfono de contacto",
           "fulfillmentCenter": "Centro de distribución",
-          "transferFulfillmentCenter": "Centros de transferencia"
+          "transferFulfillmentCenter": "Centros de transferencia",
+          "deliveryDays": "Días hasta que esté listo para recoger",
+          "storageDays": "Duración de recogida en días"
         },
         "descriptions": {
           "name": "Nombre del punto de recogida",
@@ -61,7 +63,9 @@
           "contactEmail": "Proporcione el correo de contacto",
           "contactPhone": "Proporcione el número de teléfono de contacto",
           "fulfillmentCenter": "Indique el centro de distribución",
-          "transferFulfillmentCenter": "Indique los centros de transferencia"
+          "transferFulfillmentCenter": "Indique los centros de transferencia",
+          "deliveryDays": "",
+          "storageDays": ""
         }
       }
     },
