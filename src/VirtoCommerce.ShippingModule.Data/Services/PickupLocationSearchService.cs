@@ -31,6 +31,11 @@ public class PickupLocationSearchService(Func<IShippingRepository> repositoryFac
             query = query.Where(x => x.Name.Contains(criteria.Keyword) || x.Id.Contains(criteria.Keyword));
         }
 
+        if (!criteria.ObjectIds.IsNullOrEmpty())
+        {
+            query = query.Where(x => criteria.ObjectIds.Contains(x.Id));
+        }
+
         if (criteria.IsActive.HasValue)
         {
             query = query.Where(x => x.IsActive == criteria.IsActive);

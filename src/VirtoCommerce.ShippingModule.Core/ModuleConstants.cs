@@ -8,6 +8,9 @@ namespace VirtoCommerce.ShippingModule.Core
     [ExcludeFromCodeCoverage]
     public class ModuleConstants
     {
+        public static readonly string FixedRateShipmentCode = "FixedRate";
+        public static readonly string BuyOnlinePickupInStoreShipmentCode = "BuyOnlinePickupInStore";
+
         public static class Security
         {
             public static class Permissions

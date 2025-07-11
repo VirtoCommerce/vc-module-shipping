@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using VirtoCommerce.CoreModule.Core.Common;
+using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Model;
 
 namespace VirtoCommerce.ShippingModule.Data;
 
 public class BuyOnlinePickupInStoreShippingMethod : ShippingMethod
 {
-    public BuyOnlinePickupInStoreShippingMethod() : base("BuyOnlinePickupInStore")
+    public BuyOnlinePickupInStoreShippingMethod() : base(ModuleConstants.BuyOnlinePickupInStoreShipmentCode)
     {
         Name = "Buy Online Pickup In Store";
     }
