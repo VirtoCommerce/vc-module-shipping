@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using VirtoCommerce.ShippingModule.Data.Repositories;
@@ -11,9 +12,11 @@ using VirtoCommerce.ShippingModule.Data.Repositories;
 namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(ShippingDbContext))]
-    partial class ShippingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250624093808_ShippingDeliveryRange")]
+    partial class ShippingDeliveryRange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,9 +82,6 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("DeliveryDays")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
                         .HasColumnType("character varying(1024)");
@@ -120,9 +120,15 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
+                    b.Property<int?>("StorageDays")
+                        .HasColumnType("integer");
+
                     b.Property<string>("PostalCode")
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
+
+                    b.Property<int?>("DeliveryDays")
+                        .HasColumnType("integer");
 
                     b.Property<string>("RegionId")
                         .HasMaxLength(128)
@@ -131,9 +137,6 @@ namespace VirtoCommerce.ShippingModule.Data.PostgreSql.Migrations
                     b.Property<string>("RegionName")
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
-
-                    b.Property<int?>("StorageDays")
-                        .HasColumnType("integer");
 
                     b.Property<string>("StoreId")
                         .HasMaxLength(128)
