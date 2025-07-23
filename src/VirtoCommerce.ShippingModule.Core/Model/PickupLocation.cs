@@ -26,6 +26,9 @@ public class PickupLocation : AuditableEntity, ICloneable
 
     public string ContactEmail { get; set; }
 
+    public int? DeliveryDays { get; set; }
+    public int? StorageDays { get; set; }
+
     public string WorkingHours { get; set; }
 
     public string GeoLocation { get; set; }

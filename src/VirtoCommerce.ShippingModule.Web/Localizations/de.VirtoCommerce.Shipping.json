@@ -41,7 +41,9 @@
           "contactEmail": "Kontakt-E-Mail",
           "contactPhone": "Kontakttelefon",
           "fulfillmentCenter": "Versandzentrum",
-          "transferFulfillmentCenter": "Umlagerungszentren"
+          "transferFulfillmentCenter": "Umlagerungszentren",
+          "deliveryDays": "Tage bis zur Abholbereitschaft",
+          "storageDays": "Abholdauer in Tagen"
         },
         "descriptions": {
           "name": "Name der Abholstation",
@@ -61,7 +63,9 @@
           "contactEmail": "Kontakt-E-Mail eingeben",
           "contactPhone": "Kontakttelefonnummer eingeben",
           "fulfillmentCenter": "Versandzentrum angeben",
-          "transferFulfillmentCenter": "Umlagerungszentren angeben"
+          "transferFulfillmentCenter": "Umlagerungszentren angeben",
+          "deliveryDays": "",
+          "storageDays": ""
         }
       }
     },

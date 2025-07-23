@@ -79,6 +79,9 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int?>("DeliveryDays")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
                         .HasColumnType("varchar(1024)");
@@ -128,6 +131,9 @@ namespace VirtoCommerce.ShippingModule.Data.MySql.Migrations
                     b.Property<string>("RegionName")
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
+
+                    b.Property<int?>("StorageDays")
+                        .HasColumnType("int");
 
                     b.Property<string>("StoreId")
                         .HasMaxLength(128)
