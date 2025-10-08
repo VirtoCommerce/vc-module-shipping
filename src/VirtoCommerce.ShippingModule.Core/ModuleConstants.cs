@@ -29,7 +29,7 @@ namespace VirtoCommerce.ShippingModule.Core
             public static SettingDescriptor EnableGoogleMapsForBopis { get; } = new SettingDescriptor
             {
                 Name = "Shipping.Bopis.GoogleMaps.Enabled",
-                GroupName = "Shipping|Bopis",
+                GroupName = "Shipping|BOPIS",
                 ValueType = SettingValueType.Boolean,
                 DefaultValue = false,
                 IsPublic = true,
@@ -38,7 +38,7 @@ namespace VirtoCommerce.ShippingModule.Core
             public static SettingDescriptor GoogleMapsApiKey { get; } = new SettingDescriptor
             {
                 Name = "Shipping.Bopis.GoogleMaps.ApiKey",
-                GroupName = "Shipping|Bopis",
+                GroupName = "Shipping|BOPIS",
                 ValueType = SettingValueType.ShortText,
                 DefaultValue = false,
                 IsPublic = true,
