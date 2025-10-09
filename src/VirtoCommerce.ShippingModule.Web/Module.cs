@@ -12,6 +12,8 @@ using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.Extensions;
+using VirtoCommerce.SearchModule.Core.Model;
+using VirtoCommerce.SearchModule.Core.Services;
 using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Extensions;
 using VirtoCommerce.ShippingModule.Core.Model;
@@ -22,6 +24,7 @@ using VirtoCommerce.ShippingModule.Data.ExportImport;
 using VirtoCommerce.ShippingModule.Data.MySql;
 using VirtoCommerce.ShippingModule.Data.PostgreSql;
 using VirtoCommerce.ShippingModule.Data.Repositories;
+using VirtoCommerce.ShippingModule.Data.Search.Indexed;
 using VirtoCommerce.ShippingModule.Data.Services;
 using VirtoCommerce.ShippingModule.Data.SqlServer;
 using VirtoCommerce.StoreModule.Core.Model;
@@ -67,6 +70,21 @@ namespace VirtoCommerce.ShippingModule.Web
             serviceCollection.AddTransient<IShippingMethodsSearchService, ShippingMethodsSearchService>();
 
             serviceCollection.AddTransient<ShippingExportImport>();
+
+            serviceCollection.AddTransient<PickupLocationSearchRequestBuilder>();
+
+            serviceCollection.AddSingleton<PickupLocationChangesProvider>();
+            serviceCollection.AddSingleton<PickupLocationDocumentBuilder>();
+
+            serviceCollection.AddSingleton(provider => new IndexDocumentConfiguration
+            {
+                DocumentType = ModuleConstants.PickupLocationIndexDocumentType,
+                DocumentSource = new IndexDocumentSource
+                {
+                    ChangesProvider = provider.GetService<PickupLocationChangesProvider>(),
+                    DocumentBuilder = provider.GetService<PickupLocationDocumentBuilder>(),
+                },
+            });
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -103,6 +121,9 @@ namespace VirtoCommerce.ShippingModule.Web
             }
 
             PolymorphJsonConverter.RegisterTypeForDiscriminator(typeof(ShippingMethod), nameof(ShippingMethod.TypeName));
+
+            var searchRequestBuilderRegistrar = appBuilder.ApplicationServices.GetService<ISearchRequestBuilderRegistrar>();
+            searchRequestBuilderRegistrar.Register(ModuleConstants.PickupLocationIndexDocumentType, appBuilder.ApplicationServices.GetService<PickupLocationSearchRequestBuilder>);
 
             using var serviceScope = appBuilder.ApplicationServices.CreateScope();
             var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
