@@ -7,7 +7,7 @@ using VirtoCommerce.SearchModule.Core.Extensions;
 using VirtoCommerce.SearchModule.Core.Model;
 using VirtoCommerce.SearchModule.Core.Services;
 using VirtoCommerce.ShippingModule.Core;
-using VirtoCommerce.ShippingModule.Core.Model.Search;
+using VirtoCommerce.ShippingModule.Core.Model.Search.Indexed;
 
 namespace VirtoCommerce.ShippingModule.Data.Search.Indexed;
 
@@ -70,11 +70,11 @@ public class PickupLocationSearchRequestBuilder : ISearchRequestBuilder
                 {
                     RangeFilter rangeFilter => new RangeAggregationRequest
                     {
-                        //Id = filter.Stringify(true),//TODO
+                        //Id = filter.Stringify(true),//TODO move FilterHelper to Core
                         FieldName = rangeFilter.FieldName,
                         Values = rangeFilter.Values.Select(x => new RangeAggregationRequestValue
                         {
-                            //Id = x.Stringify(),//TODO
+                            //Id = x.Stringify(),//TODO move FilterHelper to Core
                             Lower = x.Lower,
                             Upper = x.Upper,
                             IncludeLower = x.IncludeLower,
@@ -84,7 +84,7 @@ public class PickupLocationSearchRequestBuilder : ISearchRequestBuilder
                     TermFilter termFilter => new TermAggregationRequest
                     {
                         FieldName = termFilter.FieldName,
-                        //Id = filter.Stringify(),//TODO
+                        //Id = filter.Stringify(),//TODO move FilterHelper to Core
                         Size = 0
                     },
                     _ => null,

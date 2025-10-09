@@ -1,4 +1,4 @@
-namespace VirtoCommerce.ShippingModule.Core.Model.Search;
+namespace VirtoCommerce.ShippingModule.Core.Model.Search.Indexed;
 
 public class PickupLocationIndexedSearchCriteria : PickupLocationSearchCriteria
 {
