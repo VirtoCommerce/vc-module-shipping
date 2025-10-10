@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.SearchModule.Core.Exceptions;
 using VirtoCommerce.SearchModule.Core.Extensions;
 using VirtoCommerce.SearchModule.Core.Model;
 using VirtoCommerce.SearchModule.Core.Services;
 using VirtoCommerce.SearchModule.Data.Services;
 using VirtoCommerce.ShippingModule.Core;
+using VirtoCommerce.ShippingModule.Core.Extensions;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search.Indexed;
 using VirtoCommerce.ShippingModule.Core.Search.Indexed;
@@ -17,19 +20,17 @@ namespace VirtoCommerce.ShippingModule.Data.Search.Indexed;
 public class PickupLocationIndexedSearchService(
     ISearchRequestBuilderRegistrar searchRequestBuilderRegistrar,
     ISearchProvider searchProvider,
-    IPickupLocationService pickupLocationService
-    //TODO
-    //IConfiguration configuration
+    IPickupLocationService pickupLocationService,
+    IConfiguration configuration
     )
 : IPickupLocationIndexedSearchService
 {
     public virtual async Task<PickupLocationIndexedSearchResult> SearchPickupLocationsAsync(PickupLocationIndexedSearchCriteria searchCriteria)
     {
-        //TODO
-        //if (!_configuration.IsOrderFullTextSearchEnabled())
-        //{
-        //    throw new SearchException("Indexed order search is disabled. To enable it add 'Search:OrderFullTextSearchEnabled' configuration key to app settings and set it to true.");
-        //}
+        if (!configuration.IsPickupLocationFullTextSearchEnabled())
+        {
+            throw new SearchException("Indexed order search is disabled. To enable it add 'Search:PickupLocationFullTextSearchEnabled' configuration key to app settings and set it to true.");
+        }
 
         var requestBuilder = searchRequestBuilderRegistrar.GetRequestBuilderByDocumentType(ModuleConstants.PickupLocationIndexDocumentType);
         var request = await requestBuilder.BuildRequestAsync(searchCriteria);

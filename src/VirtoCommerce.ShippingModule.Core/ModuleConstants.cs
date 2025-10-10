@@ -47,11 +47,20 @@ namespace VirtoCommerce.ShippingModule.Core
                 IsPublic = true,
             };
 
+            public static SettingDescriptor EventBasedIndexation { get; } = new SettingDescriptor
+            {
+                Name = "Shipping.Bopis.Search.EventBasedIndexation.Enabled",
+                GroupName = "Shipping|BOPIS",
+                ValueType = SettingValueType.Boolean,
+                DefaultValue = true,
+            };
+
             public static class General
             {
                 public static IEnumerable<SettingDescriptor> AllSettings => [
                     EnableGoogleMapsForBopis,
-                    GoogleMapsApiKey
+                    GoogleMapsApiKey,
+                    EventBasedIndexation
                     ];
             }
 
@@ -89,6 +98,7 @@ namespace VirtoCommerce.ShippingModule.Core
                 {
                     yield return EnableGoogleMapsForBopis;
                     yield return GoogleMapsApiKey;
+                    yield return EventBasedIndexation;
                 }
             }
 
