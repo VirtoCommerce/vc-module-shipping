@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ using VirtoCommerce.SearchModule.Core.Model;
 using VirtoCommerce.SearchModule.Core.Services;
 using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Events;
+using VirtoCommerce.ShippingModule.Core.Extensions;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Security;
 using VirtoCommerce.ShippingModule.Core.Services;
@@ -95,8 +97,15 @@ namespace VirtoCommerce.ShippingModule.Web
         {
             _appBuilder = appBuilder;
 
+            var settings = ModuleConstants.Settings.AllSettings;
+
+            if (Configuration.IsPickupLocationFullTextSearchEnabled())
+            {
+                settings = settings.Union(ModuleConstants.Settings.General.IndexationSettings);
+            }
+
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
-            settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
+            settingsRegistrar.RegisterSettings(settings, ModuleInfo.Id);
             settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.FixedRateShippingMethod.AllSettings, typeof(FixedRateShippingMethod).Name);
             settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.StoreSettings, nameof(Store));
 

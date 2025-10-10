@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -55,12 +56,24 @@ namespace VirtoCommerce.ShippingModule.Core
                 DefaultValue = true,
             };
 
+            public static SettingDescriptor PickupLocationIndexationDate { get; } = new SettingDescriptor
+            {
+                Name = "VirtoCommerce.Search.IndexingJobs.IndexationDate.PickupLocation",
+                GroupName = "Shipping|BOPIS",
+                ValueType = SettingValueType.DateTime,
+                DefaultValue = default(DateTime),
+            };
+
             public static class General
             {
                 public static IEnumerable<SettingDescriptor> AllSettings => [
                     EnableGoogleMapsForBopis,
-                    GoogleMapsApiKey,
-                    EventBasedIndexation
+                    GoogleMapsApiKey
+                    ];
+
+                public static IEnumerable<SettingDescriptor> IndexationSettings => [
+                    EventBasedIndexation,
+                    PickupLocationIndexationDate
                     ];
             }
 
@@ -98,7 +111,6 @@ namespace VirtoCommerce.ShippingModule.Core
                 {
                     yield return EnableGoogleMapsForBopis;
                     yield return GoogleMapsApiKey;
-                    yield return EventBasedIndexation;
                 }
             }
 
