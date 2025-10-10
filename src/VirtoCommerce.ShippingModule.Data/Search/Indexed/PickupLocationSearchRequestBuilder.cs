@@ -6,6 +6,7 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.SearchModule.Core.Extensions;
 using VirtoCommerce.SearchModule.Core.Model;
 using VirtoCommerce.SearchModule.Core.Services;
+using VirtoCommerce.SearchModule.Data.Services;
 using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Model.Search.Indexed;
 
@@ -70,11 +71,11 @@ public class PickupLocationSearchRequestBuilder : ISearchRequestBuilder
                 {
                     RangeFilter rangeFilter => new RangeAggregationRequest
                     {
-                        //Id = filter.Stringify(true),//TODO move FilterHelper to Core
+                        Id = filter.Stringify(true),
                         FieldName = rangeFilter.FieldName,
                         Values = rangeFilter.Values.Select(x => new RangeAggregationRequestValue
                         {
-                            //Id = x.Stringify(),//TODO move FilterHelper to Core
+                            Id = x.Stringify(),
                             Lower = x.Lower,
                             Upper = x.Upper,
                             IncludeLower = x.IncludeLower,
@@ -84,7 +85,7 @@ public class PickupLocationSearchRequestBuilder : ISearchRequestBuilder
                     TermFilter termFilter => new TermAggregationRequest
                     {
                         FieldName = termFilter.FieldName,
-                        //Id = filter.Stringify(),//TODO move FilterHelper to Core
+                        Id = filter.Stringify(),
                         Size = 0
                     },
                     _ => null,
@@ -126,26 +127,22 @@ public class PickupLocationSearchRequestBuilder : ISearchRequestBuilder
 
         if (!searchCriteria.CountryCode.IsNullOrEmpty())
         {
-            //TODO: move FilterHelper to Core
-            //result.Add(FilterHelper.CreateTermFilter("CountryCode", criteria.CountryCode));
+            result.Add(FilterHelper.CreateTermFilter("CountryCode", searchCriteria.CountryCode));
         }
 
         if (!searchCriteria.RegionId.IsNullOrEmpty())
         {
-            //TODO: move FilterHelper to Core
-            //result.Add(FilterHelper.CreateTermFilter("RegionId", criteria.RegionId));
+            result.Add(FilterHelper.CreateTermFilter("RegionId", searchCriteria.RegionId));
         }
 
         if (!searchCriteria.City.IsNullOrEmpty())
         {
-            //TODO: move FilterHelper to Core
-            //result.Add(FilterHelper.CreateTermFilter("City", criteria.City));
+            result.Add(FilterHelper.CreateTermFilter("City", searchCriteria.City));
         }
 
         if (!searchCriteria.PostalCode.IsNullOrEmpty())
         {
-            //TODO: move FilterHelper to Core
-            //result.Add(FilterHelper.CreateTermFilter("PostalCode", criteria.PostalCode));
+            result.Add(FilterHelper.CreateTermFilter("PostalCode", searchCriteria.PostalCode));
         }
 
         return result;

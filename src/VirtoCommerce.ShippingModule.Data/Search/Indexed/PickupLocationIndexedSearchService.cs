@@ -5,6 +5,7 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.SearchModule.Core.Extensions;
 using VirtoCommerce.SearchModule.Core.Model;
 using VirtoCommerce.SearchModule.Core.Services;
+using VirtoCommerce.SearchModule.Data.Services;
 using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search.Indexed;
@@ -18,12 +19,10 @@ public class PickupLocationIndexedSearchService(
     ISearchProvider searchProvider,
     IPickupLocationService pickupLocationService
     //TODO
-    //IConfiguration configuration,
-    //ILocalizableSettingService localizableSettingService
+    //IConfiguration configuration
     )
 : IPickupLocationIndexedSearchService
 {
-
     public virtual async Task<PickupLocationIndexedSearchResult> SearchPickupLocationsAsync(PickupLocationIndexedSearchCriteria searchCriteria)
     {
         //TODO
@@ -89,20 +88,20 @@ public class PickupLocationIndexedSearchService(
         return result;
     }
 
-    private async Task<IList<PickupLocationAggregation>> ConvertAggregationsAsync(IList<AggregationResponse> aggregationResponses, SearchRequest searchRequest, PickupLocationIndexedSearchCriteria searchCriteria)
+    private async Task<IList<Aggregation>> ConvertAggregationsAsync(IList<AggregationResponse> aggregationResponses, SearchRequest searchRequest, PickupLocationIndexedSearchCriteria searchCriteria)
     {
-        var result = new List<PickupLocationAggregation>();
+        var result = new List<Aggregation>();
 
         foreach (var aggregationRequest in searchRequest.Aggregations)
         {
             var aggregationResponse = aggregationResponses.FirstOrDefault(x => x.Id == aggregationRequest.Id);
             if (aggregationResponse != null)
             {
-                var orderAggregation = default(PickupLocationAggregation);
+                var orderAggregation = default(Aggregation);
 
                 if (aggregationRequest is RangeAggregationRequest rangeAggregationRequest)
                 {
-                    orderAggregation = new PickupLocationAggregation()
+                    orderAggregation = new Aggregation()
                     {
                         AggregationType = "range",
                         Field = aggregationRequest.FieldName,
@@ -111,7 +110,7 @@ public class PickupLocationIndexedSearchService(
                 }
                 else if (aggregationRequest is TermAggregationRequest)
                 {
-                    orderAggregation = new PickupLocationAggregation()
+                    orderAggregation = new Aggregation()
                     {
                         AggregationType = "attr",
                         Field = aggregationRequest.FieldName,
@@ -123,22 +122,21 @@ public class PickupLocationIndexedSearchService(
             }
         }
 
-        //TODO: move FilterHelper to Core
-        //searchRequest.SetAppliedAggregations(result);
+        searchRequest.SetAppliedAggregations(result);
 
         return result;
     }
 
-    private static List<PickupLocationAggregationItem> GetAttributeAggregationItems(RangeAggregationRequest rangeAggregationRequest, IList<AggregationResponseValue> resultValues)
+    private static List<AggregationItem> GetAttributeAggregationItems(RangeAggregationRequest rangeAggregationRequest, IList<AggregationResponseValue> resultValues)
     {
-        var result = new List<PickupLocationAggregationItem>();
+        var result = new List<AggregationItem>();
 
         foreach (var requestValue in rangeAggregationRequest.Values)
         {
             var resultValue = resultValues.FirstOrDefault(x => x.Id == requestValue.Id);
             if (resultValue != null)
             {
-                var aggregationItem = new PickupLocationAggregationItem
+                var aggregationItem = new AggregationItem
                 {
                     Value = resultValue.Id,
                     Count = (int)resultValue.Count,
@@ -155,45 +153,21 @@ public class PickupLocationIndexedSearchService(
         return result;
     }
 
-    private Task<IList<PickupLocationAggregationItem>> GetAttributeAggregationItemsAsync(string fieldName, string languageCode, IList<AggregationResponseValue> aggregationResponseValues)
+    private Task<IList<AggregationItem>> GetAttributeAggregationItemsAsync(string fieldName, string languageCode, IList<AggregationResponseValue> aggregationResponseValues)
     {
-        //TODO
-        //IList<KeyValue> localizedValues = null;
-        //if (!string.IsNullOrEmpty(languageCode) && _fieldBySettingName.TryGetValue(fieldName, out var settingName))
-        //{
-        //    localizedValues = await _localizableSettingService.GetValuesAsync(ModuleConstants.Settings.General.OrderStatus.Name, languageCode);
-        //}
-
         var result = aggregationResponseValues
             .Select(x =>
             {
-                var item = new PickupLocationAggregationItem
+                var item = new AggregationItem
                 {
                     Value = x.Id,
                     Count = (int)x.Count,
                 };
 
-                //TODO
-                //if (!string.IsNullOrEmpty(languageCode) && !localizedValues.IsNullOrEmpty())
-                //{
-                //    var localizedValue = localizedValues.FirstOrDefault(y => y.Key.EqualsIgnoreCase(x.Id));
-
-                //    if (localizedValue != null)
-                //    {
-                //        var label = new OrderAggregationLabel
-                //        {
-                //            Language = languageCode,
-                //            Label = localizedValue.Value,
-                //        };
-
-                //        item.Labels = new List<OrderAggregationLabel> { label };
-                //    }
-                //}
-
                 return item;
             })
             .ToList();
 
-        return Task.FromResult<IList<PickupLocationAggregationItem>>(result);
+        return Task.FromResult<IList<AggregationItem>>(result);
     }
 }

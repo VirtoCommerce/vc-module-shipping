@@ -23,7 +23,7 @@ public class IndexPickupLocationChangedEventHandler(
 {
     public Task Handle(PickupLocationChangedEvent message)
     {
-        //TODO: settings?
+        //TODO: settings: YES
         //if (!_configuration.IsOrderFullTextSearchEnabled() ||
         //    !await _settingsManager.GetValueAsync<bool>(ModuleConstants.Settings.General.EventBasedIndexation))
         //{
