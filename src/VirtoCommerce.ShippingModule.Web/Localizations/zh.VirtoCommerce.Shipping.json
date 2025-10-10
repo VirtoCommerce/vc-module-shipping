@@ -127,6 +127,10 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Google 地图 API 密钥",
       "description": "用于加载门店自提地图的 Google Maps API 密钥。"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "基于事件的提货位置实体索引",
+      "description": "对提货位置实体的任何更改都会触发一个后台任务，将这些更改应用到搜索索引"
     }
   },
   "module": {

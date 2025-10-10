@@ -127,6 +127,10 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Klucz API Google Maps",
       "description": "Klucz API używany do ładowania Map Google dla odbioru osobistego"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "Indeksowanie oparte na zdarzeniach dla jednostek lokalizacji odbioru",
+      "description": "Każda zmiana w jednostce lokalizacji odbioru spowoduje uruchomienie zadania w tle, które zastosuje te zmiany do indeksu wyszukiwania"
     }
   },
   "module": {

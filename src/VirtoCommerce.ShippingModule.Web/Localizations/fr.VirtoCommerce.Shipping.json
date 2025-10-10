@@ -127,8 +127,11 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Clé API Google Maps",
       "description": "Clé API pour afficher Google Maps dans les options de retrait en magasin"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "Indexation basée sur les événements pour les entités de lieu de collecte",
+      "description": "Toute modification de l'entité du lieu de collecte déclenchera une tâche en arrière-plan pour appliquer ces modifications à l'index de recherche"
     }
-
   },
   "module": {
     "VirtoCommerce.Shipping": {
