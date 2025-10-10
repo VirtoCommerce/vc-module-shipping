@@ -37,6 +37,12 @@ angular.module(moduleName, ['ngSanitize'])
             template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/widgets/pickupLocationsAddressWidget.tpl.html'
         }, 'pickupLocationAddress');
 
+        widgetService.registerWidget({
+            controller: 'virtoCommerce.searchModule.indexWidgetController',
+            template: 'Modules/$(VirtoCommerce.Search)/Scripts/widgets/index-widget.tpl.html',
+            documentType: 'PickupLocation'
+        }, 'pickupLocationIndex');
+
         //Register permission scopes templates used for scope bounded definition in role management ui
         var selectedStoreScope = {
             type: 'SelectedStoreScope',
