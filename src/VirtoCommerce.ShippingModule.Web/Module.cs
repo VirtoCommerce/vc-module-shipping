@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Events;
 using VirtoCommerce.Platform.Core.ExportImport;
 using VirtoCommerce.Platform.Core.JsonConverters;
 using VirtoCommerce.Platform.Core.Modularity;
@@ -15,11 +16,13 @@ using VirtoCommerce.Platform.Data.Extensions;
 using VirtoCommerce.SearchModule.Core.Model;
 using VirtoCommerce.SearchModule.Core.Services;
 using VirtoCommerce.ShippingModule.Core;
+using VirtoCommerce.ShippingModule.Core.Events;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Security;
 using VirtoCommerce.ShippingModule.Core.Services;
 using VirtoCommerce.ShippingModule.Data;
 using VirtoCommerce.ShippingModule.Data.ExportImport;
+using VirtoCommerce.ShippingModule.Data.Handlers;
 using VirtoCommerce.ShippingModule.Data.MySql;
 using VirtoCommerce.ShippingModule.Data.PostgreSql;
 using VirtoCommerce.ShippingModule.Data.Repositories;
@@ -70,6 +73,8 @@ namespace VirtoCommerce.ShippingModule.Web
 
             serviceCollection.AddTransient<ShippingExportImport>();
 
+            serviceCollection.AddTransient<IndexPickupLocationChangedEventHandler>();
+
             serviceCollection.AddTransient<PickupLocationSearchRequestBuilder>();
 
             serviceCollection.AddSingleton<PickupLocationChangesProvider>();
@@ -110,6 +115,7 @@ namespace VirtoCommerce.ShippingModule.Web
                 ],
                 new SelectedStoreScope());
 
+            appBuilder.RegisterEventHandler<PickupLocationChangedEvent, IndexPickupLocationChangedEventHandler>();
 
             var shippingMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IShippingMethodsRegistrar>();
             shippingMethodsRegistrar.RegisterShippingMethod<FixedRateShippingMethod>();
