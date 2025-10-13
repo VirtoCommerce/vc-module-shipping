@@ -20,6 +20,7 @@ using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Events;
 using VirtoCommerce.ShippingModule.Core.Extensions;
 using VirtoCommerce.ShippingModule.Core.Model;
+using VirtoCommerce.ShippingModule.Core.Search.Indexed;
 using VirtoCommerce.ShippingModule.Core.Security;
 using VirtoCommerce.ShippingModule.Core.Services;
 using VirtoCommerce.ShippingModule.Data;
@@ -74,6 +75,8 @@ namespace VirtoCommerce.ShippingModule.Web
             serviceCollection.AddTransient<IShippingMethodsSearchService, ShippingMethodsSearchService>();
 
             serviceCollection.AddTransient<ShippingExportImport>();
+
+            serviceCollection.AddTransient<IPickupLocationIndexedSearchService, PickupLocationIndexedSearchService>();
 
             serviceCollection.AddTransient<IndexPickupLocationChangedEventHandler>();
 
