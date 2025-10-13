@@ -49,7 +49,7 @@ public class PickupLocationIndexedSearchService(
         {
             result.TotalCount = (int)response.TotalCount;
             result.Results = await ConvertDocumentsAsync(response.Documents, searchCriteria);
-            result.Aggregations = await ConvertAggregationsAsync(response.Aggregations, searchRequest, searchCriteria);
+            result.Aggregations = await ConvertAggregationsAsync(response.Aggregations, searchRequest);
         }
 
         return result;
@@ -89,7 +89,7 @@ public class PickupLocationIndexedSearchService(
         return result;
     }
 
-    private async Task<IList<Aggregation>> ConvertAggregationsAsync(IList<AggregationResponse> aggregationResponses, SearchRequest searchRequest, PickupLocationIndexedSearchCriteria searchCriteria)
+    private async Task<IList<Aggregation>> ConvertAggregationsAsync(IList<AggregationResponse> aggregationResponses, SearchRequest searchRequest)
     {
         var result = new List<Aggregation>();
 
