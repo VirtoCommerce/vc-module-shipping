@@ -23,37 +23,44 @@ public class PickupLocationSearchRequestBuilder : ISearchRequestBuilder
         _searchPhraseParser = searchPhraseParser;
     }
 
-    public Task<SearchRequest> BuildRequestAsync(SearchCriteriaBase criteria)
+    public Task<SearchRequest> BuildRequestAsync(SearchCriteriaBase searchCriteria)
     {
-        criteria = criteria.CloneTyped();
-        var filter = GetFilters(criteria).And();
-        var aggregations = GetAggregations(criteria);
+        SearchRequest result = null;
+
+        if (searchCriteria is not PickupLocationIndexedSearchCriteria pickupLocationIndexedSearchCriteria)
+        {
+            return Task.FromResult(result);
+        }
+
+        pickupLocationIndexedSearchCriteria = pickupLocationIndexedSearchCriteria.CloneTyped();
+        var filter = GetFilters(pickupLocationIndexedSearchCriteria).And();
+        var aggregations = GetAggregations(pickupLocationIndexedSearchCriteria);
         aggregations = ApplyMultiSelectFacetSearch(aggregations, filter);
 
-        var request = new SearchRequest
+        result = new SearchRequest
         {
-            SearchKeywords = criteria.Keyword,
+            SearchKeywords = pickupLocationIndexedSearchCriteria.Keyword,
             SearchFields = new[] { IndexDocumentExtensions.ContentFieldName },
             Filter = filter,
             Aggregations = aggregations,
-            Sorting = GetSorting(criteria),
-            Skip = criteria.Skip,
-            Take = criteria.Take,
+            Sorting = GetSorting(pickupLocationIndexedSearchCriteria),
+            Skip = pickupLocationIndexedSearchCriteria.Skip,
+            Take = pickupLocationIndexedSearchCriteria.Take,
         };
 
-        return Task.FromResult(request);
+        return Task.FromResult(result);
     }
 
-    private List<AggregationRequest> GetAggregations(SearchCriteriaBase criteria)
+    private List<AggregationRequest> GetAggregations(PickupLocationIndexedSearchCriteria searchCriteria)
     {
         var result = new List<AggregationRequest>();
 
-        if (criteria is not PickupLocationIndexedSearchCriteria indexedSearchCriteria || string.IsNullOrEmpty(indexedSearchCriteria.Facet))
+        if (searchCriteria.Facet.IsNullOrEmpty())
         {
             return result;
         }
 
-        var parseResult = _searchPhraseParser.Parse(indexedSearchCriteria.Facet);
+        var parseResult = _searchPhraseParser.Parse(searchCriteria.Facet);
         if (!string.IsNullOrEmpty(parseResult.Keyword))
         {
             var termFacetExpressions = parseResult.Keyword.Split(" ");
@@ -97,25 +104,24 @@ public class PickupLocationSearchRequestBuilder : ISearchRequestBuilder
         return result;
     }
 
-    protected virtual IList<IFilter> GetFilters(SearchCriteriaBase criteria)
+    protected virtual IList<IFilter> GetFilters(PickupLocationIndexedSearchCriteria searchCriteria)
     {
         var result = new List<IFilter>();
 
-        if (criteria.ObjectIds?.Any() == true)
-        {
-            result.Add(new IdsFilter { Values = criteria.ObjectIds });
-        }
+        result.AddRange(GetOptionalFilters(searchCriteria));
+        result.AddRange(GetPermanentFilters(searchCriteria));
 
-        if (!string.IsNullOrEmpty(criteria.Keyword))
+        return result;
+    }
+
+    protected virtual IList<IFilter> GetOptionalFilters(PickupLocationIndexedSearchCriteria searchCriteria)
+    {
+        var result = new List<IFilter>();
+
+        if (!searchCriteria.Filter.IsNullOrEmpty())
         {
-            var parseResult = _searchPhraseParser.Parse(criteria.Keyword);
-            criteria.Keyword = parseResult.Keyword;
+            var parseResult = _searchPhraseParser.Parse(searchCriteria.Filter);
             result.AddRange(parseResult.Filters);
-        }
-
-        if (criteria is PickupLocationIndexedSearchCriteria pickupLocationIndexedSearchCriteria)
-        {
-            result.AddRange(GetPermanentFilters(pickupLocationIndexedSearchCriteria));
         }
 
         return result;
@@ -125,31 +131,16 @@ public class PickupLocationSearchRequestBuilder : ISearchRequestBuilder
     {
         var result = new List<IFilter>();
 
-        if (!searchCriteria.CountryCode.IsNullOrEmpty())
+        if (!searchCriteria.StoreId.IsNullOrEmpty())
         {
-            result.Add(FilterHelper.CreateTermFilter("CountryCode", searchCriteria.CountryCode));
-        }
-
-        if (!searchCriteria.RegionId.IsNullOrEmpty())
-        {
-            result.Add(FilterHelper.CreateTermFilter("RegionId", searchCriteria.RegionId));
-        }
-
-        if (!searchCriteria.City.IsNullOrEmpty())
-        {
-            result.Add(FilterHelper.CreateTermFilter("City", searchCriteria.City));
-        }
-
-        if (!searchCriteria.PostalCode.IsNullOrEmpty())
-        {
-            result.Add(FilterHelper.CreateTermFilter("PostalCode", searchCriteria.PostalCode));
+            result.Add(FilterHelper.CreateTermFilter("StoreId", searchCriteria.StoreId));
         }
 
         return result;
     }
 
 
-    protected virtual IList<SortingField> GetSorting(SearchCriteriaBase criteria)
+    protected virtual IList<SortingField> GetSorting(PickupLocationIndexedSearchCriteria criteria)
     {
         var result = new List<SortingField>();
 
