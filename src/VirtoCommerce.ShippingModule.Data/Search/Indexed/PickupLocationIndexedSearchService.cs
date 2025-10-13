@@ -115,7 +115,7 @@ public class PickupLocationIndexedSearchService(
                     {
                         AggregationType = "attr",
                         Field = aggregationRequest.FieldName,
-                        Items = await GetAttributeAggregationItemsAsync(aggregationRequest.FieldName, searchCriteria.LanguageCode, aggregationResponse.Values),
+                        Items = await GetAttributeAggregationItemsAsync(aggregationResponse.Values),
                     };
                 }
 
@@ -154,7 +154,7 @@ public class PickupLocationIndexedSearchService(
         return result;
     }
 
-    private Task<IList<AggregationItem>> GetAttributeAggregationItemsAsync(string fieldName, string languageCode, IList<AggregationResponseValue> aggregationResponseValues)
+    private Task<IList<AggregationItem>> GetAttributeAggregationItemsAsync(IList<AggregationResponseValue> aggregationResponseValues)
     {
         var result = aggregationResponseValues
             .Select(x =>
