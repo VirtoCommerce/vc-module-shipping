@@ -14,24 +14,27 @@ public class PickupLocationDocumentBuilder(IPickupLocationService pickupLocation
 {
     public Task BuildSchemaAsync(IndexDocument schema)
     {
-        schema.AddFilterableString("Name");
-        schema.AddFilterableString("Description");
-        schema.AddFilterableString("WorkingHours");
-        schema.AddFilterableString("ContactEmail");
-        schema.AddFilterableString("ContactPhone");
         schema.AddFilterableString("StoreId");
         schema.AddFilterableString("OuterId");
 
         schema.AddFilterableBoolean("IsActive");
 
-        schema.AddFilterableString("Address_CountryCode");
-        schema.AddFilterableString("Address_CountryName");
-        schema.AddFilterableString("Address_RegionId");
-        schema.AddFilterableString("Address_RegionName");
-        schema.AddFilterableString("Address_City");
-        schema.AddFilterableString("Address_Line1");
-        schema.AddFilterableString("Address_Line2");
-        schema.AddFilterableString("Address_PostalCode");
+        schema.AddFilterableValue("GeoLocation", null, IndexDocumentFieldValueType.GeoPoint);
+
+        schema.AddFilterableStringAndContentString("Name");
+        schema.AddFilterableStringAndContentString("Description");
+        schema.AddFilterableStringAndContentString("WorkingHours");
+        schema.AddFilterableStringAndContentString("ContactEmail");
+        schema.AddFilterableStringAndContentString("ContactPhone");
+
+        schema.AddFilterableStringAndContentString("Address_CountryCode");
+        schema.AddFilterableStringAndContentString("Address_CountryName");
+        schema.AddFilterableStringAndContentString("Address_RegionId");
+        schema.AddFilterableStringAndContentString("Address_RegionName");
+        schema.AddFilterableStringAndContentString("Address_City");
+        schema.AddFilterableStringAndContentString("Address_Line1");
+        schema.AddFilterableStringAndContentString("Address_Line2");
+        schema.AddFilterableStringAndContentString("Address_PostalCode");
 
         return Task.CompletedTask;
     }
@@ -54,26 +57,29 @@ public class PickupLocationDocumentBuilder(IPickupLocationService pickupLocation
     {
         var document = new IndexDocument(pickupLocation.Id);
 
-        document.AddFilterableString("Name", pickupLocation.Name);
-        document.AddFilterableString("Description", pickupLocation.Description);
-        document.AddFilterableString("WorkingHours", pickupLocation.WorkingHours);
-        document.AddFilterableString("ContactEmail", pickupLocation.ContactEmail);
-        document.AddFilterableString("ContactPhone", pickupLocation.ContactPhone);
         document.AddFilterableString("StoreId", pickupLocation.StoreId);
         document.AddFilterableString("OuterId", pickupLocation.OuterId);
 
         document.AddFilterableBoolean("IsActive", pickupLocation.IsActive);
 
+        document.AddFilterableValue("GeoLocation", GeoPoint.TryParse(pickupLocation.GeoLocation), IndexDocumentFieldValueType.GeoPoint);
+
+        document.AddFilterableStringAndContentString("Name", pickupLocation.Name);
+        document.AddFilterableStringAndContentString("Description", pickupLocation.Description);
+        document.AddFilterableStringAndContentString("WorkingHours", pickupLocation.WorkingHours);
+        document.AddFilterableStringAndContentString("ContactEmail", pickupLocation.ContactEmail);
+        document.AddFilterableStringAndContentString("ContactPhone", pickupLocation.ContactPhone);
+
         if (pickupLocation.Address != null)
         {
-            document.AddFilterableString("Address_CountryCode", pickupLocation.Address.CountryCode);
-            document.AddFilterableString("Address_CountryName", pickupLocation.Address.CountryName);
-            document.AddFilterableString("Address_RegionId", pickupLocation.Address.RegionId);
-            document.AddFilterableString("Address_RegionName", pickupLocation.Address.RegionName);
-            document.AddFilterableString("Address_City", pickupLocation.Address.City);
-            document.AddFilterableString("Address_Line1", pickupLocation.Address.Line1);
-            document.AddFilterableString("Address_Line2", pickupLocation.Address.Line2);
-            document.AddFilterableString("Address_PostalCode", pickupLocation.Address.PostalCode);
+            document.AddFilterableStringAndContentString("Address_CountryCode", pickupLocation.Address.CountryCode);
+            document.AddFilterableStringAndContentString("Address_CountryName", pickupLocation.Address.CountryName);
+            document.AddFilterableStringAndContentString("Address_RegionId", pickupLocation.Address.RegionId);
+            document.AddFilterableStringAndContentString("Address_RegionName", pickupLocation.Address.RegionName);
+            document.AddFilterableStringAndContentString("Address_City", pickupLocation.Address.City);
+            document.AddFilterableStringAndContentString("Address_Line1", pickupLocation.Address.Line1);
+            document.AddFilterableStringAndContentString("Address_Line2", pickupLocation.Address.Line2);
+            document.AddFilterableStringAndContentString("Address_PostalCode", pickupLocation.Address.PostalCode);
         }
 
         return Task.FromResult(document);
