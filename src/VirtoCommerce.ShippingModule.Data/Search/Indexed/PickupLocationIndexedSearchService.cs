@@ -38,6 +38,7 @@ public class PickupLocationIndexedSearchService(
         var response = await searchProvider.SearchAsync(ModuleConstants.PickupLocationIndexDocumentType, request);
 
         var result = await ConvertResponseAsync(response, searchCriteria, request);
+
         return result;
     }
 
