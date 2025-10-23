@@ -59,11 +59,11 @@
           "geoLocation": "Enter latitude and longitude",
           "outerId": "Enter ID in an outer system",
           "description": "Provide description for the pickup location point",
-          "working-hours": "Porvide info about working hours",
+          "working-hours": "Provide info about working hours",
           "contactEmail": "Provide contact email",
           "contactPhone": "Provide contact phone number",
           "fulfillmentCenter": "Provide fulfillment center",
-          "transferFulfillmentCenter": "Provide transfer fulfillment сenters",
+          "transferFulfillmentCenter": "Provide transfer fulfillment centers",
           "deliveryDays": "",
           "storageDays": ""
         },
@@ -124,12 +124,12 @@
       }
     },
     "Shipping.Bopis.GoogleMaps.Enabled": {
-      "title": "Enable Google Maps for BOPIS",
+      "title": "Enabling Google Maps for BOPIS",
       "description": "Show store pickup locations using Google Maps"
     },
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Google Maps API Key",
-      "description": "API key used to load Google Maps for store pickup display"
+      "description": "Provide API key used to load Google Maps for store pickup display"
     }
   },
   "module": {
