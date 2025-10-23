@@ -68,14 +68,15 @@ public class PickupLocationChangesProvider(Func<IShippingRepository> shippingRep
         var criteria = GetChangeLogSearchCriteria(startDate, endDate, skip, take);
         var operations = (await changeLogSearchService.SearchAsync(criteria)).Results;
 
-        return operations.Select(o =>
+        return operations
+            .Select(o =>
             new IndexDocumentChange
             {
                 DocumentId = o.ObjectId,
                 ChangeType = o.OperationType == EntryState.Deleted ? IndexDocumentChangeType.Deleted : IndexDocumentChangeType.Modified,
                 ChangeDate = o.ModifiedDate ?? o.CreatedDate,
-            }
-        ).ToArray();
+            })
+            .ToArray();
     }
 
     protected virtual ChangeLogSearchCriteria GetChangeLogSearchCriteria(DateTime? startDate, DateTime? endDate, long skip, long take)
