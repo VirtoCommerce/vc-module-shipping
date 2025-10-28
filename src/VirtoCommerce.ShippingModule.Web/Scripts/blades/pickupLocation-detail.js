@@ -8,7 +8,7 @@ angular.module('virtoCommerce.shippingModule')
 
                 function initializeBlade(data) {
                     blade.currentEntity = angular.copy(data);
-                    blade.currentEntityId = blade.currentEntity.id;//required for index widget
+                    blade.currentEntityId = blade.currentEntity.id; // Required for index widget
                     blade.origEntity = data;
                     blade.isLoading = false;
 

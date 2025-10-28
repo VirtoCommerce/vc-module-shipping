@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <noWarn>1591</noWarn>
@@ -12,6 +12,6 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="VirtoCommerce.CoreModule.Core" Version="3.808.0" />
     <PackageReference Include="VirtoCommerce.Platform.Core" Version="3.853.0" />
-    <PackageReference Include="VirtoCommerce.SearchModule.Core" Version="3.818.0-alpha.792-vcst-3865-extracted-reusable-code" />
+    <PackageReference Include="VirtoCommerce.SearchModule.Core" Version="3.818.0-alpha.796-vcst-3865-extracted-reusable-code" />
   </ItemGroup>
 </Project>

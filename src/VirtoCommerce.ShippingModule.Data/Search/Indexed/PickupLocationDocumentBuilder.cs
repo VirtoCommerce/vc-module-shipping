@@ -72,14 +72,7 @@ public class PickupLocationDocumentBuilder(IPickupLocationService pickupLocation
 
         if (pickupLocation.Address != null)
         {
-            document.AddFilterableStringAndContentString("Address_CountryCode", pickupLocation.Address.CountryCode);
-            document.AddFilterableStringAndContentString("Address_CountryName", pickupLocation.Address.CountryName);
-            document.AddFilterableStringAndContentString("Address_RegionId", pickupLocation.Address.RegionId);
-            document.AddFilterableStringAndContentString("Address_RegionName", pickupLocation.Address.RegionName);
-            document.AddFilterableStringAndContentString("Address_City", pickupLocation.Address.City);
-            document.AddFilterableStringAndContentString("Address_Line1", pickupLocation.Address.Line1);
-            document.AddFilterableStringAndContentString("Address_Line2", pickupLocation.Address.Line2);
-            document.AddFilterableStringAndContentString("Address_PostalCode", pickupLocation.Address.PostalCode);
+            IndexAddress(pickupLocation.Address, document);
         }
 
         return Task.FromResult(document);
@@ -87,9 +80,13 @@ public class PickupLocationDocumentBuilder(IPickupLocationService pickupLocation
 
     protected virtual void IndexAddress(PickupLocationAddress address, IndexDocument document)
     {
-        if (address != null)
-        {
-            document.AddContentString($"{address.AddressType} {address}");
-        }
+        document.AddFilterableStringAndContentString("Address_CountryCode", address.CountryCode);
+        document.AddFilterableStringAndContentString("Address_CountryName", address.CountryName);
+        document.AddFilterableStringAndContentString("Address_RegionId", address.RegionId);
+        document.AddFilterableStringAndContentString("Address_RegionName", address.RegionName);
+        document.AddFilterableStringAndContentString("Address_City", address.City);
+        document.AddFilterableStringAndContentString("Address_Line1", address.Line1);
+        document.AddFilterableStringAndContentString("Address_Line2", address.Line2);
+        document.AddFilterableStringAndContentString("Address_PostalCode", address.PostalCode);
     }
 }

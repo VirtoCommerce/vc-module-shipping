@@ -48,7 +48,7 @@ namespace VirtoCommerce.ShippingModule.Core
                 IsPublic = true,
             };
 
-            public static SettingDescriptor EventBasedIndexation { get; } = new SettingDescriptor
+            public static SettingDescriptor EventBasedIndexation { get; } = new()
             {
                 Name = "Shipping.Bopis.Search.EventBasedIndexation.Enabled",
                 GroupName = "Shipping|BOPIS",
@@ -56,7 +56,7 @@ namespace VirtoCommerce.ShippingModule.Core
                 DefaultValue = true,
             };
 
-            public static SettingDescriptor PickupLocationIndexationDate { get; } = new SettingDescriptor
+            public static SettingDescriptor PickupLocationIndexationDate { get; } = new()
             {
                 Name = "VirtoCommerce.Search.IndexingJobs.IndexationDate.PickupLocation",
                 GroupName = "Shipping|BOPIS",
@@ -71,10 +71,11 @@ namespace VirtoCommerce.ShippingModule.Core
                     GoogleMapsApiKey
                     ];
 
-                public static IEnumerable<SettingDescriptor> IndexationSettings => [
+                public static IEnumerable<SettingDescriptor> IndexationSettings =>
+                [
                     EventBasedIndexation,
-                    PickupLocationIndexationDate
-                    ];
+                    PickupLocationIndexationDate,
+                ];
             }
 
             public static class FixedRateShippingMethod

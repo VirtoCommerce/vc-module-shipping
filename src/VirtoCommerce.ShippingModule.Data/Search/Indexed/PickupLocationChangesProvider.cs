@@ -23,17 +23,16 @@ public class PickupLocationChangesProvider(Func<IShippingRepository> shippingRep
             return GetChangesFromRepository(skip, take);
         }
 
-        return await GetChangesFromOperaionLog(startDate, endDate, skip, take);
+        return await GetChangesFromOperationLog(startDate, endDate, skip, take);
     }
 
     public async Task<long> GetTotalChangesCountAsync(DateTime? startDate, DateTime? endDate)
     {
         if (startDate == null && endDate == null)
         {
-            using (var repository = shippingRepositoryFactory())
-            {
-                return repository.PickupLocations.Count();
-            }
+            using var repository = shippingRepositoryFactory();
+
+            return repository.PickupLocations.Count();
         }
 
         var criteria = GetChangeLogSearchCriteria(startDate, endDate, 0, 0);
@@ -43,27 +42,26 @@ public class PickupLocationChangesProvider(Func<IShippingRepository> shippingRep
 
     private IList<IndexDocumentChange> GetChangesFromRepository(long skip, long take)
     {
-        using (var repository = shippingRepositoryFactory())
-        {
-            var pickupLocationIds = repository.PickupLocations
-                .OrderBy(x => x.CreatedDate)
-                .Select(x => x.Id)
-                .Skip((int)skip)
-                .Take((int)take)
-                .ToArray();
+        using var repository = shippingRepositoryFactory();
 
-            return pickupLocationIds
-                .Select(id => new IndexDocumentChange
-                {
-                    DocumentId = id,
-                    ChangeType = IndexDocumentChangeType.Modified,
-                    ChangeDate = DateTime.UtcNow
-                })
-                .ToArray();
-        }
+        var pickupLocationIds = repository.PickupLocations
+            .OrderBy(x => x.CreatedDate)
+            .Select(x => x.Id)
+            .Skip((int)skip)
+            .Take((int)take)
+            .ToArray();
+
+        return pickupLocationIds
+            .Select(id => new IndexDocumentChange
+            {
+                DocumentId = id,
+                ChangeType = IndexDocumentChangeType.Modified,
+                ChangeDate = DateTime.UtcNow
+            })
+            .ToArray();
     }
 
-    private async Task<IList<IndexDocumentChange>> GetChangesFromOperaionLog(DateTime? startDate, DateTime? endDate, long skip, long take)
+    private async Task<IList<IndexDocumentChange>> GetChangesFromOperationLog(DateTime? startDate, DateTime? endDate, long skip, long take)
     {
         var criteria = GetChangeLogSearchCriteria(startDate, endDate, skip, take);
         var operations = (await changeLogSearchService.SearchAsync(criteria)).Results;
@@ -87,12 +85,12 @@ public class PickupLocationChangesProvider(Func<IShippingRepository> shippingRep
 
         if (types.Count != 0)
         {
-            types.Add(nameof(PickupLocation));
+            types.Add(ChangeLogObjectType);
             criteria.ObjectTypes = types;
         }
         else
         {
-            criteria.ObjectType = nameof(PickupLocation);
+            criteria.ObjectType = ChangeLogObjectType;
         }
 
         criteria.StartDate = startDate;

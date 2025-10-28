@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,15 +24,24 @@ public class IndexPickupLocationChangedEventHandler(
 {
     public async Task Handle(PickupLocationChangedEvent message)
     {
-        if (!configuration.IsPickupLocationFullTextSearchEnabled() || !await settingsManager.GetValueAsync<bool>(ModuleConstants.Settings.EventBasedIndexation))
+        if (!configuration.IsPickupLocationFullTextSearchEnabled() ||
+            !await settingsManager.GetValueAsync<bool>(ModuleConstants.Settings.EventBasedIndexation))
         {
             return;
         }
 
         var indexEntries = message?.ChangedEntries
-            .Select(x => new IndexEntry { Id = x.OldEntry.Id, EntryState = x.EntryState, Type = ModuleConstants.PickupLocationIndexDocumentType })
-            .ToArray() ?? Array.Empty<IndexEntry>();
+            .Select(x => new IndexEntry
+            {
+                Id = x.NewEntry.Id,
+                EntryState = x.EntryState,
+                Type = ModuleConstants.PickupLocationIndexDocumentType,
+            })
+            .ToArray() ?? [];
 
-        indexingJobService.EnqueueIndexAndDeleteDocuments(indexEntries, JobPriority.Normal, indexingConfigurations.GetDocumentBuilders(ModuleConstants.PickupLocationIndexDocumentType, typeof(PickupLocationChangesProvider)).ToList());
+        indexingJobService.EnqueueIndexAndDeleteDocuments(indexEntries, JobPriority.Normal,
+            indexingConfigurations
+                .GetDocumentBuilders(ModuleConstants.PickupLocationIndexDocumentType, typeof(PickupLocationChangesProvider))
+                .ToList());
     }
 }

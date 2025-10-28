@@ -76,10 +76,9 @@ namespace VirtoCommerce.ShippingModule.Web
 
             serviceCollection.AddTransient<ShippingExportImport>();
 
-            serviceCollection.AddTransient<IPickupLocationIndexedSearchService, PickupLocationIndexedSearchService>();
-
             serviceCollection.AddTransient<IndexPickupLocationChangedEventHandler>();
 
+            serviceCollection.AddTransient<IPickupLocationIndexedSearchService, PickupLocationIndexedSearchService>();
             serviceCollection.AddTransient<PickupLocationSearchRequestBuilder>();
 
             serviceCollection.AddSingleton<PickupLocationChangesProvider>();
