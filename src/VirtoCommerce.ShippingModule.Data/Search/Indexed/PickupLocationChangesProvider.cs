@@ -40,7 +40,7 @@ public class PickupLocationChangesProvider(Func<IShippingRepository> shippingRep
         return (await changeLogSearchService.SearchAsync(criteria)).TotalCount;
     }
 
-    private IList<IndexDocumentChange> GetChangesFromRepository(long skip, long take)
+    private List<IndexDocumentChange> GetChangesFromRepository(long skip, long take)
     {
         using var repository = shippingRepositoryFactory();
 
@@ -58,10 +58,10 @@ public class PickupLocationChangesProvider(Func<IShippingRepository> shippingRep
                 ChangeType = IndexDocumentChangeType.Modified,
                 ChangeDate = DateTime.UtcNow
             })
-            .ToArray();
+            .ToList();
     }
 
-    private async Task<IList<IndexDocumentChange>> GetChangesFromOperationLog(DateTime? startDate, DateTime? endDate, long skip, long take)
+    private async Task<List<IndexDocumentChange>> GetChangesFromOperationLog(DateTime? startDate, DateTime? endDate, long skip, long take)
     {
         var criteria = GetChangeLogSearchCriteria(startDate, endDate, skip, take);
         var operations = (await changeLogSearchService.SearchAsync(criteria)).Results;
@@ -74,7 +74,7 @@ public class PickupLocationChangesProvider(Func<IShippingRepository> shippingRep
                 ChangeType = o.OperationType == EntryState.Deleted ? IndexDocumentChangeType.Deleted : IndexDocumentChangeType.Modified,
                 ChangeDate = o.ModifiedDate ?? o.CreatedDate,
             })
-            .ToArray();
+            .ToList();
     }
 
     protected virtual ChangeLogSearchCriteria GetChangeLogSearchCriteria(DateTime? startDate, DateTime? endDate, long skip, long take)

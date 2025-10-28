@@ -134,7 +134,7 @@ namespace VirtoCommerce.ShippingModule.Web
 
             PolymorphJsonConverter.RegisterTypeForDiscriminator(typeof(ShippingMethod), nameof(ShippingMethod.TypeName));
 
-            var searchRequestBuilderRegistrar = appBuilder.ApplicationServices.GetService<ISearchRequestBuilderRegistrar>();
+            var searchRequestBuilderRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISearchRequestBuilderRegistrar>();
             searchRequestBuilderRegistrar.Register(ModuleConstants.PickupLocationIndexDocumentType, appBuilder.ApplicationServices.GetService<PickupLocationSearchRequestBuilder>);
 
             using var serviceScope = appBuilder.ApplicationServices.CreateScope();

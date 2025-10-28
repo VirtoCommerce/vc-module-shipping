@@ -30,8 +30,9 @@ public class IndexPickupLocationChangedEventHandler(
             return;
         }
 
-        var indexEntries = message?.ChangedEntries
-            .Select(x => new IndexEntry
+        var indexEntries = message
+            ?.ChangedEntries
+            ?.Select(x => new IndexEntry
             {
                 Id = x.NewEntry.Id,
                 EntryState = x.EntryState,
