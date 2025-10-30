@@ -76,23 +76,26 @@ namespace VirtoCommerce.ShippingModule.Web
 
             serviceCollection.AddTransient<ShippingExportImport>();
 
-            serviceCollection.AddTransient<IndexPickupLocationChangedEventHandler>();
-
-            serviceCollection.AddTransient<IPickupLocationIndexedSearchService, PickupLocationIndexedSearchService>();
-            serviceCollection.AddTransient<PickupLocationSearchRequestBuilder>();
-
-            serviceCollection.AddSingleton<PickupLocationChangesProvider>();
-            serviceCollection.AddSingleton<PickupLocationDocumentBuilder>();
-
-            serviceCollection.AddSingleton(provider => new IndexDocumentConfiguration
+            if (Configuration.IsPickupLocationFullTextSearchEnabled())
             {
-                DocumentType = ModuleConstants.PickupLocationIndexDocumentType,
-                DocumentSource = new IndexDocumentSource
+                serviceCollection.AddTransient<IndexPickupLocationChangedEventHandler>();
+
+                serviceCollection.AddTransient<IPickupLocationIndexedSearchService, PickupLocationIndexedSearchService>();
+                serviceCollection.AddTransient<PickupLocationSearchRequestBuilder>();
+
+                serviceCollection.AddSingleton<PickupLocationChangesProvider>();
+                serviceCollection.AddSingleton<PickupLocationDocumentBuilder>();
+
+                serviceCollection.AddSingleton(provider => new IndexDocumentConfiguration
                 {
-                    ChangesProvider = provider.GetService<PickupLocationChangesProvider>(),
-                    DocumentBuilder = provider.GetService<PickupLocationDocumentBuilder>(),
-                },
-            });
+                    DocumentType = ModuleConstants.PickupLocationIndexDocumentType,
+                    DocumentSource = new IndexDocumentSource
+                    {
+                        ChangesProvider = provider.GetService<PickupLocationChangesProvider>(),
+                        DocumentBuilder = provider.GetService<PickupLocationDocumentBuilder>(),
+                    },
+                });
+            }
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -126,7 +129,10 @@ namespace VirtoCommerce.ShippingModule.Web
                 ],
                 new SelectedStoreScope());
 
-            appBuilder.RegisterEventHandler<PickupLocationChangedEvent, IndexPickupLocationChangedEventHandler>();
+            if (Configuration.IsPickupLocationFullTextSearchEnabled())
+            {
+                appBuilder.RegisterEventHandler<PickupLocationChangedEvent, IndexPickupLocationChangedEventHandler>();
+            }
 
             var shippingMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IShippingMethodsRegistrar>();
             shippingMethodsRegistrar.RegisterShippingMethod<FixedRateShippingMethod>();
@@ -134,8 +140,11 @@ namespace VirtoCommerce.ShippingModule.Web
 
             PolymorphJsonConverter.RegisterTypeForDiscriminator(typeof(ShippingMethod), nameof(ShippingMethod.TypeName));
 
-            var searchRequestBuilderRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISearchRequestBuilderRegistrar>();
-            searchRequestBuilderRegistrar.Register(ModuleConstants.PickupLocationIndexDocumentType, appBuilder.ApplicationServices.GetService<PickupLocationSearchRequestBuilder>);
+            if (Configuration.IsPickupLocationFullTextSearchEnabled())
+            {
+                var searchRequestBuilderRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISearchRequestBuilderRegistrar>();
+                searchRequestBuilderRegistrar.Register(ModuleConstants.PickupLocationIndexDocumentType, appBuilder.ApplicationServices.GetService<PickupLocationSearchRequestBuilder>);
+            }
 
             using var serviceScope = appBuilder.ApplicationServices.CreateScope();
             var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
