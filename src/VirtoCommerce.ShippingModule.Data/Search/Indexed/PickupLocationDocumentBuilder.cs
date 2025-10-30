@@ -62,7 +62,10 @@ public class PickupLocationDocumentBuilder(IPickupLocationService pickupLocation
 
         document.AddFilterableBoolean("IsActive", pickupLocation.IsActive);
 
-        document.AddFilterableValue("GeoLocation", GeoPoint.TryParse(pickupLocation.GeoLocation), IndexDocumentFieldValueType.GeoPoint);
+        if (!pickupLocation.GeoLocation.IsNullOrEmpty())
+        {
+            document.AddFilterableValue("GeoLocation", GeoPoint.TryParse(pickupLocation.GeoLocation), IndexDocumentFieldValueType.GeoPoint);
+        }
 
         document.AddFilterableStringAndContentString("Name", pickupLocation.Name);
         document.AddFilterableStringAndContentString("Description", pickupLocation.Description);
