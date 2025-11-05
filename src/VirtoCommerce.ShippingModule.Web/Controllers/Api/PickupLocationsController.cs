@@ -92,7 +92,7 @@ public class PickupLocationsController(
 
     [HttpGet]
     [Route("indexedSearchEnabled")]
-    public ActionResult GetOrderFullTextSearchEnabled()
+    public ActionResult GetPickupLocationFullTextSearchEnabled()
     {
         return Ok(new { Result = configuration.IsPickupLocationFullTextSearchEnabled() });
     }
