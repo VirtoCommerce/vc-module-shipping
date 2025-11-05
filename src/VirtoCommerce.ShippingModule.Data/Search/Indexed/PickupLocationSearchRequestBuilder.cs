@@ -24,6 +24,11 @@ public class PickupLocationSearchRequestBuilder(ISearchPhraseParser searchPhrase
             result.Add(FilterHelper.CreateTermFilter("StoreId", criteria.StoreId));
         }
 
+        if (criteria.IsActive.HasValue)
+        {
+            result.Add(FilterHelper.CreateBoolFilter("IsActive", criteria.IsActive.Value));
+        }
+
         if (!criteria.Filter.IsNullOrEmpty())
         {
             var parseResult = _searchPhraseParser.Parse(criteria.Filter);
