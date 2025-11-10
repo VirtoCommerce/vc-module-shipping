@@ -1,0 +1,140 @@
+{
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "labels": {
+          "is-active": "Er aktiv",
+          "name": "Navn",
+          "code": "Kode",
+          "tax-type": "Skattetype",
+          "description": "Beskrivelse",
+          "settings": "Innstillinger",
+          "logoUrl": "Logo-URL"
+        },
+        "placeholders": {
+          "tax-type": "Velg...",
+          "description": "Skriv inn beskrivelse"
+        }
+      },
+      "shipping-method-list": {
+        "labels": {
+          "is-active": "Er aktiv",
+          "shipping-method": "Fraktmetode",
+          "note": "Arranger rekkefølgen fraktmetodene vises i nettbutikken. Bruk dra-og-slipp for å endre rekkefølge"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "name": "Navn",
+          "is-active": "Aktiv"
+        }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Opprett ny hentested",
+          "name": "Navn",
+          "is-active": "Aktiv",
+          "geoLocation": "Sted",
+          "outerId": "Eksternt ID",
+          "description": "Beskrivelse",
+          "working-hours": "Åpningstider",
+          "contactEmail": "Kontakt-e-post",
+          "contactPhone": "Kontakttelefon",
+          "fulfillmentCenter": "Oppfyllelsessenter",
+          "transferFulfillmentCenter": "Overfør oppfyllelsessentre",
+          "deliveryDays": "Dager til klar for henting",
+          "storageDays": "Hentedager"
+        },
+        "descriptions": {
+          "name": "Navn på hentestedet",
+          "geoLocation": "Skriv inn breddegrad og lengdegrad adskilt med komma uten mellomrom, f.eks. 41.40338,8.17403",
+          "outerId": "Unik ID for å koble hentestedet til eksternt system",
+          "description": "Beskrivelse av hentestedet",
+          "working-hours": "Informasjon om åpningstider for hentestedet",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Skriv inn navn",
+          "geoLocation": "Skriv inn breddegrad og lengdegrad",
+          "outerId": "Skriv inn ID i eksternt system",
+          "description": "Gi beskrivelse av hentestedet",
+          "working-hours": "Gi informasjon om åpningstider",
+          "contactEmail": "Gi kontakt-e-post",
+          "contactPhone": "Gi kontakttelefonnummer",
+          "fulfillmentCenter": "Gi oppfyllelsessenter",
+          "transferFulfillmentCenter": "Gi overførings-oppfyllelsessentre",
+          "deliveryDays": "",
+          "storageDays": ""
+        },
+        "errors": {
+          "checkAddress": "Vennligst kontroller adressen"
+        }
+      }
+    },
+    "dialogs": {
+      "pickup-location-delete": {
+        "title": "Slett hentested",
+        "message": "Er du sikker på at du vil slette hentestedet?"
+      },
+      "pickup-location-save": {
+        "title": "Lagre hentested",
+        "message": "Hentestedet er endret. Vil du lagre endringene?"
+      },
+      "shipping-method-save": {
+        "title": "Lagre fraktmetode",
+        "message": "Fraktmetoden er endret. Vil du lagre endringene?"
+      }
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "Fraktmetoder",
+        "blade-title": "Fraktmetoder"
+      },
+      "pickup-location-widget": {
+        "title": "Hentesteder",
+        "blade-title": "Hentesteder"
+      },
+      "pickupLocationAddress": {
+        "no-address": "Ingen adresse angitt",
+        "address-detail": {
+          "city": "By",
+          "address1": "Linje 1",
+          "address2": "Linje 2",
+          "zip-code": "Postnummer"
+        }
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "Fast fraktpris",
+        "description": "Fraktmetode med fast pris"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "Luftfraktpris",
+        "description": "Fast luftfraktpris"
+      },
+      "Ground.Rate": {
+        "title": "Bakke-fraktpris",
+        "description": "Fast bakke-fraktpris"
+      }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "Aktivere Google Maps for BOPIS",
+      "description": "Vis butikkhentesteder med Google Maps"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Google Maps API-nøkkel",
+      "description": "Oppgi API-nøkkel som brukes til å laste Google Maps for visning av butikkhenting"
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "Eksporter/importer innstillinger for fraktmetoder"
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "labels": {
+          "is-active": "Är aktiv",
+          "name": "Namn",
+          "code": "Kod",
+          "tax-type": "Momstyp",
+          "description": "Beskrivning",
+          "settings": "Inställningar",
+          "logoUrl": "Logotyp-URL"
+        },
+        "placeholders": {
+          "tax-type": "Välj...",
+          "description": "Ange beskrivning"
+        }
+      },
+      "shipping-method-list": {
+        "labels": {
+          "is-active": "Är aktiv",
+          "shipping-method": "Fraktmetod",
+          "note": "Ordna i vilken ordning fraktmetoderna visas i webbutiken. Använd dra-och-släpp för att ändra ordning"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "name": "Namn",
+          "is-active": "Aktiv"
+        }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Skapa ny upphämtningsplats",
+          "name": "Namn",
+          "is-active": "Aktiv",
+          "geoLocation": "Plats",
+          "outerId": "Externt ID",
+          "description": "Beskrivning",
+          "working-hours": "Öppettider",
+          "contactEmail": "Kontakt-e-post",
+          "contactPhone": "Kontakttelefon",
+          "fulfillmentCenter": "Uppfyllelsecenter",
+          "transferFulfillmentCenter": "Överför uppfyllelsecenter",
+          "deliveryDays": "Dagar tills redo för upphämtning",
+          "storageDays": "Upphämtningsperiod i dagar"
+        },
+        "descriptions": {
+          "name": "Namn på upphämtningsplatsen",
+          "geoLocation": "Ange latitud och longitud separerade med kommatecken utan mellanslag, t.ex. 41.40338,8.17403",
+          "outerId": "Unikt ID för att koppla upphämtningsplatsen till externt system",
+          "description": "Beskrivning för upphämtningsplatsen",
+          "working-hours": "Information om öppettider för upphämtningsplatsen",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Ange namn",
+          "geoLocation": "Ange latitud och longitud",
+          "outerId": "Ange ID i externt system",
+          "description": "Ange beskrivning för upphämtningsplatsen",
+          "working-hours": "Ange information om öppettider",
+          "contactEmail": "Ange kontakt-e-post",
+          "contactPhone": "Ange kontakttelefonnummer",
+          "fulfillmentCenter": "Ange uppfyllelsecenter",
+          "transferFulfillmentCenter": "Ange överförings-uppfyllelsecenter",
+          "deliveryDays": "",
+          "storageDays": ""
+        },
+        "errors": {
+          "checkAddress": "Vänligen kontrollera adressen"
+        }
+      }
+    },
+    "dialogs": {
+      "pickup-location-delete": {
+        "title": "Radera upphämtningsplats",
+        "message": "Är du säker på att du vill radera upphämtningsplatsen?"
+      },
+      "pickup-location-save": {
+        "title": "Spara upphämtningsplats",
+        "message": "Upphämtningsplatsen har ändrats. Vill du spara ändringarna?"
+      },
+      "shipping-method-save": {
+        "title": "Spara fraktmetod",
+        "message": "Fraktmetoden har ändrats. Vill du spara ändringarna?"
+      }
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "Fraktmetoder",
+        "blade-title": "Fraktmetoder"
+      },
+      "pickup-location-widget": {
+        "title": "Upphämtningsplatser",
+        "blade-title": "Upphämtningsplatser"
+      },
+      "pickupLocationAddress": {
+        "no-address": "Ingen adress angiven",
+        "address-detail": {
+          "city": "Stad",
+          "address1": "Rad 1",
+          "address2": "Rad 2",
+          "zip-code": "Postnummer"
+        }
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "Fast fraktavgift",
+        "description": "Fraktmetod med fast pris"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "Luftfraktavgift",
+        "description": "Fast luftfraktavgift"
+      },
+      "Ground.Rate": {
+        "title": "Markfraktavgift",
+        "description": "Fast markfraktavgift"
+      }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "Aktivera Google Maps för BOPIS",
+      "description": "Visa butiksupphämtningsplatser med Google Maps"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Google Maps API-nyckel",
+      "description": "Ange API-nyckel som används för att ladda Google Maps för visning av butiksupphämtning"
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "Exportera/importera inställningar för fraktmetoder"
+    }
+  }
+}
