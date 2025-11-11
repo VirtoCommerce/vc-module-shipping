@@ -127,6 +127,10 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Clave de API de Google Maps",
       "description": "Clave de API para cargar Google Maps en el módulo de recogida en tienda"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "Indexación basada en eventos para entidades de ubicación de recogida",
+      "description": "Cualquier cambio en la entidad de ubicación de recogida activará una tarea en segundo plano para aplicar estos cambios al índice de búsqueda"
     }
   },
   "module": {

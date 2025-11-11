@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.ShippingModule.Core.Model;
 
 namespace VirtoCommerce.ShippingModule.Core
 {
@@ -10,6 +12,8 @@ namespace VirtoCommerce.ShippingModule.Core
     {
         public static readonly string FixedRateShipmentCode = "FixedRate";
         public static readonly string BuyOnlinePickupInStoreShipmentCode = "BuyOnlinePickupInStore";
+
+        public const string PickupLocationIndexDocumentType = nameof(PickupLocation);
 
         public static class Security
         {
@@ -44,12 +48,34 @@ namespace VirtoCommerce.ShippingModule.Core
                 IsPublic = true,
             };
 
+            public static SettingDescriptor EventBasedIndexation { get; } = new()
+            {
+                Name = "Shipping.Bopis.Search.EventBasedIndexation.Enabled",
+                GroupName = "Shipping|BOPIS",
+                ValueType = SettingValueType.Boolean,
+                DefaultValue = true,
+            };
+
+            public static SettingDescriptor PickupLocationIndexationDate { get; } = new()
+            {
+                Name = "VirtoCommerce.Search.IndexingJobs.IndexationDate.PickupLocation",
+                GroupName = "Shipping|BOPIS",
+                ValueType = SettingValueType.DateTime,
+                DefaultValue = default(DateTime),
+            };
+
             public static class General
             {
                 public static IEnumerable<SettingDescriptor> AllSettings => [
                     EnableGoogleMapsForBopis,
                     GoogleMapsApiKey
                     ];
+
+                public static IEnumerable<SettingDescriptor> IndexationSettings =>
+                [
+                    EventBasedIndexation,
+                    PickupLocationIndexationDate,
+                ];
             }
 
             public static class FixedRateShippingMethod

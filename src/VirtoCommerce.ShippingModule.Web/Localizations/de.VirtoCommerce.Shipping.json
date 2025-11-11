@@ -127,6 +127,10 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Google Maps API-Schlüssel",
       "description": "API-Schlüssel zur Anzeige von Abholorten mit Google Maps"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "Ereignisbasierte Indizierung für Abholort-Entitäten",
+      "description": "Jede Änderung an der Abholort-Entität löst eine Hintergrundaufgabe aus, um diese Änderungen auf den Suchindex anzuwenden"
     }
   },
   "module": {
