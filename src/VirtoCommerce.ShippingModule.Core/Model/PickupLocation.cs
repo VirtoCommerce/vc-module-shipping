@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.SearchModule.Core.Model;
 
 namespace VirtoCommerce.ShippingModule.Core.Model;
 
-public class PickupLocation : AuditableEntity, ICloneable
+public class PickupLocation : AuditableEntity, ICloneable, IHasRelevanceScore
 {
     [StringLength(128)]
     public string StoreId { get; set; }
@@ -36,6 +37,8 @@ public class PickupLocation : AuditableEntity, ICloneable
     public PickupLocationAddress Address { get; set; }
 
     public string OuterId { get; set; }
+
+    public double? RelevanceScore { get; set; }
 
     public object Clone()
     {

@@ -6,5 +6,6 @@ angular.module('virtoCommerce.shippingModule')
             get: { method: 'GET', url: 'api/shipping/pickup-locations/:storeId/:id' },
             remove: { method: 'DELETE', url: 'api/shipping/pickup-locations/:storeId/:id' },
             update: { method: 'PUT' },
+            indexedSearchEnabled: { method: 'GET', url: '/api/shipping/pickup-locations/indexedSearchEnabled' },
         });
     }]);

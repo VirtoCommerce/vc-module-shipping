@@ -127,6 +127,10 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Google マップ API キ",
       "description": "店舗受取に Google マップを読み込むための API キーです。"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "受け取り場所エンティティのイベントベースのインデックス作成",
+      "description": "受け取り場所エンティティに対する変更は、検索インデックスにこれらの変更を適用するバックグラウンドタスクをトリガーします"
     }
   },
   "module": {
