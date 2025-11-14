@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.ShippingModule.Core;
+using VirtoCommerce.ShippingModule.Core.Extensions;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Services;
@@ -16,7 +18,8 @@ namespace VirtoCommerce.ShippingModule.Web.Controllers.Api;
 public class PickupLocationsController(
     IPickupLocationService pickupLocationService,
     IPickupLocationSearchService pickupLocationSearchService,
-    IAuthorizationService authorizationService)
+    IAuthorizationService authorizationService,
+    IConfiguration configuration)
     : Controller
 {
     [HttpPost]
@@ -85,5 +88,12 @@ public class PickupLocationsController(
         }
         await pickupLocationService.DeleteAsync([id]);
         return Ok();
+    }
+
+    [HttpGet]
+    [Route("indexedSearchEnabled")]
+    public ActionResult GetPickupLocationFullTextSearchEnabled()
+    {
+        return Ok(new { Result = configuration.IsPickupLocationFullTextSearchEnabled() });
     }
 }

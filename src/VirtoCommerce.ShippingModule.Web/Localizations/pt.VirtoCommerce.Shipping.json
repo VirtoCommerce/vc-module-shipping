@@ -127,6 +127,10 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Chave de API do Google Maps",
       "description": "Chave de API para exibir Google Maps nos locais de retirada"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "Indexação baseada em eventos para entidades de local de retirada",
+      "description": "Qualquer alteração na entidade do local de retirada acionará uma tarefa em segundo plano para aplicar essas alterações ao índice de pesquisa"
     }
   },
   "module": {

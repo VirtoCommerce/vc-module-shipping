@@ -127,6 +127,10 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Ключ API для Google Maps",
       "description": "Ключ API для отображения карт Google на экране самовывоза"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "Индексация на основе событий для сущностей пунктов выдачи",
+      "description": "Любые изменения сущностей пунктов выдачи инициируют фоновую задачу для применения этих изменений к индексу поиска"
     }
   },
   "module": {
