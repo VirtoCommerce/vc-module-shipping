@@ -1,0 +1,140 @@
+{
+  "shipping": {
+    "blades": {
+      "shipping-method-detail": {
+        "labels": {
+          "is-active": "Aktiivinen",
+          "name": "Nimi",
+          "code": "Koodi",
+          "tax-type": "Verotyyppi",
+          "description": "Kuvaus",
+          "settings": "Asetukset",
+          "logoUrl": "Logon URL"
+        },
+        "placeholders": {
+          "tax-type": "Valitse...",
+          "description": "Anna kuvaus"
+        }
+      },
+      "shipping-method-list": {
+        "labels": {
+          "is-active": "Aktiivinen",
+          "shipping-method": "Toimitustapa",
+          "note": "Järjestä toimitustapojen näyttöjärjestys verkkokaupassa. Käytä raahaa ja pudota -toimintoa järjestääksesi ne uudelleen"
+        }
+      },
+      "pickup-location-list": {
+        "labels": {
+          "name": "Nimi",
+          "is-active": "Aktiivinen"
+        }
+      },
+      "pickup-location-detail": {
+        "labels": {
+          "create": "Luo uusi noutopiste",
+          "name": "Nimi",
+          "is-active": "Aktiivinen",
+          "geoLocation": "Sijainti",
+          "outerId": "Ulkoinen ID",
+          "description": "Kuvaus",
+          "working-hours": "Aukioloajat",
+          "contactEmail": "Yhteyssähköposti",
+          "contactPhone": "Yhteyspuhelin",
+          "fulfillmentCenter": "Täyttökeskus",
+          "transferFulfillmentCenter": "Siirtotäyttökeskukset",
+          "deliveryDays": "Päivät valmiina noutoon",
+          "storageDays": "Noutoaika päivinä"
+        },
+        "descriptions": {
+          "name": "Noutopisteen nimi",
+          "geoLocation": "Anna leveys- ja pituusaste pilkulla erotettuna ilman välilyöntejä, esim. 41.40338,8.17403",
+          "outerId": "Ainutlaatuinen ID noutopisteen yhdistämiseksi ulkoiseen järjestelmään",
+          "description": "Kuvaus noutopisteelle",
+          "working-hours": "Tiedot noutopisteen aukioloajoista",
+          "contactEmail": "",
+          "contactPhone": ""
+        },
+        "placeholders": {
+          "name": "Anna nimi",
+          "geoLocation": "Anna leveys- ja pituusaste",
+          "outerId": "Anna ID ulkoisessa järjestelmässä",
+          "description": "Anna kuvaus noutopisteelle",
+          "working-hours": "Anna tiedot aukioloajoista",
+          "contactEmail": "Anna yhteyssähköposti",
+          "contactPhone": "Anna yhteyspuhelinnumero",
+          "fulfillmentCenter": "Anna täyttökeskus",
+          "transferFulfillmentCenter": "Anna siirtotäyttökeskukset",
+          "deliveryDays": "",
+          "storageDays": ""
+        },
+        "errors": {
+          "checkAddress": "Tarkista osoite"
+        }
+      }
+    },
+    "dialogs": {
+      "pickup-location-delete": {
+        "title": "Poista noutopiste",
+        "message": "Haluatko varmasti poistaa noutopisteen?"
+      },
+      "pickup-location-save": {
+        "title": "Tallenna noutopiste",
+        "message": "Noutopistettä on muokattu. Haluatko tallentaa muutokset?"
+      },
+      "shipping-method-save": {
+        "title": "Tallenna toimitustapa",
+        "message": "Toimitustapaa on muokattu. Haluatko tallentaa muutokset?"
+      }
+    },
+    "widgets": {
+      "store-shipping-widget": {
+        "title": "Toimitustavat",
+        "blade-title": "Toimitustavat"
+      },
+      "pickup-location-widget": {
+        "title": "Noutopisteet",
+        "blade-title": "Noutopisteet"
+      },
+      "pickupLocationAddress": {
+        "no-address": "Osoitetta ei ole asetettu",
+        "address-detail": {
+          "city": "Kaupunki",
+          "address1": "Rivi 1",
+          "address2": "Rivi 2",
+          "zip-code": "Postinumero"
+        }
+      }
+    },
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "Kiinteä toimitusmaksu",
+        "description": "Kiinteän hinnan toimitustapa"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "Ilmatoimituksen hinta",
+        "description": "Kiinteä ilmatoimituksen hinta"
+      },
+      "Ground.Rate": {
+        "title": "Maan toimituksen hinta",
+        "description": "Kiinteä maan toimituksen hinta"
+      }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "Google Mapsin käyttöönotto BOPIS-toiminnolle",
+      "description": "Näytä myymälän noutopisteet Google Mapsilla"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "Google Maps API-avain",
+      "description": "Anna API-avain, jota käytetään Google Mapsin lataamiseen myymälän noutopisteiden näyttämiseen"
+    }
+  },
+  "module": {
+    "VirtoCommerce.Shipping": {
+      "description": "Vie/tuo toimitustapojen asetukset"
+    }
+  }
+}
