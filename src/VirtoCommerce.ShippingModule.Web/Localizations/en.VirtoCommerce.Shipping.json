@@ -134,6 +134,18 @@
     "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
       "title": "Event-based indexing for pickup location entities",
       "description": "Any changes to the pickup location entity will trigger a background task to apply these changes to the search index"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Pickup location indexation date and time",
+              "description": "Date and time when the pickup location indexing task starts"
+            }
+          }
+        }
+      }
     }
   },
   "module": {
