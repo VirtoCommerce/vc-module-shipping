@@ -131,6 +131,18 @@
     "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
       "title": "受け取り場所エンティティのイベントベースのインデックス作成",
       "description": "受け取り場所エンティティに対する変更は、検索インデックスにこれらの変更を適用するバックグラウンドタスクをトリガーします"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "受取場所のインデックス作成日時",
+              "description": "受取場所のインデックス作成タスクが開始される日時"
+            }
+          }
+        }
+      }
     }
   },
   "module": {

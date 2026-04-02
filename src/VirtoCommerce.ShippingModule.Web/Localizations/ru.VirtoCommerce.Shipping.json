@@ -131,6 +131,18 @@
     "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
       "title": "Индексация на основе событий для сущностей пунктов выдачи",
       "description": "Любые изменения сущностей пунктов выдачи инициируют фоновую задачу для применения этих изменений к индексу поиска"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Дата и время индексации места получения",
+              "description": "Дата и время начала задачи индексирования места получения"
+            }
+          }
+        }
+      }
     }
   },
   "module": {

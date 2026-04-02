@@ -130,6 +130,18 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Google Maps API-nøkkel",
       "description": "Oppgi API-nøkkel som brukes til å laste Google Maps for visning av butikkhenting"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Dato og tid for hentested-indeksering",
+              "description": "Dato og tid da hentested-indekseringsoppgaven starter"
+            }
+          }
+        }
+      }
     }
   },
   "module": {

@@ -131,6 +131,18 @@
     "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
       "title": "Indicizzazione basata su eventi per entità di posizione di ritiro",
       "description": "Qualsiasi modifica all'entità della posizione di ritiro attiverà un'attività in background per applicare queste modifiche all'indice di ricerca"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Data e ora di indicizzazione del punto di ritiro",
+              "description": "Data e ora in cui inizia l'attività di indicizzazione del punto di ritiro"
+            }
+          }
+        }
+      }
     }
   },
   "module": {
