@@ -131,6 +131,18 @@
     "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
       "title": "Indexación basada en eventos para entidades de ubicación de recogida",
       "description": "Cualquier cambio en la entidad de ubicación de recogida activará una tarea en segundo plano para aplicar estos cambios al índice de búsqueda"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Fecha y hora de indexación del punto de recogida",
+              "description": "Fecha y hora en que comienza la tarea de indexación del punto de recogida"
+            }
+          }
+        }
+      }
     }
   },
   "module": {

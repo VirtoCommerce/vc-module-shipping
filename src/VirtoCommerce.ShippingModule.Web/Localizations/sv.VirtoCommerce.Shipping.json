@@ -130,6 +130,18 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Google Maps API-nyckel",
       "description": "Ange API-nyckel som används för att ladda Google Maps för visning av butiksupphämtning"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Datum och tid för upphämtningsplatsindexering",
+              "description": "Datum och tid då indexeringsuppgiften för upphämtningsplatser startar"
+            }
+          }
+        }
+      }
     }
   },
   "module": {

@@ -131,6 +131,18 @@
     "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
       "title": "Ereignisbasierte Indizierung für Abholort-Entitäten",
       "description": "Jede Änderung an der Abholort-Entität löst eine Hintergrundaufgabe aus, um diese Änderungen auf den Suchindex anzuwenden"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Datum und Uhrzeit der Abholstandort-Indizierung",
+              "description": "Datum und Uhrzeit des Starts der Abholstandort-Indizierungsaufgabe"
+            }
+          }
+        }
+      }
     }
   },
   "module": {
