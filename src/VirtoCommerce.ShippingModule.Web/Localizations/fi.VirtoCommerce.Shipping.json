@@ -130,6 +130,18 @@
     "Shipping.Bopis.GoogleMaps.ApiKey": {
       "title": "Google Maps API-avain",
       "description": "Anna API-avain, jota käytetään Google Mapsin lataamiseen myymälän noutopisteiden näyttämiseen"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Noutopisteiden indeksointipäivä ja -aika",
+              "description": "Päivämäärä ja aika, jolloin noutopisteiden indeksointitehtävä käynnistyy"
+            }
+          }
+        }
+      }
     }
   },
   "module": {

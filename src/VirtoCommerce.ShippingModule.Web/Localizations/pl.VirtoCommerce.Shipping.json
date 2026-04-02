@@ -131,6 +131,18 @@
     "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
       "title": "Indeksowanie oparte na zdarzeniach dla jednostek lokalizacji odbioru",
       "description": "Każda zmiana w jednostce lokalizacji odbioru spowoduje uruchomienie zadania w tle, które zastosuje te zmiany do indeksu wyszukiwania"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "Data i czas indeksacji lokalizacji odbioru",
+              "description": "Data i czas rozpoczęcia zadania indeksowania lokalizacji odbioru"
+            }
+          }
+        }
+      }
     }
   },
   "module": {
