@@ -6,12 +6,13 @@ if (AppDependencies != undefined) {
 }
 
 angular.module(moduleName, ['ngSanitize'])
-    .run(['platformWebApp.widgetService',
+    .run(['$rootScope',
+        'platformWebApp.widgetService',
         'platformWebApp.permissionScopeResolver',
         'virtoCommerce.storeModule.stores',
         'platformWebApp.bladeNavigationService',
         'virtoCommerce.shippingModule.pickupLocations',
-        function (widgetService, scopeResolver, stores, bladeNavigationService, pickupLocations) {
+        function ($rootScope, widgetService, scopeResolver, stores, bladeNavigationService, pickupLocations) {
 
             widgetService.registerWidget({
                 controller: 'virtoCommerce.shippingModule.storeShippingWidgetController',
@@ -38,13 +39,17 @@ angular.module(moduleName, ['ngSanitize'])
                 template: 'Modules/$(VirtoCommerce.Shipping)/Scripts/widgets/pickupLocationsAddressWidget.tpl.html'
             }, 'pickupLocationAddress');
 
-            pickupLocations.indexedSearchEnabled(function (data) {
-                if (data.result) {
-                    widgetService.registerWidget({
-                        controller: 'virtoCommerce.searchModule.indexWidgetController',
-                        template: 'Modules/$(VirtoCommerce.Search)/Scripts/widgets/index-widget.tpl.html',
-                        documentType: 'PickupLocation'
-                    }, 'pickupLocationIndex');
+            $rootScope.$on('loginStatusChanged', function (event, authContext) {
+                if (authContext.isAuthenticated) {
+                    pickupLocations.indexedSearchEnabled(function (data) {
+                        if (data.result) {
+                            widgetService.registerWidget({
+                                controller: 'virtoCommerce.searchModule.indexWidgetController',
+                                template: 'Modules/$(VirtoCommerce.Search)/Scripts/widgets/index-widget.tpl.html',
+                                documentType: 'PickupLocation'
+                            }, 'pickupLocationIndex');
+                        }
+                    });
                 }
             });
 
