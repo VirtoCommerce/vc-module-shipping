@@ -1,4 +1,5 @@
-using System;
+using System;
+
 using System.Threading;
 using System.IO;
 using System.Threading.Tasks;
@@ -30,12 +31,12 @@ public class ShippingExportImport(
         await using var sw = new StreamWriter(outStream);
         await using var writer = new JsonTextWriter(sw);
 
-        await writer.WriteStartObjectAsync();
+        await writer.WriteStartObjectAsync(cancellationToken);
 
         progressInfo.Description = "Shipping methods are started to export";
         progressCallback(progressInfo);
 
-        await writer.WritePropertyNameAsync("ShippingMethods");
+        await writer.WritePropertyNameAsync("ShippingMethods", cancellationToken);
         await writer.SerializeArrayWithPagingAsync(jsonSerializer, _batchSize, async (skip, take) =>
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -52,7 +53,7 @@ public class ShippingExportImport(
             progressCallback(progressInfo);
         }, cancellationToken);
 
-        await writer.WritePropertyNameAsync("PickupLocations");
+        await writer.WritePropertyNameAsync("PickupLocations", cancellationToken);
         await writer.SerializeArrayWithPagingAsync(jsonSerializer, _batchSize, async (skip, take) =>
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -68,8 +69,8 @@ public class ShippingExportImport(
             progressCallback(progressInfo);
         }, cancellationToken);
 
-        await writer.WriteEndObjectAsync();
-        await writer.FlushAsync();
+        await writer.WriteEndObjectAsync(cancellationToken);
+        await writer.FlushAsync(cancellationToken);
     }
 
     public async Task DoImportAsync(Stream inputStream, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
@@ -80,7 +81,7 @@ public class ShippingExportImport(
 
         using var streamReader = new StreamReader(inputStream);
         await using var reader = new JsonTextReader(streamReader);
-        while (await reader.ReadAsync())
+        while (await reader.ReadAsync(cancellationToken))
         {
             if (reader.TokenType == JsonToken.PropertyName && reader.Value?.ToString() == "ShippingMethods")
             {
