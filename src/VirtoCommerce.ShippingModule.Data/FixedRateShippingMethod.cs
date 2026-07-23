@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using VirtoCommerce.CoreModule.Core.Common;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Model;
@@ -26,22 +27,20 @@ namespace VirtoCommerce.ShippingModule.Data
             {
                 throw new ArgumentException($"Expected context of type {nameof(ShippingRateEvaluationContext)}.", nameof(context));
             }
-            return [
-                new ShippingRate
-                {
-                    Rate = GroundOptionRate,
-                    Currency = shippingContext.Currency,
-                    ShippingMethod = this,
-                    OptionName = "Ground",
-                },
-                new ShippingRate
-                {
-                    Rate = AirOptionRate,
-                    Currency = shippingContext.Currency,
-                    ShippingMethod = this,
-                    OptionName = "Air",
-                },
-            ];
+
+            var ground = AbstractTypeFactory<ShippingRate>.TryCreateInstance();
+            ground.Rate = GroundOptionRate;
+            ground.Currency = shippingContext.Currency;
+            ground.ShippingMethod = this;
+            ground.OptionName = "Ground";
+
+            var air = AbstractTypeFactory<ShippingRate>.TryCreateInstance();
+            air.Rate = AirOptionRate;
+            air.Currency = shippingContext.Currency;
+            air.ShippingMethod = this;
+            air.OptionName = "Air";
+
+            return [ground, air];
         }
     }
 }
