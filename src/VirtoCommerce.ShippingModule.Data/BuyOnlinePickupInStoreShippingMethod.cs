@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using VirtoCommerce.CoreModule.Core.Common;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.ShippingModule.Core;
 using VirtoCommerce.ShippingModule.Core.Model;
 
@@ -20,14 +21,12 @@ public class BuyOnlinePickupInStoreShippingMethod : ShippingMethod
             throw new ArgumentException($"Expected context of type {nameof(ShippingRateEvaluationContext)}.", nameof(context));
         }
 
-        return [
-            new ShippingRate
-            {
-                Rate = 0,
-                Currency = shippingContext.Currency,
-                ShippingMethod = this,
-                OptionName = "Pickup",
-            },
-        ];
+        var pickup = AbstractTypeFactory<ShippingRate>.TryCreateInstance();
+        pickup.Rate = 0;
+        pickup.Currency = shippingContext.Currency;
+        pickup.ShippingMethod = this;
+        pickup.OptionName = "Pickup";
+
+        return [pickup];
     }
 }
