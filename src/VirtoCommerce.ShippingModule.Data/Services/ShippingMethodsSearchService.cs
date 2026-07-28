@@ -18,6 +18,8 @@ namespace VirtoCommerce.ShippingModule.Data.Services
 {
     public class ShippingMethodsSearchService : SearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod, StoreShippingMethodEntity>, IShippingMethodsSearchService
     {
+        protected const string DefaultSortColumn = nameof(StoreShippingMethodEntity.Code);
+
         private readonly ISettingsManager _settingsManager;
 
         public ShippingMethodsSearchService(
@@ -37,42 +39,58 @@ namespace VirtoCommerce.ShippingModule.Data.Services
 
             if (criteria.Take > 0 && !criteria.WithoutTransient)
             {
-                var transientMethodsQuery = AbstractTypeFactory<ShippingMethod>.AllTypeInfos
-                    .Select(x => AbstractTypeFactory<ShippingMethod>.TryCreateInstance(x.Type.Name))
-                    .AsQueryable();
+                // Plain LINQ-to-objects: composing operators on an in-memory IQueryable
+                // (EnumerableQuery) rebuilds and compiles an expression tree on every
+                // enumeration; this method runs on every cart/checkout read, and the per-call
+                // compilation convoys on runtime-wide locks under concurrent requests.
+                var transientMethods = AbstractTypeFactory<ShippingMethod>.AllTypeInfos
+                    .Select(x => AbstractTypeFactory<ShippingMethod>.TryCreateInstance(x.Type.Name));
 
                 if (!string.IsNullOrEmpty(criteria.Keyword))
                 {
-                    transientMethodsQuery = transientMethodsQuery.Where(x => x.Code.Contains(criteria.Keyword) || x.Id.Contains(criteria.Keyword));
+                    transientMethods = transientMethods.Where(x => x.Code.Contains(criteria.Keyword) || x.Id.Contains(criteria.Keyword));
                 }
 
                 if (!criteria.Codes.IsNullOrEmpty())
                 {
-                    transientMethodsQuery = transientMethodsQuery.Where(x => criteria.Codes.Contains(x.Code));
+                    transientMethods = transientMethods.Where(x => criteria.Codes.Contains(x.Code));
                 }
 
                 if (!criteria.TaxType.IsNullOrEmpty())
                 {
-                    transientMethodsQuery = transientMethodsQuery.Where(x => criteria.TaxType.Contains(x.TaxType));
+                    transientMethods = transientMethods.Where(x => criteria.TaxType.Contains(x.TaxType));
                 }
 
                 if (criteria.IsActive.HasValue)
                 {
-                    transientMethodsQuery = transientMethodsQuery.Where(x => x.IsActive == criteria.IsActive.Value);
+                    transientMethods = transientMethods.Where(x => x.IsActive == criteria.IsActive.Value);
                 }
 
-                var allPersistentTypes = result.Results.Select(x => x.GetType()).Distinct();
-                transientMethodsQuery = transientMethodsQuery.Where(x => !allPersistentTypes.Contains(x.GetType()));
+                var persistentMethodTypes = result.Results.Select(x => x.GetType()).ToHashSet();
+                var filteredTransientMethods = transientMethods
+                    .Where(x => !persistentMethodTypes.Contains(x.GetType()))
+                    .ToList();
 
-                result.TotalCount += transientMethodsQuery.Count();
-                var transientProviders = transientMethodsQuery.Skip(criteria.Skip).Take(criteria.Take).ToList();
+                result.TotalCount += filteredTransientMethods.Count;
 
-                foreach (var transientProvider in transientProviders)
+                var pagedTransientMethods = filteredTransientMethods
+                    .Skip(criteria.Skip)
+                    .Take(criteria.Take)
+                    .ToList();
+
+                foreach (var transientMethod in pagedTransientMethods)
                 {
-                    await _settingsManager.DeepLoadSettingsAsync(transientProvider);
+                    await _settingsManager.DeepLoadSettingsAsync(transientMethod);
                 }
 
-                result.Results = result.Results.Concat(transientProviders).AsQueryable().OrderBySortInfos(sortInfos).ToList();
+                var allMethods = result.Results.Concat(pagedTransientMethods);
+
+                // Arbitrary sort columns (admin, cold) are worth OrderBySortInfos' compile; the default
+                // order is not. Decided from what BuildSortExpression returned, so overriding that seam
+                // still changes the sort.
+                result.Results = IsSingleAscendingDefaultSort(sortInfos)
+                    ? allMethods.OrderBy(x => x.Code).ToList()
+                    : allMethods.AsQueryable().OrderBySortInfos(sortInfos).ToList();
             }
 
             return result;
@@ -118,11 +136,18 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             {
                 sortInfos = new[]
                 {
-                    new SortInfo{ SortColumn = nameof(StoreShippingMethodEntity.Code) }
+                    new SortInfo{ SortColumn = DefaultSortColumn }
                 };
             }
 
             return sortInfos;
+        }
+
+        protected static bool IsSingleAscendingDefaultSort(IList<SortInfo> sortInfos)
+        {
+            return sortInfos?.Count == 1
+                && sortInfos[0].SortDirection == SortDirection.Ascending
+                && DefaultSortColumn.EqualsIgnoreCase(sortInfos[0].SortColumn);
         }
     }
 }
