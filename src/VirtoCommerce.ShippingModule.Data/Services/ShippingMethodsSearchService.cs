@@ -18,6 +18,8 @@ namespace VirtoCommerce.ShippingModule.Data.Services
 {
     public class ShippingMethodsSearchService : SearchService<ShippingMethodsSearchCriteria, ShippingMethodsSearchResult, ShippingMethod, StoreShippingMethodEntity>, IShippingMethodsSearchService
     {
+        protected const string DefaultSortColumn = nameof(StoreShippingMethodEntity.Code);
+
         private readonly ISettingsManager _settingsManager;
 
         public ShippingMethodsSearchService(
@@ -83,10 +85,10 @@ namespace VirtoCommerce.ShippingModule.Data.Services
 
                 var allMethods = result.Results.Concat(pagedTransientMethods);
 
-                // The default sort (no explicit criteria.SortInfos) is a single ascending Code
-                // column — order it without the expression-based IQueryable path; arbitrary sort
-                // columns only occur on cold (admin) requests and keep the generic path.
-                result.Results = criteria.SortInfos.IsNullOrEmpty()
+                // Arbitrary sort columns (admin, cold) are worth OrderBySortInfos' compile; the default
+                // order is not. Decided from what BuildSortExpression returned, so overriding that seam
+                // still changes the sort.
+                result.Results = IsSingleAscendingDefaultSort(sortInfos)
                     ? allMethods.OrderBy(x => x.Code).ToList()
                     : allMethods.AsQueryable().OrderBySortInfos(sortInfos).ToList();
             }
@@ -134,11 +136,18 @@ namespace VirtoCommerce.ShippingModule.Data.Services
             {
                 sortInfos = new[]
                 {
-                    new SortInfo{ SortColumn = nameof(StoreShippingMethodEntity.Code) }
+                    new SortInfo{ SortColumn = DefaultSortColumn }
                 };
             }
 
             return sortInfos;
+        }
+
+        protected static bool IsSingleAscendingDefaultSort(IList<SortInfo> sortInfos)
+        {
+            return sortInfos?.Count == 1
+                && sortInfos[0].SortDirection == SortDirection.Ascending
+                && DefaultSortColumn.EqualsIgnoreCase(sortInfos[0].SortColumn);
         }
     }
 }
