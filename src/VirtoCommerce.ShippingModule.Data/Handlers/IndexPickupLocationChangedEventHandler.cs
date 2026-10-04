@@ -40,7 +40,7 @@ public class IndexPickupLocationChangedEventHandler(
             })
             .ToArray() ?? [];
 
-        indexingJobService.EnqueueIndexAndDeleteDocuments(indexEntries, JobPriority.Normal,
+        await indexingJobService.EnqueueIndexAndDeleteDocumentsAsync(indexEntries, JobPriority.Normal,
             indexingConfigurations
                 .GetDocumentBuilders(ModuleConstants.PickupLocationIndexDocumentType, typeof(PickupLocationChangesProvider))
                 .ToList());
