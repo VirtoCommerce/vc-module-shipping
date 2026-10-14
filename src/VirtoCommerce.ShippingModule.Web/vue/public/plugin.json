@@ -1,4 +1,3 @@
 {
-  // Shipping methods and pickup locations of stores (Admin Shell Module Federation remote): widgets on other modules' blades, no menu item
   "remote": { "name": "shipping_admin", "exposed": "./Module" }
 }
