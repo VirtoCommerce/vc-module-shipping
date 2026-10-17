@@ -1,5 +1,3 @@
-import { DiagnosticsClient, useApiClient } from "@vc-shell/framework";
-
 // Small same-origin fetch helper for endpoints without a generated client here.
 // Cookie auth works because the host is same-origin.
 async function http<T>(method: string, url: string, body?: unknown): Promise<T> {
@@ -39,15 +37,5 @@ export async function uploadAsset(file: File, folderUrl: string) {
   if (!res.ok) throw new Error(`upload ${file.name}: ${res.status}`);
   const [blob] = (await res.json()) as { url: string }[];
   return blob.url;
-}
-// ids of the installed modules: store widgets of other modules are shown only when their module is installed
-let installed: Promise<Set<string>> | undefined;
-export function installedModules() {
-  installed ??= useApiClient(DiagnosticsClient)
-    .getApiClient()
-    .then((c) => c.getSystemInfo())
-    .then((x) => new Set((x.installedModules ?? []).map((m) => m.id!)))
-    .catch(() => new Set<string>());
-  return installed;
 }
 

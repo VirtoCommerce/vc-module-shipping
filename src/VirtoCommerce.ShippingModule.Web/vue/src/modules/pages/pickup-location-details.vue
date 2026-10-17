@@ -191,9 +191,9 @@ import {
   VcSwitch,
   VcTextarea,
 } from "@vc-shell/framework/ui";
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { api, installedModules } from "../api";
+import { api } from "../api";
 import { addressValid, type PickupAddress, type PickupLocation } from "../pickup";
 
 // not routable: the store comes only through options (the API needs it with the id), which a page reload doesn't restore
@@ -222,8 +222,11 @@ const workingHours = computed({
 const geoInvalid = computed(() => !!item.value.geoLocation && !/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/.test(item.value.geoLocation));
 const countries = ref<{ id: string; name: string }[]>([]);
 const regions = ref<{ id: string; name: string }[]>([]);
-// the fulfillment centers come from the Inventory module: shown only when it is installed (as the AngularJS blade did)
-const inventory = ref(false);
+// the fulfillment centers come from the Inventory module: shown only when it is installed (as the AngularJS blade did),
+// as the Admin Shell knows it ($modules, vc-module-admin-shell docs/plugins.md "Using other modules"); hidden in a host
+// without it
+const modules = inject<{ isInstalled(moduleId: string): boolean } | undefined>("adminShell.modules", undefined);
+const inventory = computed(() => modules?.isInstalled("VirtoCommerce.Inventory") ?? false);
 const activeError = ref("");
 
 const form = useBladeForm({
@@ -328,12 +331,10 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 ]);
 
 onMounted(async () => {
-  const [installed, list] = await Promise.all([
-    installedModules(),
+  const [list] = await Promise.all([
     api.get<{ id: string; name: string }[]>("/api/platform/common/countries"),
     isNew.value ? Promise.resolve() : load(),
   ]);
-  inventory.value = installed.has("VirtoCommerce.Inventory");
   countries.value = list;
   if (isNew.value) form.setBaseline();
 });
