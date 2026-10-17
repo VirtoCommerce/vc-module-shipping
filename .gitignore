@@ -272,3 +272,5 @@ __pycache__/
 # Webpack output
 dist/
 /build/Build.cs
+# Admin Shell plugin build output (built from src/VirtoCommerce.ShippingModule.Web/vue)
+src/VirtoCommerce.ShippingModule.Web/plugins/
