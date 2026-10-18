@@ -1,0 +1,46 @@
+{
+  "shipping": {
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "سعر شحن ثابت",
+        "description": "طريقة شحن بسعر ثابت"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "سعر الشحن الجوي",
+        "description": "السعر الثابت للشحن الجوي"
+      },
+      "Ground.Rate": {
+        "title": "سعر الشحن البري",
+        "description": "السعر الثابت للشحن البري"
+      }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "تفعيل Google Maps للاستلام من المتجر (BOPIS)",
+      "description": "عرض مواقع الاستلام من المتجر باستخدام Google Maps"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "مفتاح API لـ Google Maps",
+      "description": "توفير مفتاح API المستخدم لتحميل Google Maps لعرض مواقع الاستلام من المتجر"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "الفهرسة المستندة إلى الأحداث لكيانات مواقع الاستلام",
+      "description": "أي تغييرات على كيان موقع الاستلام ستشغّل مهمة في الخلفية لتطبيق هذه التغييرات على فهرس البحث"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "تاريخ ووقت فهرسة مواقع الاستلام",
+              "description": "تاريخ ووقت بدء مهمة فهرسة مواقع الاستلام"
+            }
+          }
+        }
+      }
+    }
+  }
+}
