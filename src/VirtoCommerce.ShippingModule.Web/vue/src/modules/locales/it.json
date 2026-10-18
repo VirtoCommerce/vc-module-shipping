@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Attivo",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Ci sono modifiche non salvate. Chiudere comunque?",
+      "DELETE_SELECTED": "Eliminare {count} elementi selezionati? L'operazione non può essere annullata."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Descrizione",
+      "IS_ACTIVE": "Attivo",
+      "NAME": "Nome",
+      "STATUS": "Stato",
+      "LOGO": "Logo",
+      "CODE": "Codice",
+      "PRIORITY": "Priorità",
+      "TAX_TYPE": "Tipo di tassa"
+    },
+    "GENERAL": "Generale",
+    "INACTIVE": "Inattivo",
+    "PICKUP": {
+      "ADDRESS": "Indirizzo",
+      "ADDRESS_REQUIRED": "Inserire paese, città e CAP prima di attivare il punto di ritiro",
+      "CITY": "Città",
+      "COUNTRY": "Paese",
+      "DELIVERY_DAYS": "Giorni prima che sia pronto per il ritiro",
+      "EMAIL": "Email di contatto",
+      "EMPTY": "Nessun punto di ritiro",
+      "FULFILLMENT_CENTER": "Centro logistico",
+      "GEO": "Geolocalizzazione (latitudine, longitudine)",
+      "GEO_ERROR": "Inserire come latitudine, longitudine",
+      "LINE1": "Riga indirizzo 1",
+      "LINE2": "Riga indirizzo 2",
+      "NEW_TITLE": "Nuovo punto di ritiro",
+      "OUTER_ID": "ID esterno",
+      "PHONE": "Telefono di contatto",
+      "POSTAL_CODE": "CAP",
+      "REGION": "Regione",
+      "STORAGE_DAYS": "Giorni di giacenza",
+      "TITLE": "Punti di ritiro",
+      "TRANSFER_CENTERS": "Centri di trasferimento",
+      "WORKING_HOURS": "Orari di apertura"
+    },
+    "TOOLBAR": {
+      "ADD": "Aggiungi",
+      "CREATE": "Crea",
+      "DELETE": "Elimina",
+      "REFRESH": "Aggiorna",
+      "RESET": "Reimposta",
+      "SAVE": "Salva"
+    },
+    "TITLE": "Metodi di spedizione",
+    "EMPTY": "Nessun metodo di spedizione registrato"
+  }
+}

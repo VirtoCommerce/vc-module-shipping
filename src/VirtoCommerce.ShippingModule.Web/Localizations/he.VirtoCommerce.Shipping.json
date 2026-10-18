@@ -1,0 +1,46 @@
+{
+  "shipping": {
+    "labels": {
+      "FixedRateShippingMethod": {
+        "name": "תעריף משלוח קבוע",
+        "description": "שיטת משלוח בתעריף קבוע"
+      }
+    }
+  },
+  "settings": {
+    "VirtoCommerce.Shipping.FixedRateShippingMethod": {
+      "Air.Rate": {
+        "title": "תעריף משלוח אווירי",
+        "description": "תעריף קבוע למשלוח אווירי"
+      },
+      "Ground.Rate": {
+        "title": "תעריף משלוח יבשתי",
+        "description": "תעריף קבוע למשלוח יבשתי"
+      }
+    },
+    "Shipping.Bopis.GoogleMaps.Enabled": {
+      "title": "הפעלת Google Maps עבור BOPIS",
+      "description": "הצגת נקודות האיסוף מהחנות באמצעות Google Maps"
+    },
+    "Shipping.Bopis.GoogleMaps.ApiKey": {
+      "title": "מפתח API של Google Maps",
+      "description": "יש לספק את מפתח ה-API המשמש לטעינת Google Maps להצגת נקודות האיסוף מהחנות"
+    },
+    "Shipping.Bopis.Search.EventBasedIndexation.Enabled": {
+      "title": "אינדוקס מבוסס אירועים עבור ישויות של נקודות איסוף",
+      "description": "כל שינוי בישות נקודת האיסוף יפעיל משימת רקע שתחיל את השינויים על אינדקס החיפוש"
+    },
+    "VirtoCommerce": {
+      "Search": {
+        "IndexingJobs": {
+          "IndexationDate": {
+            "PickupLocation": {
+              "title": "תאריך ושעת אינדוקס נקודות איסוף",
+              "description": "התאריך והשעה שבהם מתחילה משימת אינדוקס נקודות האיסוף"
+            }
+          }
+        }
+      }
+    }
+  }
+}
