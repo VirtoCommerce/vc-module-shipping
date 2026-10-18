@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "已启用",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "有未保存的更改。仍要关闭吗？",
+      "DELETE_SELECTED": "删除所选的 {count} 个项目？此操作无法撤消。"
+    },
+    "FIELDS": {
+      "DESCRIPTION": "描述",
+      "IS_ACTIVE": "启用",
+      "NAME": "名称",
+      "STATUS": "状态",
+      "LOGO": "徽标",
+      "CODE": "代码",
+      "PRIORITY": "优先级",
+      "TAX_TYPE": "税种"
+    },
+    "GENERAL": "常规",
+    "INACTIVE": "已停用",
+    "PICKUP": {
+      "ADDRESS": "地址",
+      "ADDRESS_REQUIRED": "激活自提点前，请输入国家、城市和邮政编码",
+      "CITY": "城市",
+      "COUNTRY": "国家",
+      "DELIVERY_DAYS": "准备取货所需天数",
+      "EMAIL": "联系邮箱",
+      "EMPTY": "没有自提点",
+      "FULFILLMENT_CENTER": "履约中心",
+      "GEO": "地理位置（纬度, 经度）",
+      "GEO_ERROR": "请按“纬度, 经度”格式输入",
+      "LINE1": "地址行 1",
+      "LINE2": "地址行 2",
+      "NEW_TITLE": "新建自提点",
+      "OUTER_ID": "外部ID",
+      "PHONE": "联系电话",
+      "POSTAL_CODE": "邮政编码",
+      "REGION": "地区",
+      "STORAGE_DAYS": "保管天数",
+      "TITLE": "自提点",
+      "TRANSFER_CENTERS": "转运履约中心",
+      "WORKING_HOURS": "营业时间"
+    },
+    "TOOLBAR": {
+      "ADD": "添加",
+      "CREATE": "创建",
+      "DELETE": "删除",
+      "REFRESH": "刷新",
+      "RESET": "重置",
+      "SAVE": "保存"
+    },
+    "TITLE": "配送方式",
+    "EMPTY": "没有已注册的配送方式"
+  }
+}

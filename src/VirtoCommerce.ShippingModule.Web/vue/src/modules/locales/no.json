@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Aktiv",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Du har ulagrede endringer. Vil du lukke likevel?",
+      "DELETE_SELECTED": "Slette {count} valgte element(er)? Dette kan ikke angres."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Beskrivelse",
+      "IS_ACTIVE": "Aktiv",
+      "NAME": "Navn",
+      "STATUS": "Status",
+      "LOGO": "Logo",
+      "CODE": "Kode",
+      "PRIORITY": "Prioritet",
+      "TAX_TYPE": "Skattetype"
+    },
+    "GENERAL": "Generelt",
+    "INACTIVE": "Inaktiv",
+    "PICKUP": {
+      "ADDRESS": "Adresse",
+      "ADDRESS_REQUIRED": "Angi land, by og postnummer før du aktiverer hentestedet",
+      "CITY": "By",
+      "COUNTRY": "Land",
+      "DELIVERY_DAYS": "Dager til klar for henting",
+      "EMAIL": "Kontakt-e-post",
+      "EMPTY": "Ingen hentesteder",
+      "FULFILLMENT_CENTER": "Oppfyllelsessenter",
+      "GEO": "Geoposisjon (breddegrad, lengdegrad)",
+      "GEO_ERROR": "Angi som breddegrad, lengdegrad",
+      "LINE1": "Adresselinje 1",
+      "LINE2": "Adresselinje 2",
+      "NEW_TITLE": "Nytt hentested",
+      "OUTER_ID": "Ekstern ID",
+      "PHONE": "Kontakttelefon",
+      "POSTAL_CODE": "Postnummer",
+      "REGION": "Region",
+      "STORAGE_DAYS": "Lagringsdager",
+      "TITLE": "Hentesteder",
+      "TRANSFER_CENTERS": "Overføringssentre",
+      "WORKING_HOURS": "Åpningstider"
+    },
+    "TOOLBAR": {
+      "ADD": "Legg til",
+      "CREATE": "Opprett",
+      "DELETE": "Slett",
+      "REFRESH": "Oppdater",
+      "RESET": "Tilbakestill",
+      "SAVE": "Lagre"
+    },
+    "TITLE": "Fraktmetoder",
+    "EMPTY": "Ingen fraktmetoder registrert"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Aktiv",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Du har osparade ändringar. Stäng ändå?",
+      "DELETE_SELECTED": "Radera {count} valda objekt? Det går inte att ångra."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Beskrivning",
+      "IS_ACTIVE": "Aktiv",
+      "NAME": "Namn",
+      "STATUS": "Status",
+      "LOGO": "Logotyp",
+      "CODE": "Kod",
+      "PRIORITY": "Prioritet",
+      "TAX_TYPE": "Momstyp"
+    },
+    "GENERAL": "Allmänt",
+    "INACTIVE": "Inaktiv",
+    "PICKUP": {
+      "ADDRESS": "Adress",
+      "ADDRESS_REQUIRED": "Ange land, stad och postnummer innan upphämtningsplatsen aktiveras",
+      "CITY": "Stad",
+      "COUNTRY": "Land",
+      "DELIVERY_DAYS": "Dagar tills redo för upphämtning",
+      "EMAIL": "Kontakt-e-post",
+      "EMPTY": "Inga upphämtningsplatser",
+      "FULFILLMENT_CENTER": "Uppfyllelsecenter",
+      "GEO": "Geografisk position (latitud, longitud)",
+      "GEO_ERROR": "Ange som latitud, longitud",
+      "LINE1": "Adressrad 1",
+      "LINE2": "Adressrad 2",
+      "NEW_TITLE": "Ny upphämtningsplats",
+      "OUTER_ID": "Externt ID",
+      "PHONE": "Kontakttelefon",
+      "POSTAL_CODE": "Postnummer",
+      "REGION": "Region",
+      "STORAGE_DAYS": "Förvaringsdagar",
+      "TITLE": "Upphämtningsplatser",
+      "TRANSFER_CENTERS": "Överföringscenter",
+      "WORKING_HOURS": "Öppettider"
+    },
+    "TOOLBAR": {
+      "ADD": "Lägg till",
+      "CREATE": "Skapa",
+      "DELETE": "Radera",
+      "REFRESH": "Uppdatera",
+      "RESET": "Återställ",
+      "SAVE": "Spara"
+    },
+    "TITLE": "Fraktmetoder",
+    "EMPTY": "Inga fraktmetoder registrerade"
+  }
+}
