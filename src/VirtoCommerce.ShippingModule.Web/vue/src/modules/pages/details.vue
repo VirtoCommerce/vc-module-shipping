@@ -75,7 +75,7 @@ import { api, toOptions, type Option } from "../api";
 import ImageField from "../components/ImageField.vue";
 import SettingsEditor from "../components/SettingsEditor.vue";
 import { PICKUP_TYPE, URL, methodName, type ShippingMethod } from "../methods";
-import { loadLegacyTexts } from "../utils";
+import { useLegacyTexts } from "../utils";
 
 // not routable: the method and its store come only through options, which a page reload doesn't restore
 defineBlade({
@@ -88,7 +88,7 @@ const { t } = useI18n({ useScope: "global" });
 const { options, callParent, openBlade, exposeToChildren } = useBlade<{ method?: ShippingMethod; storeId: string }>();
 
 const item = ref<ShippingMethod>(JSON.parse(JSON.stringify(options.value?.method ?? {})));
-const texts = ref<Record<string, unknown>>({});
+const texts = useLegacyTexts();
 const taxTypes = ref<Option[]>([]);
 const name = computed(() => methodName(texts.value, item.value));
 
@@ -152,7 +152,6 @@ exposeToChildren({ reloadPickupCount: loadPickupCount });
 
 onMounted(() =>
   Promise.all([
-    loadLegacyTexts().then((x) => (texts.value = x)),
     // the pickup widget is for the method's type, known once it is loaded
     load().then(loadPickupCount),
     // as the AngularJS blade's settings.getValues: needs no setting permission; a refused lookup leaves the list empty

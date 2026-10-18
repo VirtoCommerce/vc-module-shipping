@@ -1,5 +1,5 @@
 import type { SettingEntry } from "./components/SettingsEditor.vue";
-import { legacyText } from "./utils";
+import { legacyText, type LegacyTexts } from "./utils";
 
 // Shipping methods of a store (api/shipping). The server picks the concrete type from typeName: PUT the whole object back.
 export interface ShippingMethod {
@@ -22,7 +22,7 @@ export const URL = "/api/shipping";
 export const PICKUP_TYPE = "BuyOnlinePickupInStoreShippingMethod";
 
 // display name/description: the AngularJS texts per type ("shipping.labels.<typeName>.name"), else the method's own
-export const methodName = (texts: Record<string, unknown>, m: ShippingMethod) =>
+export const methodName = (texts: LegacyTexts, m: ShippingMethod) =>
   legacyText(texts, "shipping", "labels", m.typeName ?? "", "name") ?? m.name ?? m.typeName ?? m.code ?? "";
-export const methodDescription = (texts: Record<string, unknown>, m: ShippingMethod) =>
+export const methodDescription = (texts: LegacyTexts, m: ShippingMethod) =>
   legacyText(texts, "shipping", "labels", m.typeName ?? "", "description") ?? m.description ?? "";
