@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Ativo",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Existem alterações não salvas. Fechar mesmo assim?",
+      "DELETE_SELECTED": "Eliminar {count} item(ns) selecionado(s)? Esta ação não pode ser desfeita."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Descrição",
+      "IS_ACTIVE": "Ativo",
+      "NAME": "Nome",
+      "STATUS": "Status",
+      "LOGO": "Logotipo",
+      "CODE": "Código",
+      "PRIORITY": "Prioridade",
+      "TAX_TYPE": "Tipo de imposto"
+    },
+    "GENERAL": "Geral",
+    "INACTIVE": "Inativo",
+    "PICKUP": {
+      "ADDRESS": "Endereço",
+      "ADDRESS_REQUIRED": "Informe o país, a cidade e o código postal antes de ativar o local de retirada",
+      "CITY": "Cidade",
+      "COUNTRY": "País",
+      "DELIVERY_DAYS": "Dias até estar pronto para retirada",
+      "EMAIL": "E-mail de contato",
+      "EMPTY": "Nenhum local de retirada",
+      "FULFILLMENT_CENTER": "Centro de distribuição",
+      "GEO": "Geolocalização (latitude, longitude)",
+      "GEO_ERROR": "Informe como latitude, longitude",
+      "LINE1": "Linha de endereço 1",
+      "LINE2": "Linha de endereço 2",
+      "NEW_TITLE": "Novo local de retirada",
+      "OUTER_ID": "ID externa",
+      "PHONE": "Telefone de contato",
+      "POSTAL_CODE": "Código postal",
+      "REGION": "Região",
+      "STORAGE_DAYS": "Dias de armazenamento",
+      "TITLE": "Locais de retirada",
+      "TRANSFER_CENTERS": "Centros de transferência",
+      "WORKING_HOURS": "Horário de funcionamento"
+    },
+    "TOOLBAR": {
+      "ADD": "Adicionar",
+      "CREATE": "Criar",
+      "DELETE": "Eliminar",
+      "REFRESH": "Atualizar",
+      "RESET": "Redefinir",
+      "SAVE": "Salvar"
+    },
+    "TITLE": "Métodos de envio",
+    "EMPTY": "Nenhum método de envio registrado"
+  }
+}

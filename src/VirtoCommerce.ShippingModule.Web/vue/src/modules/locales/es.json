@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Activo",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Hay cambios sin guardar. ¿Cerrar de todos modos?",
+      "DELETE_SELECTED": "¿Eliminar {count} elemento(s) seleccionado(s)? Esta acción no se puede deshacer."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Descripción",
+      "IS_ACTIVE": "Activo",
+      "NAME": "Nombre",
+      "STATUS": "Estado",
+      "LOGO": "Logotipo",
+      "CODE": "Código",
+      "PRIORITY": "Prioridad",
+      "TAX_TYPE": "Tipo de impuesto"
+    },
+    "GENERAL": "General",
+    "INACTIVE": "Inactivo",
+    "PICKUP": {
+      "ADDRESS": "Dirección",
+      "ADDRESS_REQUIRED": "Introduzca el país, la ciudad y el código postal antes de activar el punto de recogida",
+      "CITY": "Ciudad",
+      "COUNTRY": "País",
+      "DELIVERY_DAYS": "Días hasta que esté listo para recoger",
+      "EMAIL": "Correo electrónico de contacto",
+      "EMPTY": "No hay puntos de recogida",
+      "FULFILLMENT_CENTER": "Centro de distribución",
+      "GEO": "Geolocalización (latitud, longitud)",
+      "GEO_ERROR": "Introduzca como latitud, longitud",
+      "LINE1": "Línea de dirección 1",
+      "LINE2": "Línea de dirección 2",
+      "NEW_TITLE": "Nuevo punto de recogida",
+      "OUTER_ID": "ID externa",
+      "PHONE": "Teléfono de contacto",
+      "POSTAL_CODE": "Código postal",
+      "REGION": "Región",
+      "STORAGE_DAYS": "Días de almacenamiento",
+      "TITLE": "Puntos de recogida",
+      "TRANSFER_CENTERS": "Centros de transferencia",
+      "WORKING_HOURS": "Horario de atención"
+    },
+    "TOOLBAR": {
+      "ADD": "Añadir",
+      "CREATE": "Crear",
+      "DELETE": "Eliminar",
+      "REFRESH": "Actualizar",
+      "RESET": "Restablecer",
+      "SAVE": "Guardar"
+    },
+    "TITLE": "Métodos de envío",
+    "EMPTY": "No hay métodos de envío registrados"
+  }
+}

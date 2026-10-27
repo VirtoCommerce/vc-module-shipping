@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Aktiivinen",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Muutoksia ei ole tallennettu. Suljetaanko silti?",
+      "DELETE_SELECTED": "Poistetaanko {count} valittua kohdetta? Toimintoa ei voi kumota."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Kuvaus",
+      "IS_ACTIVE": "Aktiivinen",
+      "NAME": "Nimi",
+      "STATUS": "Tila",
+      "LOGO": "Logo",
+      "CODE": "Koodi",
+      "PRIORITY": "Prioriteetti",
+      "TAX_TYPE": "Verotyyppi"
+    },
+    "GENERAL": "Yleiset",
+    "INACTIVE": "Ei aktiivinen",
+    "PICKUP": {
+      "ADDRESS": "Osoite",
+      "ADDRESS_REQUIRED": "Anna maa, kaupunki ja postinumero ennen noutopisteen aktivointia",
+      "CITY": "Kaupunki",
+      "COUNTRY": "Maa",
+      "DELIVERY_DAYS": "Päivät valmiina noutoon",
+      "EMAIL": "Yhteyssähköposti",
+      "EMPTY": "Ei noutopisteitä",
+      "FULFILLMENT_CENTER": "Täyttökeskus",
+      "GEO": "Sijainti (leveysaste, pituusaste)",
+      "GEO_ERROR": "Anna muodossa leveysaste, pituusaste",
+      "LINE1": "Osoiterivi 1",
+      "LINE2": "Osoiterivi 2",
+      "NEW_TITLE": "Uusi noutopiste",
+      "OUTER_ID": "Ulkoinen ID",
+      "PHONE": "Yhteyspuhelin",
+      "POSTAL_CODE": "Postinumero",
+      "REGION": "Alue",
+      "STORAGE_DAYS": "Säilytyspäivät",
+      "TITLE": "Noutopisteet",
+      "TRANSFER_CENTERS": "Siirtotäyttökeskukset",
+      "WORKING_HOURS": "Aukioloajat"
+    },
+    "TOOLBAR": {
+      "ADD": "Lisää",
+      "CREATE": "Luo",
+      "DELETE": "Poista",
+      "REFRESH": "Päivitä",
+      "RESET": "Palauta",
+      "SAVE": "Tallenna"
+    },
+    "TITLE": "Toimitustavat",
+    "EMPTY": "Toimitustapoja ei ole rekisteröity"
+  }
+}

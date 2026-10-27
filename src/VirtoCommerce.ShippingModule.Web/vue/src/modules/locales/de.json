@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Aktiv",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Sie haben nicht gespeicherte Änderungen. Trotzdem schließen?",
+      "DELETE_SELECTED": "{count} ausgewählte(s) Element(e) löschen? Dies kann nicht rückgängig gemacht werden."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Beschreibung",
+      "IS_ACTIVE": "Aktiv",
+      "NAME": "Name",
+      "STATUS": "Status",
+      "LOGO": "Logo",
+      "CODE": "Code",
+      "PRIORITY": "Priorität",
+      "TAX_TYPE": "Steuerart"
+    },
+    "GENERAL": "Allgemein",
+    "INACTIVE": "Inaktiv",
+    "PICKUP": {
+      "ADDRESS": "Adresse",
+      "ADDRESS_REQUIRED": "Geben Sie Land, Stadt und Postleitzahl ein, bevor Sie den Abholort aktivieren",
+      "CITY": "Stadt",
+      "COUNTRY": "Land",
+      "DELIVERY_DAYS": "Tage bis zur Abholbereitschaft",
+      "EMAIL": "Kontakt-E-Mail",
+      "EMPTY": "Keine Abholorte",
+      "FULFILLMENT_CENTER": "Versandzentrum",
+      "GEO": "Geoposition (Breitengrad, Längengrad)",
+      "GEO_ERROR": "Als Breitengrad, Längengrad eingeben",
+      "LINE1": "Adresszeile 1",
+      "LINE2": "Adresszeile 2",
+      "NEW_TITLE": "Neuer Abholort",
+      "OUTER_ID": "Externe ID",
+      "PHONE": "Kontakttelefon",
+      "POSTAL_CODE": "Postleitzahl",
+      "REGION": "Region",
+      "STORAGE_DAYS": "Aufbewahrungstage",
+      "TITLE": "Abholorte",
+      "TRANSFER_CENTERS": "Umlagerungszentren",
+      "WORKING_HOURS": "Öffnungszeiten"
+    },
+    "TOOLBAR": {
+      "ADD": "Hinzufügen",
+      "CREATE": "Erstellen",
+      "DELETE": "Löschen",
+      "REFRESH": "Aktualisieren",
+      "RESET": "Zurücksetzen",
+      "SAVE": "Speichern"
+    },
+    "TITLE": "Versandmethoden",
+    "EMPTY": "Keine Versandmethoden registriert"
+  }
+}

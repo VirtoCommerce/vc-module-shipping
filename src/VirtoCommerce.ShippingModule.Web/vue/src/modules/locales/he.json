@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "פעיל",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "יש שינויים שלא נשמרו. האם לסגור בכל זאת?",
+      "DELETE_SELECTED": "מחיקת הפריטים שנבחרו ({count})? לא ניתן לבטל פעולה זו."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "תיאור",
+      "IS_ACTIVE": "פעיל",
+      "NAME": "שם",
+      "STATUS": "סטטוס",
+      "LOGO": "לוגו",
+      "CODE": "קוד",
+      "PRIORITY": "עדיפות",
+      "TAX_TYPE": "סוג מס"
+    },
+    "GENERAL": "כללי",
+    "INACTIVE": "לא פעיל",
+    "PICKUP": {
+      "ADDRESS": "כתובת",
+      "ADDRESS_REQUIRED": "יש להזין מדינה, עיר ומיקוד לפני הפעלת המיקום",
+      "CITY": "עיר",
+      "COUNTRY": "מדינה",
+      "DELIVERY_DAYS": "ימי משלוח",
+      "EMAIL": "דוא\"ל ליצירת קשר",
+      "EMPTY": "אין נקודות איסוף",
+      "FULFILLMENT_CENTER": "מרכז הפצה",
+      "GEO": "מיקום גאוגרפי (קו רוחב, קו אורך)",
+      "GEO_ERROR": "יש להזין בתבנית: קו רוחב, קו אורך",
+      "LINE1": "שורת כתובת 1",
+      "LINE2": "שורת כתובת 2",
+      "NEW_TITLE": "נקודת איסוף חדשה",
+      "OUTER_ID": "מזהה חיצוני",
+      "PHONE": "טלפון ליצירת קשר",
+      "POSTAL_CODE": "מיקוד",
+      "REGION": "אזור",
+      "STORAGE_DAYS": "ימי אחסון",
+      "TITLE": "נקודות איסוף",
+      "TRANSFER_CENTERS": "מרכזי הפצה להעברה",
+      "WORKING_HOURS": "שעות פעילות"
+    },
+    "TOOLBAR": {
+      "ADD": "הוספה",
+      "CREATE": "יצירה",
+      "DELETE": "מחיקה",
+      "REFRESH": "רענון",
+      "RESET": "איפוס",
+      "SAVE": "שמירה"
+    },
+    "TITLE": "שיטות משלוח",
+    "EMPTY": "לא נרשמו שיטות משלוח"
+  }
+}

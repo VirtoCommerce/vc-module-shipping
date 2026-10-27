@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "有効",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "保存されていない変更があります。閉じてもよろしいですか？",
+      "DELETE_SELECTED": "選択した {count} 件の項目を削除しますか？この操作は元に戻せません。"
+    },
+    "FIELDS": {
+      "DESCRIPTION": "説明",
+      "IS_ACTIVE": "有効",
+      "NAME": "名前",
+      "STATUS": "ステータス",
+      "LOGO": "ロゴ",
+      "CODE": "コード",
+      "PRIORITY": "優先度",
+      "TAX_TYPE": "税タイプ"
+    },
+    "GENERAL": "一般",
+    "INACTIVE": "無効",
+    "PICKUP": {
+      "ADDRESS": "住所",
+      "ADDRESS_REQUIRED": "受け取り場所を有効にする前に、国、市区町村、郵便番号を入力してください",
+      "CITY": "市区町村",
+      "COUNTRY": "国",
+      "DELIVERY_DAYS": "受け取り準備までの日数",
+      "EMAIL": "連絡用メールアドレス",
+      "EMPTY": "受け取り場所がありません",
+      "FULFILLMENT_CENTER": "フルフィルメントセンター",
+      "GEO": "位置情報（緯度、経度）",
+      "GEO_ERROR": "「緯度, 経度」の形式で入力してください",
+      "LINE1": "住所 1",
+      "LINE2": "住所 2",
+      "NEW_TITLE": "新しい受け取り場所",
+      "OUTER_ID": "外部ID",
+      "PHONE": "連絡用電話番号",
+      "POSTAL_CODE": "郵便番号",
+      "REGION": "地域",
+      "STORAGE_DAYS": "保管日数",
+      "TITLE": "受け取り場所",
+      "TRANSFER_CENTERS": "転送フルフィルメントセンター",
+      "WORKING_HOURS": "営業時間"
+    },
+    "TOOLBAR": {
+      "ADD": "追加",
+      "CREATE": "作成",
+      "DELETE": "削除",
+      "REFRESH": "更新",
+      "RESET": "リセット",
+      "SAVE": "保存"
+    },
+    "TITLE": "配送方法",
+    "EMPTY": "登録されている配送方法はありません"
+  }
+}
