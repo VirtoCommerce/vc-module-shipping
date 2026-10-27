@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Actif",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Certaines modifications ne sont pas enregistrées. Fermer quand même ?",
+      "DELETE_SELECTED": "Supprimer {count} élément(s) sélectionné(s) ? Cette action est irréversible."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Description",
+      "IS_ACTIVE": "Actif",
+      "NAME": "Nom",
+      "STATUS": "Statut",
+      "LOGO": "Logo",
+      "CODE": "Code",
+      "PRIORITY": "Priorité",
+      "TAX_TYPE": "Type de taxe"
+    },
+    "GENERAL": "Général",
+    "INACTIVE": "Inactif",
+    "PICKUP": {
+      "ADDRESS": "Adresse",
+      "ADDRESS_REQUIRED": "Saisissez le pays, la ville et le code postal avant d'activer le point de retrait",
+      "CITY": "Ville",
+      "COUNTRY": "Pays",
+      "DELIVERY_DAYS": "Jours avant disponibilité pour le retrait",
+      "EMAIL": "E-mail de contact",
+      "EMPTY": "Aucun point de retrait",
+      "FULFILLMENT_CENTER": "Centre de distribution",
+      "GEO": "Géolocalisation (latitude, longitude)",
+      "GEO_ERROR": "Saisir sous la forme latitude, longitude",
+      "LINE1": "Ligne d'adresse 1",
+      "LINE2": "Ligne d'adresse 2",
+      "NEW_TITLE": "Nouveau point de retrait",
+      "OUTER_ID": "ID externe",
+      "PHONE": "Téléphone de contact",
+      "POSTAL_CODE": "Code postal",
+      "REGION": "Région",
+      "STORAGE_DAYS": "Jours de conservation",
+      "TITLE": "Points de retrait",
+      "TRANSFER_CENTERS": "Centres de transfert",
+      "WORKING_HOURS": "Heures d'ouverture"
+    },
+    "TOOLBAR": {
+      "ADD": "Ajouter",
+      "CREATE": "Créer",
+      "DELETE": "Supprimer",
+      "REFRESH": "Actualiser",
+      "RESET": "Réinitialiser",
+      "SAVE": "Enregistrer"
+    },
+    "TITLE": "Modes de livraison",
+    "EMPTY": "Aucun mode de livraison enregistré"
+  }
+}

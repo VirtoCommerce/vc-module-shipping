@@ -1,0 +1,54 @@
+{
+  "SHIPPING": {
+    "ACTIVE": "Active",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "You have unsaved changes. Close anyway?",
+      "DELETE_SELECTED": "Delete {count} selected item(s)? This can't be undone."
+    },
+    "FIELDS": {
+      "DESCRIPTION": "Description",
+      "IS_ACTIVE": "Active",
+      "NAME": "Name",
+      "STATUS": "Status",
+      "LOGO": "Logo",
+      "CODE": "Code",
+      "PRIORITY": "Priority",
+      "TAX_TYPE": "Tax type"
+    },
+    "GENERAL": "General",
+    "INACTIVE": "Inactive",
+    "PICKUP": {
+      "ADDRESS": "Address",
+      "ADDRESS_REQUIRED": "Enter the country, city and postal code before activating the location",
+      "CITY": "City",
+      "COUNTRY": "Country",
+      "DELIVERY_DAYS": "Delivery days",
+      "EMAIL": "Contact email",
+      "EMPTY": "No pickup locations",
+      "FULFILLMENT_CENTER": "Fulfillment center",
+      "GEO": "Geo location (latitude, longitude)",
+      "GEO_ERROR": "Enter as latitude, longitude",
+      "LINE1": "Address line 1",
+      "LINE2": "Address line 2",
+      "NEW_TITLE": "New pickup location",
+      "OUTER_ID": "Outer ID",
+      "PHONE": "Contact phone",
+      "POSTAL_CODE": "Postal code",
+      "REGION": "Region",
+      "STORAGE_DAYS": "Storage days",
+      "TITLE": "Pickup locations",
+      "TRANSFER_CENTERS": "Transfer fulfillment centers",
+      "WORKING_HOURS": "Working hours"
+    },
+    "TOOLBAR": {
+      "ADD": "Add",
+      "CREATE": "Create",
+      "DELETE": "Delete",
+      "REFRESH": "Refresh",
+      "RESET": "Reset",
+      "SAVE": "Save"
+    },
+    "TITLE": "Shipping methods",
+    "EMPTY": "No shipping methods registered"
+  }
+}
