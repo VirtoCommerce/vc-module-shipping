@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VirtoCommerce.Platform.Core.Common;
-using VirtoCommerce.Platform.Core.Extensions;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.ShippingModule.Core.MCP.StoreSetup;
 using VirtoCommerce.ShippingModule.Core.Model;
@@ -61,10 +60,7 @@ public class ShippingStoreSetupPart(
             choice.Description = method.Description;
 
             // Secrets are not even listed, so the agent never proposes to send one.
-            choice.Settings = GetSettingDescriptors(method)
-                .Where(x => !setupSettings.IsSecret(x))
-                .Select(x => setupSettings.Describe(x, value: null))
-                .ToList();
+            choice.Settings = setupSettings.DescribeAll(GetSettingDescriptors(method));
 
             choices.Add(choice);
         }
@@ -127,7 +123,6 @@ public class ShippingStoreSetupPart(
         var requested = ((ShippingStoreSetupSection)section).Methods ?? [];
 
         var plan = AbstractTypeFactory<ShippingStoreSetupPlan>.TryCreateInstance();
-        plan.Part = PartName;
         plan.Methods = await GetStoreMethodsAsync(context.Store.Id);
 
         foreach (var code in requested.GroupBy(x => x.Code, StringComparer.OrdinalIgnoreCase).Where(x => x.Count() > 1).Select(x => x.Key))
@@ -214,49 +209,14 @@ public class ShippingStoreSetupPart(
 
     protected virtual void PlanSettings(ShippingStoreSetupPlan plan, ShippingMethod method, IDictionary<string, object> settings)
     {
-        if (settings.IsNullOrEmpty())
+        // Store's rules for a settings map, the same in every part: an unknown name, a secret or a wrong value is
+        // refused, a null returns the default, and a value equal to the one in effect changes nothing.
+        var changed = setupSettings.PlanSettings(plan, method, GetSettingDescriptors(method), settings,
+            $"methods.{method.Code}.", $"Shipping method '{method.Code}'", "get_store_setup_options");
+
+        if (changed.Count > 0)
         {
-            return;
-        }
-
-        var descriptors = GetSettingDescriptors(method);
-
-        // A method the store has never saved starts with an empty array.
-        method.Settings = method.Settings?.ToList() ?? [];
-
-        foreach (var (name, raw) in settings)
-        {
-            var descriptor = descriptors.FirstOrDefault(x => x.Name.EqualsIgnoreCase(name));
-
-            if (descriptor == null)
-            {
-                plan.Errors.Add($"Shipping method '{method.Code}' has no setting '{name}'.");
-                continue;
-            }
-
-            // Store's one refusal for every part: a secret, a setting a setup cannot change, a wrong value.
-            if (!setupSettings.TryConvert(descriptor, raw, out var value, out var error))
-            {
-                plan.Errors.Add(error);
-                continue;
-            }
-
-            var entry = method.Settings.FirstOrDefault(x => x.Name.EqualsIgnoreCase(name));
-
-            if (entry == null)
-            {
-                entry = new ObjectSettingEntry(descriptor);
-                method.Settings.Add(entry);
-            }
-
-            // A null saves the default itself: the platform's settings save skips a null for most settings.
-            var newValue = value ?? descriptor.DefaultValue;
-
-            if (!StoreSetupValues.AreEqual(entry.Value, newValue))
-            {
-                AddChange(plan, method, name, entry.Value, newValue);
-                entry.Value = newValue;
-            }
+            plan.ChangedCodes.Add(method.Code);
         }
     }
 
@@ -280,27 +240,18 @@ public class ShippingStoreSetupPart(
         var item = AbstractTypeFactory<ShippingStoreSetupMethod>.TryCreateInstance();
         item.Code = method.Code;
         item.Priority = method.Priority;
-        item.Settings = GetSettingDescriptors(method)
-            .Where(x => !setupSettings.IsSecret(x))
-            .ToDictionary(x => x.Name, x => GetValue(method, x), StringComparer.OrdinalIgnoreCase);
+        item.Settings = setupSettings.GetValues(method, GetSettingDescriptors(method));
 
         return item;
     }
 
     protected virtual StoreSetupFinding CreateFinding(Store store, string id, StoreSetupFindingSeverity severity, string title, string why, string evidence, string fix)
     {
-        var finding = AbstractTypeFactory<StoreSetupFinding>.TryCreateInstance();
-        finding.Id = id;
-        finding.Part = PartName;
-        finding.Severity = severity;
+        var finding = StoreSetupFinding.ForStore(store, PartName, id, severity, "Shipping methods");
         finding.Title = title;
         finding.Why = why;
         finding.Evidence = evidence;
         finding.Fix = fix;
-        finding.Screen = $"Stores > {store.Name ?? store.Id} > Shipping methods";
-        finding.ObjectType = nameof(Store);
-        finding.ObjectId = store.Id;
-        finding.ObjectName = store.Name;
 
         return finding;
     }
@@ -309,10 +260,5 @@ public class ShippingStoreSetupPart(
     {
         plan.AddChange($"methods.{method.Code}.{field}", from, to);
         plan.ChangedCodes.Add(method.Code);
-    }
-
-    private static object GetValue(ShippingMethod method, SettingDescriptor descriptor)
-    {
-        return method.Settings?.FirstOrDefault(x => x.Name.EqualsIgnoreCase(descriptor.Name))?.Value ?? descriptor.DefaultValue;
     }
 }

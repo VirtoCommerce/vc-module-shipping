@@ -8,7 +8,6 @@ using VirtoCommerce.ShippingModule.Core.MCP.StoreSetup;
 using VirtoCommerce.ShippingModule.Core.Model;
 using VirtoCommerce.ShippingModule.Core.Model.Search;
 using VirtoCommerce.ShippingModule.Core.Services;
-using VirtoCommerce.ShippingModule.Data;
 using VirtoCommerce.ShippingModule.Data.MCP.StoreSetup;
 using VirtoCommerce.StoreModule.Core.MCP.StoreSetup;
 using VirtoCommerce.StoreModule.Core.Model;
@@ -107,6 +106,22 @@ public class ShippingStoreSetupPartTests
         //Assert
         Assert.Contains(plan.Errors, x => x.Contains(expectedError));
         Assert.DoesNotContain(plan.Errors, x => x.Contains("AIza-maps"));
+    }
+
+    // A setting the method never saved has its default: sending that value changes nothing.
+    [Fact]
+    public async Task PlanAsync_ASettingSentWithTheValueInEffect_ChangesNothing()
+    {
+        //Arrange
+        _saved.Add(new TestPickupShippingMethod { StoreId = StoreId, IsActive = true });
+        var section = CreateSection(new ShippingStoreSetupMethod { Code = PickupCode, Settings = new Dictionary<string, object> { [_rate.Name] = 0m } });
+
+        //Act
+        var plan = await CreatePart().PlanAsync(CreateContext(), section);
+
+        //Assert
+        Assert.Empty(plan.Errors);
+        Assert.Empty(plan.Changes);
     }
 
     [Fact]
