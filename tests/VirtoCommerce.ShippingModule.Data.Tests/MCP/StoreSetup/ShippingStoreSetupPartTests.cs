@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Moq;
 using VirtoCommerce.MCP.Core.Models;
@@ -20,7 +21,7 @@ public class ShippingStoreSetupPartTests
 {
     private const string StoreId = "eu-store";
     private const string FixedRateCode = "FixedRate";
-    private const string PickupCode = "TestPickup";
+    private const string PickupCode = TestPickupShippingMethod.PickupCode;
 
     private static readonly SettingDescriptor _rate = new() { Name = "Test.Pickup.Rate", ValueType = SettingValueType.Decimal, DefaultValue = 0m };
     private static readonly SettingDescriptor _mapsApiKey = new() { Name = "Test.Pickup.MapsApiKey", ValueType = SettingValueType.ShortText };
@@ -207,6 +208,42 @@ public class ShippingStoreSetupPartTests
         return new StoreSetupContext { Store = new Store { Id = StoreId, Name = "EU store" } };
     }
 
+    // The state lists the active methods, each with its settings in effect, and never a secret's value.
+    [Fact]
+    public async Task GetStateAsync_ListsTheActiveMethods_WithTheirSettings_WithoutSecrets()
+    {
+        //Arrange
+        _saved.Add(new TestPickupShippingMethod
+        {
+            StoreId = StoreId,
+            IsActive = true,
+            Priority = 3,
+            Settings = [new ObjectSettingEntry(_pickupPoint) { Value = "berlin-1" }, new ObjectSettingEntry(_mapsApiKey) { Value = "AIza-maps" }],
+        });
+
+        //Act
+        var state = (ShippingStoreSetupSection)await CreatePart().GetStateAsync(CreateContext().Store);
+
+        //Assert
+        var method = Assert.Single(state.Methods);
+        Assert.Equal((PickupCode, 3), (method.Code, method.Priority));
+        Assert.Equal(new Dictionary<string, object> { [_rate.Name] = 0m, [_pickupPoint.Name] = "berlin-1" }, method.Settings);
+        Assert.DoesNotContain("AIza-maps", JsonSerializer.Serialize(state));
+    }
+
+    [Fact]
+    public async Task PlanAsync_AnEntryWithoutACode_IsRefused_AndACodeIsReadWithoutSpaces()
+    {
+        //Act
+        var withoutCode = await CreatePart().PlanAsync(CreateContext(), CreateSection(new ShippingStoreSetupMethod { Code = PickupCode }, new ShippingStoreSetupMethod { Code = " " }));
+        var spaced = await CreatePart().PlanAsync(CreateContext(), CreateSection(new ShippingStoreSetupMethod { Code = $" {PickupCode} " }));
+
+        //Assert
+        Assert.Equal(["Each shipping method needs its code. get_store_setup_options lists the codes."], withoutCode.Errors);
+        Assert.Empty(spaced.Errors);
+        Assert.Contains(spaced.Changes, x => x.Field == $"methods.{PickupCode}.active");
+    }
+
     private static ShippingStoreSetupSection CreateSection(params ShippingStoreSetupMethod[] methods)
     {
         return new ShippingStoreSetupSection { Methods = methods };
@@ -220,9 +257,10 @@ public class ShippingStoreSetupPartTests
         var searchService = new Mock<IShippingMethodsSearchService>();
         searchService
             .Setup(x => x.SearchAsync(It.IsAny<ShippingMethodsSearchCriteria>(), It.IsAny<bool>()))
-            .ReturnsAsync((ShippingMethodsSearchCriteria criteria, bool _) =>
+            .ReturnsAsync((ShippingMethodsSearchCriteria criteria, bool clone) =>
             {
-                var saved = _saved.Where(x => x.StoreId == criteria.StoreId).Select(x => x.CloneTyped()).ToList();
+                // As the search service: copies when asked, the saved instances themselves otherwise.
+                var saved = _saved.Where(x => x.StoreId == criteria.StoreId).Select(x => clone ? x.CloneTyped() : x).ToList();
                 var installed = new ShippingMethod[] { new FixedRateShippingMethod(), new TestPickupShippingMethod() };
                 var all = saved.Concat(installed.Where(x => !saved.Any(s => s.Code == x.Code))).ToList();
 
@@ -246,15 +284,5 @@ public class ShippingStoreSetupPartTests
         settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(FixedRateShippingMethod))).Returns([]);
 
         return new ShippingStoreSetupPart(registrar.Object, searchService.Object, _methodsService.Object, settingsRegistrar.Object, new TestStoreSetupSettings());
-    }
-
-    // A second installed method, with settings of its own.
-    private sealed class TestPickupShippingMethod : FixedRateShippingMethod
-    {
-        public TestPickupShippingMethod()
-        {
-            Code = PickupCode;
-            Name = "Test pickup";
-        }
     }
 }

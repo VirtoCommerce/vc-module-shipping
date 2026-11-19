@@ -159,6 +159,18 @@ public class ShippingStoreSetupPart(
             return plan;
         }
 
+        // An entry without a code names no method. A code is read without the spaces around it.
+        if (requested.Any(x => string.IsNullOrWhiteSpace(x?.Code)))
+        {
+            plan.Errors.Add("Each shipping method needs its code. get_store_setup_options lists the codes.");
+            return plan;
+        }
+
+        foreach (var item in requested)
+        {
+            item.Code = item.Code.Trim();
+        }
+
         foreach (var code in requested.GroupBy(x => x.Code, StringComparer.OrdinalIgnoreCase).Where(x => x.Count() > 1).Select(x => x.Key))
         {
             plan.Errors.Add($"Shipping method '{code}' is listed twice.");
@@ -237,7 +249,7 @@ public class ShippingStoreSetupPart(
             method.Priority = planned.Priority;
         }
 
-        StoreSetupSettingsExtensions.CopySettings(planned, method, fields);
+        setupSettings.CopySettings(planned, method, fields);
     }
 
     protected virtual void PlanActive(ShippingStoreSetupPlan plan, ShippingMethod method, bool isActive)
