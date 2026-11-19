@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Moq;
+using VirtoCommerce.MCP.Core.Models;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.ShippingModule.Core.MCP.StoreSetup;
@@ -49,7 +50,7 @@ public class ShippingStoreSetupPartTests
         //Assert
         var finding = Assert.Single(findings);
         Assert.Equal("shipping-no-active-method", finding.Id);
-        Assert.Equal(StoreSetupFindingSeverity.Blocking, finding.Severity);
+        Assert.Equal(McpFindingSeverities.Critical, finding.Severity);
     }
 
     [Fact]
@@ -66,7 +67,7 @@ public class ShippingStoreSetupPartTests
         //Assert
         var finding = Assert.Single(findings);
         Assert.Equal("shipping-country-not-checked", finding.Id);
-        Assert.Equal(StoreSetupFindingSeverity.Info, finding.Severity);
+        Assert.Equal(McpFindingSeverities.Info, finding.Severity);
         Assert.Contains("DEU", finding.Title);
         Assert.Contains(FixedRateCode, finding.Evidence);
     }

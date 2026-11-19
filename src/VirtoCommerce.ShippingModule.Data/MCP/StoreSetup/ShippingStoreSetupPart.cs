@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VirtoCommerce.MCP.Core.Models;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.ShippingModule.Core.MCP.StoreSetup;
@@ -33,12 +34,12 @@ public class ShippingStoreSetupPart(
 
     // Shipping's own permissions, limited to stores by its SelectedStoreScope. Setting shipping up on a new store changes
     // the store's methods, so it needs shipping:update too.
-    public virtual StoreSetupPermissions Permissions => new()
+    public virtual McpSetupPermissions Permissions => new()
     {
         Read = ShippingPermissions.Read,
         Update = ShippingPermissions.Update,
         Create = ShippingPermissions.Update,
-        StoreScopeType = nameof(SelectedStoreScope),
+        ScopeType = nameof(SelectedStoreScope),
     };
 
     public virtual Type SectionType => typeof(ShippingStoreSetupSection);
@@ -47,13 +48,13 @@ public class ShippingStoreSetupPart(
     public virtual bool IsRequiredForNewStore => false;
 
     // 1. What can be chosen: every shipping method installed on the platform, with the settings it takes.
-    public virtual async Task<IList<StoreSetupChoice>> GetChoicesAsync()
+    public virtual async Task<IList<McpSetupChoice>> GetChoicesAsync()
     {
-        var choices = new List<StoreSetupChoice>();
+        var choices = new List<McpSetupChoice>();
 
         foreach (var method in await shippingMethodsRegistrar.GetRegisteredMethods())
         {
-            var choice = AbstractTypeFactory<StoreSetupChoice>.TryCreateInstance();
+            var choice = AbstractTypeFactory<McpSetupChoice>.TryCreateInstance();
             choice.Field = $"{PartName}.methods.code";
             choice.Value = method.Code;
             choice.Title = method.Name;
@@ -85,7 +86,7 @@ public class ShippingStoreSetupPart(
 
     // 3. What is missing. When the request plans a shipping section, the check reads the methods as they will be after
     // the change (the plan), so the preview says what the store would miss afterwards. Otherwise it reads the saved ones.
-    public virtual async Task<IList<StoreSetupFinding>> CheckAsync(StoreSetupContext context)
+    public virtual async Task<IList<McpFinding>> CheckAsync(StoreSetupContext context)
     {
         var store = context.Store;
         var methods = context.Plans.TryGetValue(PartName, out var plan) && plan is ShippingStoreSetupPlan shippingPlan
@@ -93,11 +94,11 @@ public class ShippingStoreSetupPart(
             : await GetStoreMethodsAsync(store.Id);
 
         var activeMethods = methods.Where(x => x.IsActive).OrderBy(x => x.Priority).ToList();
-        var findings = new List<StoreSetupFinding>();
+        var findings = new List<McpFinding>();
 
         if (activeMethods.Count == 0)
         {
-            findings.Add(CreateFinding(store, "shipping-no-active-method", StoreSetupFindingSeverity.Blocking,
+            findings.Add(CreateFinding(store, "shipping-no-active-method", McpFindingSeverities.Critical,
                 "No shipping method is active",
                 "Customers cannot choose how their order is delivered, so they cannot check out.",
                 $"0 of {methods.Count} installed shipping methods are active.",
@@ -107,7 +108,7 @@ public class ShippingStoreSetupPart(
         // Nothing in a store limits the countries it ships to; the methods decide their rates at checkout.
         if (!string.IsNullOrEmpty(context.Country))
         {
-            findings.Add(CreateFinding(store, "shipping-country-not-checked", StoreSetupFindingSeverity.Info,
+            findings.Add(CreateFinding(store, "shipping-country-not-checked", McpFindingSeverities.Info,
                 $"Shipping to {context.Country} is not checked here",
                 "Nothing here blocks it: each shipping method decides its rates for an address at checkout.",
                 $"Active shipping methods: {(activeMethods.Count == 0 ? "none" : string.Join(", ", activeMethods.Select(x => x.Code)))}.",
@@ -118,7 +119,7 @@ public class ShippingStoreSetupPart(
     }
 
     // 4a. Plans the section without side effects: the search returns copies, and nothing is saved here.
-    public virtual async Task<StoreSetupPartPlan> PlanAsync(StoreSetupContext context, object section)
+    public virtual async Task<McpSetupPartPlan> PlanAsync(StoreSetupContext context, object section)
     {
         var requested = ((ShippingStoreSetupSection)section).Methods ?? [];
 
@@ -160,7 +161,7 @@ public class ShippingStoreSetupPart(
 
     // 4b. Saves the methods the plan changes. The plan was made from the saved rows a moment ago, so a repeat after a
     // failure finds the applied methods unchanged and saves only the rest.
-    public virtual async Task ApplyAsync(StoreSetupContext context, StoreSetupPartPlan plan)
+    public virtual async Task ApplyAsync(StoreSetupContext context, McpSetupPartPlan plan)
     {
         var shippingPlan = (ShippingStoreSetupPlan)plan;
         var changed = shippingPlan.Methods.Where(x => shippingPlan.ChangedCodes.Contains(x.Code)).ToList();
@@ -245,9 +246,9 @@ public class ShippingStoreSetupPart(
         return item;
     }
 
-    protected virtual StoreSetupFinding CreateFinding(Store store, string id, StoreSetupFindingSeverity severity, string title, string why, string evidence, string fix)
+    protected virtual McpFinding CreateFinding(Store store, string id, string severity, string title, string why, string evidence, string fix)
     {
-        var finding = StoreSetupFinding.ForStore(store, PartName, id, severity, "Shipping methods");
+        var finding = StoreSetupFindings.ForStore(store, PartName, id, severity, "Shipping methods");
         finding.Title = title;
         finding.Why = why;
         finding.Evidence = evidence;
