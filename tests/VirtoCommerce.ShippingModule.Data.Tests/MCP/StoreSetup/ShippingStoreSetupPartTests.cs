@@ -24,6 +24,7 @@ public class ShippingStoreSetupPartTests
 
     private static readonly SettingDescriptor _rate = new() { Name = "Test.Pickup.Rate", ValueType = SettingValueType.Decimal, DefaultValue = 0m };
     private static readonly SettingDescriptor _mapsApiKey = new() { Name = "Test.Pickup.MapsApiKey", ValueType = SettingValueType.ShortText };
+    private static readonly SettingDescriptor _pickupPoint = new() { Name = "Test.Pickup.PointId", ValueType = SettingValueType.ShortText, IsRequired = true };
 
     // The methods the store has saved; the search adds a new instance of every installed method the store has not saved.
     private readonly List<ShippingMethod> _saved = [];
@@ -38,7 +39,7 @@ public class ShippingStoreSetupPartTests
         //Assert
         Assert.Equal([FixedRateCode, PickupCode], choices.Select(x => x.Value));
         Assert.All(choices, x => Assert.Equal("shipping.methods.code", x.Field));
-        Assert.Equal([_rate.Name], choices.Single(x => x.Value == PickupCode).Settings.Select(x => x.Name));
+        Assert.Equal([_rate.Name, _pickupPoint.Name], choices.Single(x => x.Value == PickupCode).Settings.Select(x => x.Name));
     }
 
     [Fact]
@@ -89,6 +90,23 @@ public class ShippingStoreSetupPartTests
             plan.Changes.Select(x => x.Field));
         Assert.Contains(plan.Warnings, x => x.StartsWith("Switches off"));
         _methodsService.Verify(x => x.SaveChangesAsync(It.IsAny<IList<ShippingMethod>>()), Times.Never);
+    }
+
+    // A field that is left out changes nothing, as the agent is told; an empty list is what switches every method off.
+    [Fact]
+    public async Task PlanAsync_ASectionWithoutMethods_ChangesNothing()
+    {
+        //Arrange
+        _saved.Add(new FixedRateShippingMethod { StoreId = StoreId, IsActive = true });
+
+        //Act
+        var withoutMethods = await CreatePart().PlanAsync(CreateContext(), new ShippingStoreSetupSection());
+        var emptyList = await CreatePart().PlanAsync(CreateContext(), CreateSection());
+
+        //Assert
+        Assert.Empty(withoutMethods.Errors);
+        Assert.Empty(withoutMethods.Changes);
+        Assert.Equal([$"methods.{FixedRateCode}.active"], emptyList.Changes.Select(x => x.Field));
     }
 
     [Theory]
@@ -145,6 +163,45 @@ public class ShippingStoreSetupPartTests
         Assert.Empty(repeat.Changes);
     }
 
+    // Applying reads the methods again: a setting changed in the back office since the plan, which the plan does not
+    // name, keeps its new value.
+    [Fact]
+    public async Task ApplyAsync_KeepsWhatChangedSinceThePlan()
+    {
+        //Arrange
+        _saved.Add(new TestPickupShippingMethod { StoreId = StoreId, IsActive = true, Settings = [new ObjectSettingEntry(_rate) { Value = 1m }] });
+        var part = CreatePart();
+        var context = CreateContext();
+        var plan = await part.PlanAsync(context, CreateSection(new ShippingStoreSetupMethod { Code = PickupCode, Settings = new Dictionary<string, object> { [_rate.Name] = 4.5m } }));
+        _saved.Single().Settings.Add(new ObjectSettingEntry(_pickupPoint) { Value = "P-1" });
+
+        //Act
+        await part.ApplyAsync(context, plan);
+
+        //Assert
+        var saved = Assert.Single(_saved);
+        Assert.Equal(4.5m, saved.Settings.Single(x => x.Name == _rate.Name).Value);
+        Assert.Equal("P-1", saved.Settings.Single(x => x.Name == _pickupPoint.Name).Value);
+    }
+
+    // Q6: a required setting left empty blocks going live, as for payment methods.
+    [Fact]
+    public async Task CheckAsync_ActiveMethodWithAnEmptyRequiredSetting_IsBlocking()
+    {
+        //Arrange
+        _saved.Add(new TestPickupShippingMethod { StoreId = StoreId, IsActive = true });
+
+        //Act
+        var findings = await CreatePart().CheckAsync(CreateContext());
+
+        //Assert
+        var finding = Assert.Single(findings);
+        Assert.Equal(("shipping-method-needs-settings", McpFindingSeverities.Critical), (finding.Id, finding.Severity));
+        Assert.Equal("Empty: Test.Pickup.PointId.", finding.Evidence);
+        Assert.False(finding.ManualOnly);
+        Assert.Equal(PickupCode, finding.ObjectId);
+    }
+
     private static StoreSetupContext CreateContext()
     {
         return new StoreSetupContext { Store = new Store { Id = StoreId, Name = "EU store" } };
@@ -185,7 +242,7 @@ public class ShippingStoreSetupPartTests
             .Returns(Task.CompletedTask);
 
         var settingsRegistrar = new Mock<ISettingsRegistrar>();
-        settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(TestPickupShippingMethod))).Returns([_rate, _mapsApiKey]);
+        settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(TestPickupShippingMethod))).Returns([_rate, _mapsApiKey, _pickupPoint]);
         settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(FixedRateShippingMethod))).Returns([]);
 
         return new ShippingStoreSetupPart(registrar.Object, searchService.Object, _methodsService.Object, settingsRegistrar.Object, new TestStoreSetupSettings());

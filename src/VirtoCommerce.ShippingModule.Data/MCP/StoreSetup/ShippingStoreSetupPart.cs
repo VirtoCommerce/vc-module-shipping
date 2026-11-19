@@ -105,6 +105,33 @@ public class ShippingStoreSetupPart(
                 "Activate at least one shipping method."));
         }
 
+        foreach (var method in activeMethods)
+        {
+            // A secret is never named, not even when it is missing: a person enters it in the back office.
+            var (names, secretCount) = setupSettings.GetEmptyRequiredSettings(method, GetSettingDescriptors(method));
+
+            if (names.Count == 0 && secretCount == 0)
+            {
+                continue;
+            }
+
+            var finding = CreateFinding(store, "shipping-method-needs-settings", McpFindingSeverities.Critical,
+                $"{method.Name ?? method.Code} needs its required settings",
+                "The method cannot ship orders until its required settings have values.",
+                StoreSetupFindings.GetEmptySettingsEvidence(names, secretCount),
+                secretCount == 0
+                    ? "Fill the settings in the shipping section, or in the back office."
+                    : names.Count == 0
+                        ? "A person enters the secret settings in the back office: secrets are never sent through the agent."
+                        : "Fill the other settings in the shipping section; a person enters the secret settings in the back office.");
+            finding.ManualOnly = names.Count == 0;
+            finding.ObjectType = nameof(ShippingMethod);
+            finding.ObjectId = method.Code;
+            finding.ObjectName = method.Name;
+
+            findings.Add(finding);
+        }
+
         // Nothing in a store limits the countries it ships to; the methods decide their rates at checkout.
         if (!string.IsNullOrEmpty(context.Country))
         {
@@ -121,10 +148,16 @@ public class ShippingStoreSetupPart(
     // 4a. Plans the section without side effects: the search returns copies, and nothing is saved here.
     public virtual async Task<McpSetupPartPlan> PlanAsync(StoreSetupContext context, object section)
     {
-        var requested = ((ShippingStoreSetupSection)section).Methods ?? [];
+        var requested = ((ShippingStoreSetupSection)section).Methods;
 
         var plan = AbstractTypeFactory<ShippingStoreSetupPlan>.TryCreateInstance();
         plan.Methods = await GetStoreMethodsAsync(context.Store.Id);
+
+        // A list that is left out changes nothing; an empty list switches every method off.
+        if (requested == null)
+        {
+            return plan;
+        }
 
         foreach (var code in requested.GroupBy(x => x.Code, StringComparer.OrdinalIgnoreCase).Where(x => x.Count() > 1).Select(x => x.Key))
         {
@@ -164,20 +197,47 @@ public class ShippingStoreSetupPart(
     public virtual async Task ApplyAsync(StoreSetupContext context, McpSetupPartPlan plan)
     {
         var shippingPlan = (ShippingStoreSetupPlan)plan;
-        var changed = shippingPlan.Methods.Where(x => shippingPlan.ChangedCodes.Contains(x.Code)).ToList();
+        var methods = await GetStoreMethodsAsync(context.Store.Id);
+        var changed = new List<ShippingMethod>();
 
-        if (changed.Count == 0)
+        // The methods read again: the fields of the plan's rows take their planned values, so a change made since the
+        // plan stays.
+        foreach (var planned in shippingPlan.Methods)
         {
-            return;
-        }
+            var fields = shippingPlan.GetChangedFields($"methods.{planned.Code}.");
 
-        // A method the store has never saved comes from the search without a store.
-        foreach (var method in changed)
-        {
+            if (fields.Count == 0)
+            {
+                continue;
+            }
+
+            var method = methods.First(x => x.Code.EqualsIgnoreCase(planned.Code));
+            ApplyChangedFields(planned, method, fields);
+            // A method the store has never saved comes from the search without a store.
             method.StoreId = context.Store.Id;
+            changed.Add(method);
         }
 
-        await shippingMethodsService.SaveChangesAsync(changed);
+        if (changed.Count > 0)
+        {
+            await shippingMethodsService.SaveChangesAsync(changed);
+        }
+    }
+
+    // The planned values of the fields the plan changes, on the method read again.
+    protected virtual void ApplyChangedFields(ShippingMethod planned, ShippingMethod method, ISet<string> fields)
+    {
+        if (fields.Contains("active"))
+        {
+            method.IsActive = planned.IsActive;
+        }
+
+        if (fields.Contains("priority"))
+        {
+            method.Priority = planned.Priority;
+        }
+
+        StoreSetupSettingsExtensions.CopySettings(planned, method, fields);
     }
 
     protected virtual void PlanActive(ShippingStoreSetupPlan plan, ShippingMethod method, bool isActive)
@@ -212,13 +272,8 @@ public class ShippingStoreSetupPart(
     {
         // Store's rules for a settings map, the same in every part: an unknown name, a secret or a wrong value is
         // refused, a null returns the default, and a value equal to the one in effect changes nothing.
-        var changed = setupSettings.PlanSettings(plan, method, GetSettingDescriptors(method), settings,
+        setupSettings.PlanSettings(plan, method, GetSettingDescriptors(method), settings,
             $"methods.{method.Code}.", $"Shipping method '{method.Code}'", "get_store_setup_options");
-
-        if (changed.Count > 0)
-        {
-            plan.ChangedCodes.Add(method.Code);
-        }
     }
 
     // The store's saved methods, plus a new instance of every installed method the store has not saved yet.
@@ -260,6 +315,5 @@ public class ShippingStoreSetupPart(
     private static void AddChange(ShippingStoreSetupPlan plan, ShippingMethod method, string field, object from, object to)
     {
         plan.AddChange($"methods.{method.Code}.{field}", from, to);
-        plan.ChangedCodes.Add(method.Code);
     }
 }
