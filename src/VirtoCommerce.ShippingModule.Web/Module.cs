@@ -30,12 +30,14 @@ using VirtoCommerce.ShippingModule.Core.Services;
 using VirtoCommerce.ShippingModule.Data;
 using VirtoCommerce.ShippingModule.Data.ExportImport;
 using VirtoCommerce.ShippingModule.Data.Handlers;
+using VirtoCommerce.ShippingModule.Data.MCP.StoreSetup;
 using VirtoCommerce.ShippingModule.Data.MySql;
 using VirtoCommerce.ShippingModule.Data.PostgreSql;
 using VirtoCommerce.ShippingModule.Data.Repositories;
 using VirtoCommerce.ShippingModule.Data.Search.Indexed;
 using VirtoCommerce.ShippingModule.Data.Services;
 using VirtoCommerce.ShippingModule.Data.SqlServer;
+using VirtoCommerce.StoreModule.Core.Extensions;
 using VirtoCommerce.StoreModule.Core.Model;
 
 namespace VirtoCommerce.ShippingModule.Web
@@ -77,6 +79,7 @@ namespace VirtoCommerce.ShippingModule.Web
             serviceCollection.AddTransient<IShippingMethodsService, ShippingMethodsService>();
             serviceCollection.AddTransient<IShippingMethodsRegistrar, ShippingMethodsService>();
             serviceCollection.AddTransient<IShippingMethodsSearchService, ShippingMethodsSearchService>();
+            serviceCollection.AddStoreSetupPart<ShippingStoreSetupPart>();
 
             serviceCollection.AddTransient<ShippingExportImport>();
 
