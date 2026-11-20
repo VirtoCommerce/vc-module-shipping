@@ -190,7 +190,7 @@ public class ShippingStoreSetupPartTests
         Assert.Equal("P-1", saved.Settings.Single(x => x.Name == _pickupPoint.Name).Value);
     }
 
-    // Q6: a required setting left empty blocks going live, as for payment methods.
+    // A required setting left empty blocks going live, as for payment methods.
     [Fact]
     public async Task CheckAsync_ActiveMethodWithAnEmptyRequiredSetting_IsBlocking()
     {
@@ -250,6 +250,62 @@ public class ShippingStoreSetupPartTests
     }
 
     // A priority left out keeps the method's own, which a method the store has never saved has as 0.
+    // With a shipping section in the request, the check reads the methods as the plan leaves them.
+    [Fact]
+    public async Task CheckAsync_ReadsTheMethodsAsThePlanLeavesThem()
+    {
+        //Arrange
+        var part = CreatePart();
+        var context = CreateContext();
+        context.Plans[ShippingStoreSetupPart.PartName] = await part.PlanAsync(context, CreateSection(new ShippingStoreSetupMethod { Code = FixedRateCode }));
+
+        //Act
+        var findings = await part.CheckAsync(context);
+
+        //Assert
+        Assert.DoesNotContain(findings, x => x.Id == "shipping-no-active-method");
+    }
+
+    [Fact]
+    public async Task ApplyAsync_SavesAPlannedPriority()
+    {
+        //Arrange
+        _saved.Add(new FixedRateShippingMethod { StoreId = StoreId, IsActive = true });
+        var part = CreatePart();
+        var context = CreateContext();
+        var plan = await part.PlanAsync(context, CreateSection(new ShippingStoreSetupMethod { Code = FixedRateCode, Priority = 5 }));
+
+        //Act
+        await part.ApplyAsync(context, plan);
+
+        //Assert
+        Assert.Equal(5, Assert.Single(_saved).Priority);
+    }
+
+    [Fact]
+    public async Task PlanAsync_AMethodListedTwice_IsRefused()
+    {
+        //Act
+        var plan = await CreatePart().PlanAsync(CreateContext(), CreateSection(new ShippingStoreSetupMethod { Code = FixedRateCode }, new ShippingStoreSetupMethod { Code = FixedRateCode.ToLowerInvariant() }));
+
+        //Assert
+        Assert.Equal([$"Shipping method '{FixedRateCode}' is listed twice."], plan.Errors);
+    }
+
+    [Fact]
+    public async Task GetStateAsync_ListsTheActiveMethodsByPriority()
+    {
+        //Arrange
+        _saved.Add(new FixedRateShippingMethod { StoreId = StoreId, IsActive = true, Priority = 2 });
+        _saved.Add(new TestPickupShippingMethod { StoreId = StoreId, IsActive = true, Priority = 1 });
+
+        //Act
+        var state = (ShippingStoreSetupSection)await CreatePart().GetStateAsync(CreateContext().Store);
+
+        //Assert
+        Assert.Equal([PickupCode, FixedRateCode], state.Methods.Select(x => x.Code));
+    }
+
     [Fact]
     public void Priority_SaysWhatALeftOutPriorityIs()
     {
@@ -257,7 +313,10 @@ public class ShippingStoreSetupPartTests
         var description = typeof(ShippingStoreSetupMethod).GetProperty(nameof(ShippingStoreSetupMethod.Priority))!.GetCustomAttribute<DescriptionAttribute>()!.Description;
 
         //Assert
-        Assert.EndsWith("Left out: unchanged, which is 0 for a method the store has never saved. Equal numbers come in no fixed order.", description);
+        Assert.EndsWith("Left out: unchanged, which is 0 for a method the store has never saved.", description);
+        // A stored sort value: the Virto Commerce storefront lists the methods by code, so no order at checkout is promised.
+        Assert.Contains("the Virto Commerce storefront lists them by code", description);
+        Assert.DoesNotContain("checkout", description);
     }
 
     // The settings map says what a null does, as Store's settings section does.
@@ -268,7 +327,8 @@ public class ShippingStoreSetupPartTests
         var description = typeof(ShippingStoreSetupMethod).GetProperty(nameof(ShippingStoreSetupMethod.Settings))!.GetCustomAttribute<DescriptionAttribute>()!.Description;
 
         //Assert
-        Assert.Contains("null returns a setting to its default, and a setting without a default takes a value instead.", description);
+        Assert.Contains("null returns a setting to its default, or clears a setting that has allowed values but no default, and a setting with neither " +
+            "takes a value instead.", description);
     }
 
     // A dry run, the plan made again at submit, and the apply never write to the settings manager's cached entries.
@@ -333,6 +393,6 @@ public class ShippingStoreSetupPartTests
         settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(TestPickupShippingMethod))).Returns([_rate, _mapsApiKey, _pickupPoint]);
         settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(FixedRateShippingMethod))).Returns([]);
 
-        return new ShippingStoreSetupPart(registrar.Object, searchService.Object, _methodsService.Object, settingsRegistrar.Object, new TestStoreSetupSettings());
+        return new ShippingStoreSetupPart(registrar.Object, searchService.Object, _methodsService.Object, settingsRegistrar.Object, new TestStoreSetupSettings(), new StoreSetupFindings());
     }
 }

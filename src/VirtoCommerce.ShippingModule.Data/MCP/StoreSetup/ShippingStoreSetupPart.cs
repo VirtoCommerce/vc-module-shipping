@@ -23,7 +23,8 @@ public class ShippingStoreSetupPart(
     IShippingMethodsSearchService shippingMethodsSearchService,
     IShippingMethodsService shippingMethodsService,
     ISettingsRegistrar settingsRegistrar,
-    IStoreSetupSettings setupSettings)
+    IStoreSetupSettings setupSettings,
+    IStoreSetupFindings setupFindings)
     : IStoreSetupChoices, IStoreSetupState, IStoreSetupCheck, IStoreSetupSection
 {
     public const string PartName = "shipping";
@@ -34,13 +35,19 @@ public class ShippingStoreSetupPart(
 
     // Shipping's own permissions, limited to stores by its SelectedStoreScope. Setting shipping up on a new store changes
     // the store's methods, so it needs shipping:update too.
-    public virtual McpSetupPermissions Permissions => new()
+    public virtual McpSetupPermissions Permissions
     {
-        Read = ShippingPermissions.Read,
-        Update = ShippingPermissions.Update,
-        Create = ShippingPermissions.Update,
-        ScopeType = nameof(SelectedStoreScope),
-    };
+        get
+        {
+            var permissions = AbstractTypeFactory<McpSetupPermissions>.TryCreateInstance();
+            permissions.Read = ShippingPermissions.Read;
+            permissions.Update = ShippingPermissions.Update;
+            permissions.Create = ShippingPermissions.Update;
+            permissions.ScopeType = nameof(SelectedStoreScope);
+
+            return permissions;
+        }
+    }
 
     public virtual Type SectionType => typeof(ShippingStoreSetupSection);
 
@@ -116,14 +123,10 @@ public class ShippingStoreSetupPart(
             }
 
             var finding = CreateFinding(store, "shipping-method-needs-settings", McpFindingSeverities.Critical,
-                $"{method.Name ?? method.Code} needs its required settings",
+                $"{method.Name} needs its required settings",
                 "The method cannot ship orders until its required settings have values.",
-                StoreSetupFindings.GetEmptySettingsEvidence(names, secretCount),
-                secretCount == 0
-                    ? "Fill the settings in the shipping section, or in the back office."
-                    : names.Count == 0
-                        ? "A person enters the secret settings in the back office: secrets are never sent through the agent."
-                        : "Fill the other settings in the shipping section; a person enters the secret settings in the back office.");
+                setupFindings.GetEmptySettingsEvidence(names, secretCount),
+                GetEmptySettingsFix(names, secretCount));
             finding.ManualOnly = names.Count == 0;
             finding.ObjectType = nameof(ShippingMethod);
             finding.ObjectId = method.Code;
@@ -145,7 +148,8 @@ public class ShippingStoreSetupPart(
         return findings;
     }
 
-    // 4a. Plans the section without side effects: the search returns copies, and nothing is saved here.
+    // 4a. Plans the section without side effects: the search returns copies, and nothing is saved here. The Store tool
+    // plans for the dry run, again for the requester at approval, and again right before applying.
     public virtual async Task<McpSetupPartPlan> PlanAsync(StoreSetupContext context, object section)
     {
         var requested = ((ShippingStoreSetupSection)section).Methods;
@@ -204,16 +208,15 @@ public class ShippingStoreSetupPart(
         return plan;
     }
 
-    // 4b. Saves the methods the plan changes. The plan was made from the saved rows a moment ago, so a repeat after a
-    // failure finds the applied methods unchanged and saves only the rest.
+    // 4b. Saves what the plan changes onto the store's methods read again, so a change made since the plan stays: the
+    // fields of the plan's rows (active, priority and settings) take their planned values, the others keep theirs. A
+    // repeat after a failure finds the applied methods unchanged and saves only the rest.
     public virtual async Task ApplyAsync(StoreSetupContext context, McpSetupPartPlan plan)
     {
         var shippingPlan = (ShippingStoreSetupPlan)plan;
         var methods = await GetStoreMethodsAsync(context.Store.Id);
         var changed = new List<ShippingMethod>();
 
-        // The methods read again: the fields of the plan's rows take their planned values, so a change made since the
-        // plan stays.
         foreach (var planned in shippingPlan.Methods)
         {
             var fields = shippingPlan.GetChangedFields(GetFieldPrefix(planned.Code));
@@ -324,7 +327,7 @@ public class ShippingStoreSetupPart(
 
     protected virtual McpFinding CreateFinding(Store store, string id, string severity, string title, string why, string evidence, string fix)
     {
-        var finding = StoreSetupFindings.ForStore(store, PartName, id, severity, "Shipping methods");
+        var finding = setupFindings.ForStore(store, PartName, id, severity, "Shipping methods");
         finding.Title = title;
         finding.Why = why;
         finding.Evidence = evidence;
@@ -333,8 +336,22 @@ public class ShippingStoreSetupPart(
         return finding;
     }
 
-    private static void AddChange(ShippingStoreSetupPlan plan, ShippingMethod method, string field, object from, object to)
+    // A row of the plan for one method's field, with the method's prefix (GetFieldPrefix).
+    protected virtual void AddChange(ShippingStoreSetupPlan plan, ShippingMethod method, string field, object from, object to)
     {
         plan.AddChange($"{GetFieldPrefix(method.Code)}{field}", from, to);
+    }
+
+    // Settings that are not secrets can be sent in the section; a person enters secrets in the back office.
+    protected virtual string GetEmptySettingsFix(IList<string> names, int secretCount)
+    {
+        if (secretCount == 0)
+        {
+            return "Fill the settings in the shipping section, or in the back office.";
+        }
+
+        return names.Count == 0
+            ? "A person enters the secret settings in the back office: secrets are never sent through the agent."
+            : "Fill the other settings in the shipping section; a person enters the secret settings in the back office.";
     }
 }
