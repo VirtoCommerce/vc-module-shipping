@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Moq;
@@ -30,6 +32,9 @@ public class ShippingStoreSetupPartTests
     // The methods the store has saved; the search adds a new instance of every installed method the store has not saved.
     private readonly List<ShippingMethod> _saved = [];
     private readonly Mock<IShippingMethodsService> _methodsService = new();
+
+    // The settings manager's cached entries: every read of an unsaved test method gets a new list of these instances.
+    private readonly List<ObjectSettingEntry> _cachedSettings = [];
 
     [Fact]
     public async Task GetChoicesAsync_ListsTheInstalledMethods_WithTheirSettingsThatAreNotSecrets()
@@ -244,6 +249,40 @@ public class ShippingStoreSetupPartTests
         Assert.Contains(spaced.Changes, x => x.Field == $"methods.{PickupCode}.active");
     }
 
+    // A priority left out keeps the method's own, which a method the store has never saved has as 0.
+    [Fact]
+    public void Priority_SaysWhatALeftOutPriorityIs()
+    {
+        //Act
+        var description = typeof(ShippingStoreSetupMethod).GetProperty(nameof(ShippingStoreSetupMethod.Priority))!.GetCustomAttribute<DescriptionAttribute>()!.Description;
+
+        //Assert
+        Assert.EndsWith("Left out: unchanged, which is 0 for a method the store has never saved. Equal numbers come in no fixed order.", description);
+    }
+
+    // A dry run, the plan made again at submit, and the apply never write to the settings manager's cached entries.
+    [Fact]
+    public async Task PlanAndApply_NeverWriteToTheSettingsManagersCachedEntries()
+    {
+        //Arrange
+        var cached = new ObjectSettingEntry(_rate) { Value = 0m };
+        _cachedSettings.Add(cached);
+        var section = CreateSection(new ShippingStoreSetupMethod { Code = PickupCode, Settings = new Dictionary<string, object> { [_rate.Name] = 9.5m } });
+
+        //Act
+        var dryRun = await CreatePart().PlanAsync(CreateContext(), section);
+        var atSubmit = await CreatePart().PlanAsync(CreateContext(), section);
+        await CreatePart().ApplyAsync(CreateContext(), atSubmit);
+
+        //Assert
+        Assert.Equal(0m, cached.Value);
+        Assert.Contains(dryRun.Changes, x => x.Field == $"methods.{PickupCode}.{_rate.Name}");
+        Assert.Contains(atSubmit.Changes, x => x.Field == $"methods.{PickupCode}.{_rate.Name}");
+        var savedMethods = (IList<ShippingMethod>)_methodsService.Invocations.Last(x => x.Method.Name == nameof(IShippingMethodsService.SaveChangesAsync)).Arguments[0];
+        Assert.DoesNotContain(savedMethods.SelectMany(x => x.Settings), x => ReferenceEquals(x, cached));
+        Assert.Equal(9.5m, savedMethods.Single(x => x.Code == PickupCode).Settings.Single(x => x.Name == _rate.Name).Value);
+    }
+
     private static ShippingStoreSetupSection CreateSection(params ShippingStoreSetupMethod[] methods)
     {
         return new ShippingStoreSetupSection { Methods = methods };
@@ -261,7 +300,7 @@ public class ShippingStoreSetupPartTests
             {
                 // As the search service: copies when asked, the saved instances themselves otherwise.
                 var saved = _saved.Where(x => x.StoreId == criteria.StoreId).Select(x => clone ? x.CloneTyped() : x).ToList();
-                var installed = new ShippingMethod[] { new FixedRateShippingMethod(), new TestPickupShippingMethod() };
+                var installed = new ShippingMethod[] { new FixedRateShippingMethod(), new TestPickupShippingMethod { Settings = _cachedSettings.ToList() } };
                 var all = saved.Concat(installed.Where(x => !saved.Any(s => s.Code == x.Code))).ToList();
 
                 return new ShippingMethodsSearchResult { TotalCount = all.Count, Results = all.Skip(criteria.Skip).Take(criteria.Take).ToList() };

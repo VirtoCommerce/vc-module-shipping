@@ -8,7 +8,8 @@ public class ShippingStoreSetupMethod
     [Description("Method code, as get_store_setup_options lists it.")]
     public string Code { get; set; }
 
-    [Description("Position at checkout: a lower number comes first. Left out: unchanged.")]
+    [Description("Position at checkout: a lower number comes first. Left out: unchanged, which is 0 for a method the store " +
+        "has never saved. Equal numbers come in no fixed order.")]
     public int? Priority { get; set; }
 
     [Description("Setting name to value for this method, such as its rates. Leaves the other settings as they are; null " +
