@@ -260,6 +260,17 @@ public class ShippingStoreSetupPartTests
         Assert.EndsWith("Left out: unchanged, which is 0 for a method the store has never saved. Equal numbers come in no fixed order.", description);
     }
 
+    // The settings map says what a null does, as Store's settings section does.
+    [Fact]
+    public void Settings_SaysWhatANullDoes()
+    {
+        //Act
+        var description = typeof(ShippingStoreSetupMethod).GetProperty(nameof(ShippingStoreSetupMethod.Settings))!.GetCustomAttribute<DescriptionAttribute>()!.Description;
+
+        //Assert
+        Assert.Contains("null returns a setting to its default, and a setting without a default takes a value instead.", description);
+    }
+
     // A dry run, the plan made again at submit, and the apply never write to the settings manager's cached entries.
     [Fact]
     public async Task PlanAndApply_NeverWriteToTheSettingsManagersCachedEntries()
