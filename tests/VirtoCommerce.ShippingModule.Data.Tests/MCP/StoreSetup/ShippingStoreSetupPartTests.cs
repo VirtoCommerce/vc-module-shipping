@@ -28,6 +28,7 @@ public class ShippingStoreSetupPartTests
     private static readonly SettingDescriptor _rate = new() { Name = "Test.Pickup.Rate", ValueType = SettingValueType.Decimal, DefaultValue = 0m };
     private static readonly SettingDescriptor _mapsApiKey = new() { Name = "Test.Pickup.MapsApiKey", ValueType = SettingValueType.ShortText };
     private static readonly SettingDescriptor _pickupPoint = new() { Name = "Test.Pickup.PointId", ValueType = SettingValueType.ShortText, IsRequired = true };
+    private static readonly SettingDescriptor _accountKey = new() { Name = "Test.Pickup.AccountKey", ValueType = SettingValueType.ShortText, IsRequired = true };
 
     // The methods the store has saved; the search adds a new instance of every installed method the store has not saved.
     private readonly List<ShippingMethod> _saved = [];
@@ -35,6 +36,9 @@ public class ShippingStoreSetupPartTests
 
     // The settings manager's cached entries: every read of an unsaved test method gets a new list of these instances.
     private readonly List<ObjectSettingEntry> _cachedSettings = [];
+
+    // The settings the pickup method registers: a test that needs a required secret adds _accountKey.
+    private readonly List<SettingDescriptor> _pickupSettings = [_rate, _mapsApiKey, _pickupPoint];
 
     [Fact]
     public async Task GetChoicesAsync_ListsTheInstalledMethods_WithTheirSettingsThatAreNotSecrets()
@@ -208,6 +212,24 @@ public class ShippingStoreSetupPartTests
         Assert.Equal(PickupCode, finding.ObjectId);
     }
 
+    // Only a person can enter a secret, so a finding about empty secrets alone names no tool.
+    [Fact]
+    public async Task CheckAsync_ActiveMethodWithOnlyAnEmptySecret_IsManualOnly()
+    {
+        //Arrange
+        _pickupSettings.Add(_accountKey);
+        _saved.Add(new TestPickupShippingMethod { StoreId = StoreId, IsActive = true, Settings = [new ObjectSettingEntry(_pickupPoint) { Value = "berlin-1" }] });
+
+        //Act
+        var findings = await CreatePart().CheckAsync(CreateContext());
+
+        //Assert
+        var finding = Assert.Single(findings);
+        Assert.True(finding.ManualOnly);
+        Assert.Equal("1 secret setting is empty.", finding.Evidence);
+        Assert.StartsWith("A person enters the secret settings in the back office", finding.Fix);
+    }
+
     private static StoreSetupContext CreateContext()
     {
         return new StoreSetupContext { Store = new Store { Id = StoreId, Name = "EU store" } };
@@ -249,7 +271,6 @@ public class ShippingStoreSetupPartTests
         Assert.Contains(spaced.Changes, x => x.Field == $"methods.{PickupCode}.active");
     }
 
-    // A priority left out keeps the method's own, which a method the store has never saved has as 0.
     // With a shipping section in the request, the check reads the methods as the plan leaves them.
     [Fact]
     public async Task CheckAsync_ReadsTheMethodsAsThePlanLeavesThem()
@@ -306,6 +327,7 @@ public class ShippingStoreSetupPartTests
         Assert.Equal([PickupCode, FixedRateCode], state.Methods.Select(x => x.Code));
     }
 
+    // A priority left out keeps the method's own, which a method the store has never saved has as 0.
     [Fact]
     public void Priority_SaysWhatALeftOutPriorityIs()
     {
@@ -390,7 +412,7 @@ public class ShippingStoreSetupPartTests
             .Returns(Task.CompletedTask);
 
         var settingsRegistrar = new Mock<ISettingsRegistrar>();
-        settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(TestPickupShippingMethod))).Returns([_rate, _mapsApiKey, _pickupPoint]);
+        settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(TestPickupShippingMethod))).Returns(_pickupSettings);
         settingsRegistrar.Setup(x => x.GetSettingsForType(nameof(FixedRateShippingMethod))).Returns([]);
 
         return new ShippingStoreSetupPart(registrar.Object, searchService.Object, _methodsService.Object, settingsRegistrar.Object, new TestStoreSetupSettings(), new StoreSetupFindings());
