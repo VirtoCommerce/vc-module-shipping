@@ -135,13 +135,14 @@ public class ShippingStoreSetupPart(
             findings.Add(finding);
         }
 
-        // Nothing in a store limits the countries it ships to; the methods decide their rates at checkout.
-        if (!string.IsNullOrEmpty(context.Country))
+        // Nothing in a store limits the countries it ships to; the methods decide their rates at checkout. Without an active
+        // method there are no rates to check: the blocking finding above says why customers cannot check out.
+        if (!string.IsNullOrEmpty(context.Country) && activeMethods.Count > 0)
         {
             findings.Add(CreateFinding(store, "shipping-country-not-checked", McpFindingSeverities.Info,
                 $"Shipping to {context.Country} is not checked here",
                 "Nothing here blocks it: each shipping method decides its rates for an address at checkout.",
-                $"Active shipping methods: {(activeMethods.Count == 0 ? "none" : string.Join(", ", activeMethods.Select(x => x.Code)))}.",
+                $"Active shipping methods: {string.Join(", ", activeMethods.Select(x => x.Code))}.",
                 "Check the rates of the active methods for this country in the back office."));
         }
 

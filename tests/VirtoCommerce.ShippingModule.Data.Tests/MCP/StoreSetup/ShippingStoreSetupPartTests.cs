@@ -52,11 +52,18 @@ public class ShippingStoreSetupPartTests
         Assert.Equal([_rate.Name, _pickupPoint.Name], choices.Single(x => x.Value == PickupCode).Settings.Select(x => x.Name));
     }
 
-    [Fact]
-    public async Task CheckAsync_WithoutAnActiveMethod_IsBlocking()
+    // With a country too, the blocking finding is the only one: no "nothing here blocks it" beside it.
+    [Theory]
+    [InlineData(null)]
+    [InlineData("DEU")]
+    public async Task CheckAsync_WithoutAnActiveMethod_IsBlocking_WithOrWithoutACountry(string country)
     {
+        //Arrange
+        var context = CreateContext();
+        context.Country = country;
+
         //Act
-        var findings = await CreatePart().CheckAsync(CreateContext());
+        var findings = await CreatePart().CheckAsync(context);
 
         //Assert
         var finding = Assert.Single(findings);
