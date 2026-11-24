@@ -13,11 +13,14 @@
       :total-count="totalCount"
       :pagination="pagination"
       :searchable="true"
+      search-bar
       :state-key="'STORE_PICKUP_LOCATIONS'"
+      :global-filters="globalFilters"
       :active-item-id="activeItemId"
       :empty-state="{ icon: 'lucide-map-pin', title: $t('SHIPPING.PICKUP.EMPTY') }"
       @row-click="(e: { data: PickupLocation }) => openDetails(e.data.id)"
       @pagination-click="pagination.goToPage"
+      @filter="onFilter"
     >
       <VcColumn
         id="name"
@@ -70,6 +73,8 @@ const PAGE_SIZE = 20;
 const items = ref<PickupLocation[]>([]);
 const totalCount = ref(0);
 const keyword = ref("");
+type Status = "active" | "inactive";
+const status = ref<Status>();
 const selection = ref<PickupLocation[]>([]);
 const activeItemId = ref<string>();
 const pagination = useDataTablePagination({ pageSize: PAGE_SIZE, totalCount });
@@ -78,12 +83,31 @@ const { loading, action: load } = useAsync(async () => {
   const result = await api.post<{ results?: PickupLocation[]; totalCount?: number }>("/api/shipping/pickup-locations/search", {
     storeId: param.value,
     keyword: keyword.value || undefined,
+    isActive: status.value ? status.value === "active" : undefined,
     skip: pagination.skip,
     take: PAGE_SIZE,
   });
   items.value = result.results ?? [];
   totalCount.value = result.totalCount ?? 0;
 });
+
+// the API filters by one isActive value, so the status filter takes one value
+const globalFilters = computed(() => [
+  {
+    id: "status",
+    label: t("SHIPPING.FIELDS.STATUS"),
+    filter: {
+      options: [
+        { value: "active", label: t("SHIPPING.ACTIVE") },
+        { value: "inactive", label: t("SHIPPING.INACTIVE") },
+      ],
+    },
+  },
+]);
+
+function onFilter(event: { filters: Record<string, unknown> }) {
+  status.value = (event.filters.status as Status | undefined) || undefined;
+}
 
 const bladeToolbar = ref<IBladeToolbar[]>([
   { id: "refresh", title: t("SHIPPING.TOOLBAR.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
@@ -128,6 +152,7 @@ async function reload() {
 
 // off the first page, the page change loads
 watch(keyword, debounce(() => (pagination.skip ? pagination.setPage(1) : load()), 400));
+watch(status, () => (pagination.skip ? pagination.setPage(1) : load()));
 watch(() => pagination.skip, () => load());
 onMounted(load);
 exposeToChildren({ reload });
